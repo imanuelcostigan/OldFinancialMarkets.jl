@@ -1,11 +1,12 @@
 module FinMarkets
 
-using Datetime
+using Dates
 
 export
     isweekend,
     isnewyearsday
 
-include("calendars/calendars.jl")
+include("times.jl")
+include("calendars.jl")
 
-end # module
+end
