@@ -6,7 +6,7 @@ function isnewyearsday(d::Date)
     month(d) == January && day(d) == 1
 end
 
-function isnewyearsday(d::Date, substitutedays::Array{Int64})
+function isnewyearsday(d::Date, substitutedays::Array{Int})
     isnyd = isnewyearsday(d)
     isnyd || (dayofweek(d) == Monday &&
         ((day(d) == 2 && Sunday in substitutedays) ||
