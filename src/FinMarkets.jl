@@ -3,6 +3,7 @@ module FinMarkets
 using Dates
 
 export
+    years,
     isweekend,
     isnewyearsday
 
