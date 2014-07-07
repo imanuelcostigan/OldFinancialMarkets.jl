@@ -1,5 +1,11 @@
 module FinMarkets
 
-# package code goes here
+using Datetime
+
+export
+    isweekend,
+    isnewyearsday
+
+include("calendars/calendars.jl")
 
 end # module
