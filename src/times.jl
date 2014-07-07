@@ -58,7 +58,7 @@ function years(date1::Date, date2::Date, dc::Thirty360)
     m1 = month(date1); m2 = month(date2)
     y1 = year(date1); y2 = year(date2)
     d1 == 31 && (d1 = 30)
-    d2 == 31 || d1 > 29 && (d2 = 30)
+    d2 == 31 && d1 > 29 && (d2 = 30)
     (360 * (y2 - y1) + 30 * (m2 - m1) + (d2 - d1)) / 360
 end
 
