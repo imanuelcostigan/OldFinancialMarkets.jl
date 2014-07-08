@@ -18,9 +18,6 @@ end
 immutable ThirtyE360 <: DayCountFraction
     name::String
 end
-immutable ThirtyE360ISDA <: DayCountFraction
-    name::String
-end
 
 ####
 # Constructors
@@ -31,7 +28,6 @@ A360() = A360("Actual/360")
 ActAct() = ActAct("Actual/Actual")
 Thirty360() = Thirty360("30/360")
 ThirtyE360() = ThirtyE360("30E/360")
-ThirtyE360ISDA() = ThirtyE360ISDA("30E/360 (ISDA)")
 
 ####
 # Helper methods
@@ -43,9 +39,9 @@ daysinyear(year::Int) = isleap(year) ? 366 : 365
 # Day count basis methods
 ####
 
-years(date1::Date, date2::Date, dc::A365) = (date2 - date1) / 365
+years(date1::Date, date2::Date, dc::A365) = (date2 - date1).value / 365
 
-years(date1::Date, date2::Date, dc::A360) = (date2 - date1) / 360
+years(date1::Date, date2::Date, dc::A360) = (date2 - date1).value / 360
 
 function years(date1::Date, date2::Date, dc::ActAct)
     date1 == date2 && return 0
@@ -53,7 +49,8 @@ function years(date1::Date, date2::Date, dc::ActAct)
     diy1 = daysinyear(date1); diy2 = daysinyear(date2)
     bony1 = Date(y1 + 1, 1, 1)
     boy2 = Date(y2, 1, 1)
-    return (bony1 - date1) / diy1 + y2 - y1 - 1 + (date2 - boy2) / diy2
+    return ((bony1 - date1).value / diy1 + y2 - y1 - 1 +
+        (date2 - boy2).value / diy2)
 end
 
 function years(date1::Date, date2::Date, dc::Thirty360)
