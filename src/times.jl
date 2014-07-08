@@ -44,7 +44,9 @@ daysinyear(year::Int) = isleap(year) ? 366 : 365
 ####
 
 years(date1::Date, date2::Date, dc::A365) = (date2 - date1) / 365
+
 years(date1::Date, date2::Date, dc::A360) = (date2 - date1) / 360
+
 function years(date1::Date, date2::Date, dc::ActAct)
     date1 == date2 && return 0
     y1 = year(date1); y2 = year(date2)
@@ -53,6 +55,7 @@ function years(date1::Date, date2::Date, dc::ActAct)
     boy2 = Date(y2, 1, 1)
     return (bony1 - date1) / diy1 + y2 - y1 - 1 + (date2 - boy2) / diy2
 end
+
 function years(date1::Date, date2::Date, dc::Thirty360)
     date1 == date2 && return 0
     d1 = day(date1); d2 = day(date2)
