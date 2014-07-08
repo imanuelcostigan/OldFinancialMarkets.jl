@@ -14,3 +14,4 @@ before_install:
 script:
   - julia -e 'Pkg.init(); run(`ln -s $(pwd()) $(Pkg.dir("FinMarkets"))`); Pkg.pin("FinMarkets"); Pkg.resolve()'
   - julia -e 'using FinMarkets; @assert isdefined(:FinMarkets); @assert typeof(FinMarkets) === Module'
+  - if [ $JULIAVERSION = "julianightlies" ]; then julia --code-coverage test/runtests.jl; fi
