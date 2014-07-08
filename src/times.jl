@@ -21,6 +21,7 @@ end
 immutable ThirtyE360ISDA <: DayCountFraction
     name::String
 end
+
 ####
 # Constructors
 ####
