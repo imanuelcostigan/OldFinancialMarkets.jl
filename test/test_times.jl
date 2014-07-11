@@ -27,3 +27,7 @@ thirty360 = Thirty360()
 @test_approx_eq years(d2, d1, thirty360) -1.0
 @test_approx_eq years(d1, d3, thirty360) 1 / 12
 @test_approx_eq years(d4, d1, thirty360) (2 * 360 - 11 * 30) / 360
+
+# Days in leap years
+@test daysinyear(2012) == Day(366)
+@test daysinyear(2013) == Day(365)
