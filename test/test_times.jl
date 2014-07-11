@@ -20,3 +20,10 @@ actact = ActAct()
 @test_approx_eq years(d1, d2, actact)  1.0
 @test_approx_eq years(d2, d1, actact)  -1.0
 @test_approx_eq years(d4, d1, actact)  31 / 366 + 1
+
+# Thirty360
+thirty360 = Thirty360()
+@test_approx_eq years(d1, d2, thirty360) 1.0
+@test_approx_eq years(d2, d1, thirty360) -1.0
+@test_approx_eq years(d1, d3, thirty360) 1 / 12
+@test_approx_eq years(d4, d1, thirty360) (2 * 360 - 11 * 30) / 360
