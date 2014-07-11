@@ -46,7 +46,7 @@ years(date1::Date, date2::Date, dc::A360) = (date2 - date1).value / 360
 function years(date1::Date, date2::Date, dc::ActAct)
     date1 == date2 && return 0
     y1 = year(date1); y2 = year(date2)
-    diy1 = daysinyear(date1); diy2 = daysinyear(date2)
+    diy1 = daysinyear(year(date1)); diy2 = daysinyear(year(date2))
     bony1 = Date(y1 + 1, 1, 1)
     boy2 = Date(y2, 1, 1)
     return ((bony1 - date1).value / diy1 + y2 - y1 - 1 +
