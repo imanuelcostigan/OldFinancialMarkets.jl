@@ -43,6 +43,15 @@ thirtyE360 = ThirtyE360()
 @test_approx_eq years(d5, d6, thirtyE360) years(d5, d6, thirty360)
 @test_approx_eq years(d1, d6, thirtyE360) (2 * 30 + 29) / 360
 
+# ThirtyEP360
+thirtyEP360 = ThirtyEP360()
+@test_approx_eq years(d1, d2, thirtyEP360) years(d1, d2, thirty360)
+@test_approx_eq years(d2, d1, thirtyEP360) years(d2, d1, thirty360)
+@test_approx_eq years(d1, d3, thirtyEP360) years(d1, d3, thirty360)
+@test_approx_eq years(d1, d5, thirtyEP360) 1 / 12
+@test_approx_eq years(d5, d6, thirtyEP360) (-29 + 3 * 30) / 360
+@test_approx_eq years(d1, d6, thirtyEP360) 3 * 30 / 360
+
 # Days in leap years
 @test daysinyear(2012) == Day(366)
 @test daysinyear(2013) == Day(365)
