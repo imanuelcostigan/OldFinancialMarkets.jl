@@ -9,7 +9,7 @@ export
     isweekend,
     isnewyearsday
 
-include("times.jl")
 include("calendars.jl")
+include("times.jl")
 
 end

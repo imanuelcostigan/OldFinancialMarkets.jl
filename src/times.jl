@@ -34,12 +34,6 @@ ThirtyE360() = ThirtyE360("30E/360 (ISDA)")
 ThirtyEP360() = ThirtyEP360("30E+/360 (ISDA)")
 
 ####
-# Helper methods
-####
-
-daysinyear(year::Int) = isleap(year) ? Day(366) : Day(365)
-
-####
 # Day count basis methods
 ####
 

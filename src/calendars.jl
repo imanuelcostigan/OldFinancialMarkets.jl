@@ -1,3 +1,5 @@
+daysinyear(year::Int) = isleap(year) ? Day(366) : Day(365)
+
 function isweekend(d::Date)
     dayofweek(d) == Saturday || dayofweek(d) == Sunday
 end
