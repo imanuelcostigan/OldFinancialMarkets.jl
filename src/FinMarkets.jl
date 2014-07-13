@@ -7,7 +7,7 @@ export
     daysinyear,
     years,
     isweekend,
-    isnewyearsday
+    isnewyears
 
 include("calendars.jl")
 include("times.jl")

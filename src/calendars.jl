@@ -1,16 +1,9 @@
 daysinyear(year::Int) = isleap(year) ? Day(366) : Day(365)
+isweekend(d::Date) = dayofweek(d) == Saturday || dayofweek(d) == Sunday
+isnewyears(d::Date) =  month(d) == January && day(d) == 1
 
-function isweekend(d::Date)
-    dayofweek(d) == Saturday || dayofweek(d) == Sunday
-end
-
-function isnewyearsday(d::Date)
-    month(d) == January && day(d) == 1
-end
-
-function isnewyearsday(d::Date, substitutedays::Array{Int})
-    isnyd = isnewyearsday(d)
-    isnyd || (dayofweek(d) == Monday &&
+function isnewyears(d::Date, substitutedays::Array{Int})
+    isnewyears(d) || (dayofweek(d) == Monday &&
         ((day(d) == 2 && Sunday in substitutedays) ||
             (day(d) == 3 && Saturday in substitutedays)))
 end
