@@ -17,7 +17,7 @@ function iseasterholiday(dt::Date, c::AUSYFCalendar)
     iseasterholiday(dt, [Fri, Mon])
 end
 function isanzacdayholiday(dt::Date, c::AUSYFCalendar)
-    isanzacdayholiday(dt, [Sat, Sun])
+    isanzacdayholiday(dt)
 end
 function isqueensbirthdayholiday(dt::Date, c::AUSYFCalendar)
     dayofweek(dt) == Mon && dayofweekofmonth(dt) == 2 && month(dt) == Jun
