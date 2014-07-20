@@ -10,7 +10,7 @@ export
     easter,
     isweekend, isnewyearsday, isaustraliaday, isanzacday, iseaster,
     ischristmasday, isboxingday,
-    isnewyearholiday, isaustraliadayholiday, isanzacdayholiday, iseasterholiday,
+    isnewyearsholiday, isaustraliadayholiday, isanzacdayholiday, iseasterholiday,
     ischristmasdayholiday, isboxingdayholiday,
     isgoodday,
     # calendars_sydney.jl

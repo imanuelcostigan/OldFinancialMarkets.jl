@@ -31,3 +31,11 @@
 @test isboxingday(Date(2014, 12, 26))
 @test !isboxingday(Date(2014, 12, 27))
 @test !isboxingday(Date(2014, 11, 26))
+
+# Holiday testers
+@test isnewyearsholiday(Date(2014, 1, 1), [Sat, Sun])
+@test !isnewyearsholiday(Date(2011, 1, 2), [Sat, Sun])
+@test isnewyearsholiday(Date(2011, 1, 3), [Sat, Sun])
+@test isnewyearsholiday(Date(2011, 1, 3), [Sat])
+@test isnewyearsholiday(Date(2012, 1, 2), [Sat, Sun])
+@test isnewyearsholiday(Date(2012, 1, 2), [Sun])
