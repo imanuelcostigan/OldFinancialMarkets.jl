@@ -92,4 +92,4 @@ isgoodday(dt::Date, c = NoFCalendar()) = !isweekend(dt, c)
 # Other calendar methods
 #####
 
-include("SydneyCalendar.jl")
+include("calendar_sydney.jl")
