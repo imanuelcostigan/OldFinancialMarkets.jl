@@ -92,7 +92,6 @@ end
 # isgoodday methods
 #####
 
-isgoodday(dt::Date) = true
 isgoodday(dt::Date, c = NoFCalendar()) = !isweekend(dt, c)
 
 #####

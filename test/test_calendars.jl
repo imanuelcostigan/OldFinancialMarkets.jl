@@ -62,3 +62,7 @@
 @test isboxingdayholiday(Date(2015, 12, 26), true)
 @test !isboxingdayholiday(Date(2015, 12, 28))
 @test isboxingdayholiday(Date(2015, 12, 28), true)
+
+# Good day testers
+@test !isgoodday(Date(2014, 7, 20), NoFCalendar())
+@test isgoodday(Date(2014, 7, 21), NoFCalendar())

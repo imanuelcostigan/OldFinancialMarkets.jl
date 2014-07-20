@@ -6,7 +6,7 @@ export
     # times.j;
     A365, A360, ActActISDA, Thirty360, ThirtyE360, ThirtyEP360, years,
     # calendars.jl
-    FinCalendar, NFCalendar,
+    FinCalendar, NoFCalendar,
     easter,
     isweekend, isnewyearsday, isaustraliaday, isanzacday, iseaster,
     ischristmasday, isboxingday,
