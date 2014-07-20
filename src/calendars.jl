@@ -2,18 +2,12 @@
 # Type declarations
 #####
 
-abstract FinCalendar <: ISOCalendar
-abstract NoFCalendar <: FinCalendar
+abstract FinCalendar
+immutable NoFCalendar <: FinCalendar end
 
 #####
 # Epochs and their checkers
 #####
-
-isweekend(dt::Date, c = NoFCalendar()) = dayofweek(dt) in [Sat, Sun]
-isnewyearsday(dt::Date, c = NoFCalendar()) = dayofyear(dt) == 1
-isaustraliaday(dt::Date, c = NoFCalendar()) = (month(dt) == Jan &&
-    day(dt) == 26)
-isanzacday(dt::Date, c = NoFCalendar()) = (month(dt) == Apr && day(dt) == 25)
 function easter(y::Integer, day = Sun, c = NoFCalendar())
     # Using Meeus/Jones/Butcher algorithm
     # https://en.wikipedia.org/wiki/Computus#Anonymous_Gregorian_algorithm
@@ -44,10 +38,15 @@ function easter(y::Integer, day = Sun, c = NoFCalendar())
     return dt
 end
 easter(dt::Date, day = Sun, c = NoFCalendar()) = easter(year(dt), day, c)
+isweekend(dt::Date, c = NoFCalendar()) = dayofweek(dt) in [Sat, Sun]
+isnewyearsday(dt::Date, c = NoFCalendar()) = dayofyear(dt) == 1
+isaustraliaday(dt::Date, c = NoFCalendar()) = (month(dt) == Jan &&
+    day(dt) == 26)
+isanzacday(dt::Date, c = NoFCalendar()) = (month(dt) == Apr && day(dt) == 25)
 iseaster(dt::Date, day = Sun, c = NoFCalendar()) = dt == easter(dt, day, c)
 ischristmasday(dt::Date, c = NoFCalendar()) = (month(dt) == Dec &&
     day(dt) == 25)
-isboxingday(dt::Date, c::NoFCalendar()) = (month(dt) == Dec &&
+isboxingday(dt::Date, c = NoFCalendar()) = (month(dt) == Dec &&
     day(dt) == 26)
 
 #####
@@ -66,7 +65,7 @@ function isaustraliadayholiday(dt::Date, substitutedays::Array{Integer})
 end
 function isanzacdayholiday(dt::Date, substitutedays::Array{Integer})
     isanzacday(dt) || (month(dt) == April && dayofweek(dt) == Mon &&
-        ((day(dt) == 26 Sun in substitutedays) ||
+        ((day(dt) == 26 && Sun in substitutedays) ||
             (day(dt) == 27 && Sat in substitutedays)))
 end
 function iseasterholiday(dt::Date, days::Array{Integer})
@@ -92,4 +91,4 @@ isgoodday(dt::Date, c = NoFCalendar()) = !isweekend(dt, c)
 # Other calendar methods
 #####
 
-include("calendar_sydney.jl")
+include("calendars_sydney.jl")

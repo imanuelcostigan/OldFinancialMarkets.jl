@@ -4,5 +4,5 @@
 @test isweekend(Date(2014, 7, 13))
 @test !isweekend(Date(2014, 7, 14))
 
-# NewYears tester
+# Epoch tester
 @test isnewyearsday(Date(2014, 1, 1))

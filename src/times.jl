@@ -47,8 +47,8 @@ function years(date1::Date, date2::Date, dc::ActActISDA)
     diy1 = daysinyear(year(date1)); diy2 = daysinyear(year(date2))
     bony1 = Date(y1 + 1, 1, 1)
     boy2 = Date(y2, 1, 1)
-    return ((bony1 - date1).value / diy1.value + y2 - y1 - 1 +
-        (date2 - boy2).value / diy2.value)
+    return ((bony1 - date1).value / diy1 + y2 - y1 - 1 +
+        (date2 - boy2).value / diy2)
 end
 
 function years(date1::Date, date2::Date, dc::Thirty360)
