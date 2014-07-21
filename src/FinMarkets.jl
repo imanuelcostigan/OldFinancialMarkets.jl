@@ -16,8 +16,12 @@ export
     # calendars_au.jl
     AUFCalendar, AUSYFCalendar, AUMEFCalendar,
     isqueensbirthdayholiday, isbankholiday, islabourdayholiday,
-    ismelbournecupholiday
-
+    ismelbournecupholiday,
+    # calendars_us.jl
+    USFCalendar, USNYFCalendar,
+    ismlkdayholiday, iswashingtonsbdayholiday, ismemorialdayholiday,
+    isindependencedayholiday, iscolumbusdayholiday, isveteransdayholiday,
+    isthanksgivingdayholiday
 
 include("calendars.jl")
 include("times.jl")

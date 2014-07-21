@@ -7,6 +7,7 @@ abstract AUFCalendar <: FinCalendar
 #####
 # Methods
 #####
+
 function isnewyearsholiday(dt::Date, c::AUFCalendar)
     isnewyearsholiday(dt, [Sat, Sun])
 end
