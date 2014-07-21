@@ -3,7 +3,7 @@ module FinMarkets
 using Dates
 
 export
-    # times.j;
+    # times.jl
     A365, A360, ActActISDA, Thirty360, ThirtyE360, ThirtyEP360, years,
     # calendars.jl
     FinCalendar, NoFCalendar,
@@ -21,9 +21,13 @@ export
     USFCalendar, USNYFCalendar,
     ismlkdayholiday, iswashingtonsbdayholiday, ismemorialdayholiday,
     isindependencedayholiday, iscolumbusdayholiday, isveteransdayholiday,
-    isthanksgivingdayholiday
+    isthanksgivingdayholiday,
+    # business_day_conventions.jl
+    BusinessDayConvention, Unadjusted, Preceding, ModifiedPreceding,
+    Following, ModifiedFollowing, Succeeding, adjust
 
 include("calendars.jl")
 include("times.jl")
+include("business_day_conventions.jl")
 
 end
