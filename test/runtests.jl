@@ -4,4 +4,5 @@ using Base.Test
 
 include("test_times.jl")
 include("test_calendars.jl")
-include("test_calendars_sydney.jl")
+include("test_calendars_ausy.jl")
+include("test_calendars_aume.jl")
