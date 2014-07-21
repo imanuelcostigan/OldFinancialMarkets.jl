@@ -28,14 +28,6 @@ end
 function isboxingdayholiday(dt::Date, c::AUFCalendar)
     isboxingdayholiday(dt, true)
 end
-function isgoodday(dt::Date, c::AUFCalendar)
-    !(isweekend(dt) || isnewyearsholiday(dt, c) ||
-        isaustraliadayholiday(dt, c) || isanzacdayholiday(dt, c) ||
-        ischristmasdayholiday(dt, c) || isboxingdayholiday(dt, c) ||
-        iseasterholiday(dt, c) || isqueensbirthdayholiday(dt, c) ||
-        isqueensbirthdayholiday(dt, c) || isbankholiday(dt, c) ||
-        islabourdayholiday(dt, c))
-end
 
 include("calendars_ausy.jl")
 include("calendars_aume.jl")
