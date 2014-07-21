@@ -13,9 +13,10 @@ export
     isnewyearsholiday, isaustraliadayholiday, isanzacdayholiday, iseasterholiday,
     ischristmasdayholiday, isboxingdayholiday,
     isgoodday,
-    # calendars_sydney.jl
-    AUSYFCalendar,
-    isqueensbirthdayholiday, isbankholiday, islabourdayholiday
+    # calendars_au.jl
+    AUFCalendar, AUSYFCalendar, AUMEFCalendar,
+    isqueensbirthdayholiday, isbankholiday, islabourdayholiday,
+    ismelbournecupholiday
 
 
 include("calendars.jl")
