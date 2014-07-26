@@ -38,6 +38,6 @@ end
 function adjust(dt::Date, bdc::Succeeding, c = NoFCalendar())
     follow_dt = adjust(dt, Following(), c)
     is_barrier_crossed = (month(follow_dt) != month(dt) ||
-        day(dt) <= 15 && day(follow_dt) > 15)
+        day(dt) ≤ 15 && day(follow_dt) > 15)
     is_barrier_crossed ? adjust(dt, Preceding(), c) : follow_dt
 end
