@@ -27,3 +27,7 @@ function shift(dt::TimeType, p::Period, bdc = Unadjusted(), c = NoFCalendar(),
         end
     end
 end
+
+function tonthdayofweek(dt::TimeType, n::Int, dow::Int)
+    dt + Day(7 * (n - 1) + mod(dow - dayofweek(dt), 7))
+end

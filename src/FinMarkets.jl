@@ -26,7 +26,7 @@ export
     BusinessDayConvention, Unadjusted, Preceding, ModifiedPreceding,
     Following, ModifiedFollowing, Succeeding, adjust,
     # shifters.jl
-    shift
+    shift, tonthdayofweek
 
 include("calendars.jl")
 include("times.jl")

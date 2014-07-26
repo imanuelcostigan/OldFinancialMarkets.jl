@@ -14,7 +14,7 @@ immutable Succeeding <: BusinessDayConvention end
 # Methods
 #####
 
-adjust(dt::TimeType, bdc::Unadjusted) = dt
+adjust(dt::TimeType, bdc::Unadjusted, c = NoFCalendar()) = dt
 function adjust(dt::TimeType, bdc::Preceding, c = NoFCalendar())
     while !isgoodday(dt, c)
         dt -= Day(1)
