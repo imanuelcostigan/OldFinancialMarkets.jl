@@ -56,25 +56,25 @@ isboxingday(dt::Date, c = NoFCalendar()) = (month(dt) == Dec &&
 #####
 
 isnewyearsholiday(dt::Date) = isnewyearsday(dt)
-function isnewyearsholiday(dt::Date, substitutedays::Array{Int64, 1})
+function isnewyearsholiday(dt::Date, substitutedays::Array{Int, 1})
     isnewyearsday(dt) || (month(dt) == Jan && dayofweek(dt) == Mon &&
         ((day(dt) == 2 && Sun in substitutedays) ||
             (day(dt) == 3 && Sat in substitutedays)))
 end
 isaustraliadayholiday(dt::Date) = isaustraliaday(dt)
-function isaustraliadayholiday(dt::Date, substitutedays::Array{Int64, 1})
+function isaustraliadayholiday(dt::Date, substitutedays::Array{Int, 1})
     isaustraliaday(dt) || (month(dt) == Jan && dayofweek(dt) == Mon &&
         ((day(dt) == 27 && Sun in substitutedays) ||
             (day(dt) == 28 && Sat in substitutedays)))
 end
 isanzacdayholiday(dt::Date) = isanzacday(dt)
-function isanzacdayholiday(dt::Date, substitutedays::Array{Int64, 1})
+function isanzacdayholiday(dt::Date, substitutedays::Array{Int, 1})
     isanzacday(dt) || (month(dt) == April && dayofweek(dt) == Mon &&
         ((day(dt) == 26 && Sun in substitutedays) ||
             (day(dt) == 27 && Sat in substitutedays)))
 end
 iseasterholiday(dt::Date) = iseaster(dt)
-function iseasterholiday(dt::Date, days::Array{Int64, 1})
+function iseasterholiday(dt::Date, days::Array{Int, 1})
     any([iseaster(dt, day) for day in days])
 end
 ischristmasdayholiday(dt::Date) = ischristmasday(dt)
