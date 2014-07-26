@@ -39,51 +39,53 @@ function easter(y::Integer, day = Sun, c = NoFCalendar())
         return dt
     end
 end
-easter(dt::Date, day = Sun, c = NoFCalendar()) = easter(year(dt), day, c)
-isweekend(dt::Date, c = NoFCalendar()) = dayofweek(dt) in [Sat, Sun]
-isnewyearsday(dt::Date, c = NoFCalendar()) = dayofyear(dt) == 1
-isaustraliaday(dt::Date, c = NoFCalendar()) = (month(dt) == Jan &&
+easter(dt::TimeType, day = Sun, c = NoFCalendar()) = easter(year(dt), day, c)
+isweekend(dt::TimeType, c = NoFCalendar()) = dayofweek(dt) in [Sat, Sun]
+isnewyearsday(dt::TimeType, c = NoFCalendar()) = dayofyear(dt) == 1
+isaustraliaday(dt::TimeType, c = NoFCalendar()) = (month(dt) == Jan &&
     day(dt) == 26)
-isanzacday(dt::Date, c = NoFCalendar()) = (month(dt) == Apr && day(dt) == 25)
-iseaster(dt::Date, day = Sun, c = NoFCalendar()) = dt == easter(dt, day, c)
-ischristmasday(dt::Date, c = NoFCalendar()) = (month(dt) == Dec &&
+isanzacday(dt::TimeType, c = NoFCalendar()) = (month(dt) == Apr &&
     day(dt) == 25)
-isboxingday(dt::Date, c = NoFCalendar()) = (month(dt) == Dec &&
+iseaster(dt::TimeType, day = Sun, c = NoFCalendar()) = (Date(dt) ==
+    easter(dt, day, c))
+ischristmasday(dt::TimeType, c = NoFCalendar()) = (month(dt) == Dec &&
+    day(dt) == 25)
+isboxingday(dt::TimeType, c = NoFCalendar()) = (month(dt) == Dec &&
     day(dt) == 26)
 
 #####
 # Holiday functions
 #####
 
-isnewyearsholiday(dt::Date) = isnewyearsday(dt)
-function isnewyearsholiday(dt::Date, substitutedays::Array{Int, 1})
+isnewyearsholiday(dt::TimeType) = isnewyearsday(dt)
+function isnewyearsholiday(dt::TimeType, substitutedays::Array{Int, 1})
     isnewyearsday(dt) || (month(dt) == Jan && dayofweek(dt) == Mon &&
         ((day(dt) == 2 && Sun in substitutedays) ||
             (day(dt) == 3 && Sat in substitutedays)))
 end
-isaustraliadayholiday(dt::Date) = isaustraliaday(dt)
-function isaustraliadayholiday(dt::Date, substitutedays::Array{Int, 1})
+isaustraliadayholiday(dt::TimeType) = isaustraliaday(dt)
+function isaustraliadayholiday(dt::TimeType, substitutedays::Array{Int, 1})
     isaustraliaday(dt) || (month(dt) == Jan && dayofweek(dt) == Mon &&
         ((day(dt) == 27 && Sun in substitutedays) ||
             (day(dt) == 28 && Sat in substitutedays)))
 end
-isanzacdayholiday(dt::Date) = isanzacday(dt)
-function isanzacdayholiday(dt::Date, substitutedays::Array{Int, 1})
+isanzacdayholiday(dt::TimeType) = isanzacday(dt)
+function isanzacdayholiday(dt::TimeType, substitutedays::Array{Int, 1})
     isanzacday(dt) || (month(dt) == April && dayofweek(dt) == Mon &&
         ((day(dt) == 26 && Sun in substitutedays) ||
             (day(dt) == 27 && Sat in substitutedays)))
 end
-iseasterholiday(dt::Date) = iseaster(dt)
-function iseasterholiday(dt::Date, days::Array{Int, 1})
+iseasterholiday(dt::TimeType) = iseaster(dt)
+function iseasterholiday(dt::TimeType, days::Array{Int, 1})
     any([iseaster(dt, day) for day in days])
 end
-ischristmasdayholiday(dt::Date) = ischristmasday(dt)
-function ischristmasdayholiday(dt::Date, substitute::Bool)
+ischristmasdayholiday(dt::TimeType) = ischristmasday(dt)
+function ischristmasdayholiday(dt::TimeType, substitute::Bool)
     ischristmasday(dt) || (substitute && month(dt) == Dec &&
         day(dt) == 27 && dayofweek(dt) in [Mon, Tue])
 end
-isboxingdayholiday(dt::Date) = isboxingday(dt)
-function isboxingdayholiday(dt::Date, substitute::Bool)
+isboxingdayholiday(dt::TimeType) = isboxingday(dt)
+function isboxingdayholiday(dt::TimeType, substitute::Bool)
     isboxingday(dt) || (substitute && month(dt) == Dec && day(dt) == 28 &&
         dayofweek(dt) in [Mon, Tue])
 end
@@ -92,7 +94,7 @@ end
 # isgoodday methods
 #####
 
-isgoodday(dt::Date, c = NoFCalendar()) = !isweekend(dt, c)
+isgoodday(dt::TimeType, c = NoFCalendar()) = !isweekend(dt, c)
 
 #####
 # Other calendar methods

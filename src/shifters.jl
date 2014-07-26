@@ -1,4 +1,4 @@
-function shift(dt::Date, p::Period, bdc = Unadjusted(), c = NoFCalendar(),
+function shift(dt::TimeType, p::Period, bdc = Unadjusted(), c = NoFCalendar(),
     eom = true)
     result = dt
     # Extract period details
