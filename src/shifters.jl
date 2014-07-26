@@ -1,4 +1,3 @@
-
 function shift(dt::Date, p::Period, bdc = Unadjusted(), c = NoFCalendar(),
     eom = true)
     result = dt
