@@ -24,7 +24,9 @@ export
     isthanksgivingdayholiday,
     # business_day_conventions.jl
     BusinessDayConvention, Unadjusted, Preceding, ModifiedPreceding,
-    Following, ModifiedFollowing, Succeeding, adjust
+    Following, ModifiedFollowing, Succeeding, adjust,
+    # shifters.jl
+    shift
 
 include("calendars.jl")
 include("times.jl")
