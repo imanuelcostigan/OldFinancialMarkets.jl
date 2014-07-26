@@ -1,3 +1,30 @@
-function shift(dt::Date, n::Int, )
-function shift(dt::Date, p::Period, bdc::BusinessDayConvention, eom::Bool)
+
+function shift(dt::Date, p::Period, bdc = Unadjusted(), c = NoFCalendar(),
+    eom = true)
+    result = dt
+    # Extract period details
+    n = p.value
+    pt = typeof(p)
+    # Zero length period
+    n == 0 && return adjust(result, bdc, c)
+    # Non-zero length period
+    if pt == Day
+        while abs(n) > 0
+            result += Day(sign(n))
+            isgoodday(result, c) && (n -= sign(n))
+        end
+        return result
+    elseif pt == Week
+        result += p
+        return adjust(result, bdc, c)
+    else
+        # End of month convention applies to Month & Year shifter
+        result += p
+        isldom = lastdayofmonth(dt) == dt
+        if eom && isldom
+            return adjust(lastdayofmonth(result), Preceding(), c)
+        else
+            return adjust(result, bdc, c)
+        end
+    end
 end
