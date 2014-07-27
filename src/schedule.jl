@@ -49,7 +49,7 @@ function SwapDateSchedule(effectivedate::TimeType, terminationdate::TimeType,
 
     # Unadjusted dates
     while dates[1] > exitdate
-        insert!(dates, 1, [seed + α * tenor])
+        insert!(dates, 1, [seed + α * i * tenor])
         i += 1
     end
 
