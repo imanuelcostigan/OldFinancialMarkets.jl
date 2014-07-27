@@ -4,7 +4,8 @@ using Dates
 
 export
     # times.jl
-    A365, A360, ActActISDA, Thirty360, ThirtyE360, ThirtyEP360, years,
+    DayCountFraction, A365, A360, ActActISDA, Thirty360, ThirtyE360,
+    ThirtyEP360, years,
     # calendars.jl
     FinCalendar, NoFCalendar,
     easter,
@@ -32,4 +33,5 @@ include("calendars.jl")
 include("times.jl")
 include("business_day_conventions.jl")
 include("shifters.jl")
+include("schedule.jl")
 end
