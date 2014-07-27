@@ -57,7 +57,7 @@ function SwapDateSchedule(effectivedate::TimeType, terminationdate::TimeType,
     if !(exitdate in dates)
         isa(stub, FrontStub) && insert!(dates[2:end], 1, exitdate)
         isa(stub, BackStub) && push!(dates[1:(end - 1)], exitdate)
-
+    end
     # EOM and other adjustments
     toeom = (month(adjust(seed+Day(1), Following(), calendar)) != month(seed) &&
         eom)
