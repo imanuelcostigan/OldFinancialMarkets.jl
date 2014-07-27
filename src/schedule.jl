@@ -53,7 +53,7 @@ function SwapDateSchedule(effectivedate::TimeType, terminationdate::TimeType,
         i += 1
     end
 
-    # Check if effective date is in dates and replace first element if not
+    # Check if exit date is in dates and replace first element if not
     if !(exitdate in dates)
         isa(stub, FrontStub) && insert!(dates[2:end], 1, exitdate)
         isa(stub, BackStub) && push!(dates[1:(end - 1)], exitdate)
