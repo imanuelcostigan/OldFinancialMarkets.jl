@@ -24,7 +24,7 @@ end
 ####
 # Methods & constructors
 ####
-function sign(stub::Stub)
+function Base.sign(stub::Stub)
     isa(stub, FrontStub) && (return -1)
     isa(stub, BackStub) && (return 1)
 end
