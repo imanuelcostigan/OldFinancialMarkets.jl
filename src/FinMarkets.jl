@@ -23,6 +23,9 @@ export
     ismlkdayholiday, iswashingtonsbdayholiday, ismemorialdayholiday,
     isindependencedayholiday, iscolumbusdayholiday, isveteransdayholiday,
     isthanksgivingdayholiday,
+    # calendars_gb.jl
+    GBFCalendar, GBLOFCalendar,
+    isqueensjubileeholiday, isroyalweddingholiday,
     # business_day_conventions.jl
     BusinessDayConvention, Unadjusted, Preceding, ModifiedPreceding,
     Following, ModifiedFollowing, Succeeding, adjust,

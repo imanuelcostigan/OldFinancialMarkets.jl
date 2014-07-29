@@ -18,7 +18,7 @@ end
 function isbankholiday(dt::TimeType, c::GBFCalendar)
     # May Day
     ismayday = (dayofweek(dt) == Mon && dayofweekofmonth(dt) == 1 &&
-        month(dt) == May && year(dt) >= 1978 && !(year(dt) in [2002, 2012]))
+        month(dt) == May && year(dt) >= 1978)
     # Spring
     isspring = (dayofweek(dt) == Mon && dayofweekofmonth(dt) >= 4 &&
         month(dt) == May && year(dt) >= 1971 && !(year(dt) in [2002, 2012]))
@@ -27,7 +27,7 @@ function isbankholiday(dt::TimeType, c::GBFCalendar)
         month(dt) == Aug && year(dt) >= 1971)
     # Alternative for Queen's golden and diamond Jubilee
     isalt = day(dt) == 4 && month(dt) == Jun && year(dt) in [2002, 2012]
-    return ismayday || isspring || isalt
+    return ismayday || isspring || issummer || isalt
 end
 function isqueensjubileeholiday(dt::TimeType, c::GBFCalendar)
     day(dt) == 5 && month(dt) == Jun && year(dt) == 2012
