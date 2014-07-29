@@ -102,3 +102,4 @@ isgoodday(dt::TimeType, c = NoFCalendar()) = !isweekend(dt, c)
 
 include("calendars_au.jl")
 include("calendars_us.jl")
+include("calendars_gb.jl")
