@@ -26,6 +26,8 @@ export
     # calendars_gb.jl
     GBFCalendar, GBLOFCalendar,
     isqueensjubileeholiday, isroyalweddingholiday,
+    # calendars_eu.jl
+    EUFCalendar, EUTAFCalendar,
     # business_day_conventions.jl
     BusinessDayConvention, Unadjusted, Preceding, ModifiedPreceding,
     Following, ModifiedFollowing, Succeeding, adjust,
