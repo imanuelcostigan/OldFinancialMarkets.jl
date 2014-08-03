@@ -28,6 +28,12 @@ export
     isqueensjubileeholiday, isroyalweddingholiday,
     # calendars_eu.jl
     EUFCalendar, EUTAFCalendar,
+    # calendars_jp.jl
+    JPFCalendar, JPTOFCalendar,
+    iscomingofageholiday, isfoundationdayholiday, isshowadayholiday,
+    ismayholiday, ismarinedayholiday, isrespectforagedholiday,
+    iscitizensdayholiday, ishealthandsportsdayholiday, isculturedayholiday,
+    isemperorsbirthdayholiday,
     # business_day_conventions.jl
     BusinessDayConvention, Unadjusted, Preceding, ModifiedPreceding,
     Following, ModifiedFollowing, Succeeding, adjust,

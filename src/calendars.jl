@@ -127,8 +127,8 @@ isseasonstartholiday(dt::TimeType, m::Integer) = isseasonstart(Date(dt), m)
 function isseasonstartholiday(dt::TimeType, m::Integer,
     substitutedays::Array{Int, 1})
     isseasonstart(Date(dt), m) || (dayofweek(dt) == Mon &&
-        ((dt == Date(seasonstart(dt)) + Day(1) && Sun in substitutedays) ||
-            (dt == Date(seasonstart(dt)) + Day(2) && Sat in substitutedays)))
+        ((dt == Date(seasonstart(dt, m)) + Day(1) && Sun in substitutedays) ||
+            (dt == Date(seasonstart(dt, m)) + Day(2) && Sat in substitutedays)))
 end
 
 #####
@@ -145,3 +145,4 @@ include("calendars_au.jl")
 include("calendars_us.jl")
 include("calendars_gb.jl")
 include("calendars_euta.jl")
+include("calendars_jp.jl")
