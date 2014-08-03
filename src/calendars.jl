@@ -40,6 +40,35 @@ function easter(y::Integer, day = Sun, c = NoFCalendar())
     end
 end
 easter(dt::TimeType, day = Sun, c = NoFCalendar()) = easter(year(dt), day, c)
+function seasonstart(y::Integer, m::Integer)
+    # From Jean Meeus' Astronomical Algorithms (1st Ed, 1991). See Chapter 26.
+    # Assertions
+    1000 <= y <= 3000 || error(string("Algorithm only valid for years",
+        " between 1000 and 3000 A.D."))
+    m in [Mar, Jun, Sep, Dec] || error(string("Season starts must be Mar, ",
+        " Jun, Sep or Dec."))
+
+    # Calculate mean time
+    y = (y - 2000) / 1000
+    k = SEASON[m]
+    jde0 = 0
+    for i in 1:length(k) jde0 += y ^ (i - 1) * k[i] end
+
+    # Calculate corrections
+    tt = (jde0 - 2451545) / 36525
+    w = 35999.373tt - 2.47
+    δλ = 1 + 0.0334cosd(w) + 0.0007cosd(2w)
+    ss = 0
+    for i in 1:length(SEASON_A)
+        ss += SEASON_A[i] * cosd(SEASON_B[i] + SEASON_C[i] * tt)
+    end
+
+    # Convert from Julian day to calendar date
+    julian2datetime(jde0 + 0.00001ss / δλ)
+end
+seasonstart(dt::DateTime, m::Integer) = seasonstart(year(dt), m)
+seasonstart(dt::Date, m::Integer) = Date(seasonstart(year(dt), m))
+
 isweekend(dt::TimeType, c = NoFCalendar()) = dayofweek(dt) in [Sat, Sun]
 isnewyearsday(dt::TimeType, c = NoFCalendar()) = dayofyear(dt) == 1
 isaustraliaday(dt::TimeType, c = NoFCalendar()) = (month(dt) == Jan &&
@@ -52,6 +81,11 @@ ischristmasday(dt::TimeType, c = NoFCalendar()) = (month(dt) == Dec &&
     day(dt) == 25)
 isboxingday(dt::TimeType, c = NoFCalendar()) = (month(dt) == Dec &&
     day(dt) == 26)
+isseasonstart(dt::DateTime, m::Integer, c = NoFCalendar()) = (dt ==
+    seasonstart(dt, m))
+isseasonstart(dt::Date, m::Integer, c = NoFCalendar()) = (dt ==
+    seasonstart(dt, m))
+
 
 #####
 # Holiday functions
@@ -88,6 +122,13 @@ isboxingdayholiday(dt::TimeType) = isboxingday(dt)
 function isboxingdayholiday(dt::TimeType, substitute::Bool)
     isboxingday(dt) || (substitute && month(dt) == Dec && day(dt) == 28 &&
         dayofweek(dt) in [Mon, Tue])
+end
+isseasonstartholiday(dt::TimeType, m::Integer) = isseasonstart(Date(dt), m)
+function isseasonstartholiday(dt::TimeType, m::Integer,
+    substitutedays::Array{Int, 1})
+    isseasonstart(Date(dt), m) || (dayofweek(dt) == Mon &&
+        ((dt == Date(seasonstart(dt)) + Day(1) && Sun in substitutedays) ||
+            (dt == Date(seasonstart(dt)) + Day(2) && Sat in substitutedays)))
 end
 
 #####

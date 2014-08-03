@@ -8,11 +8,11 @@ export
     ThirtyEP360, years,
     # calendars.jl
     FinCalendar, NoFCalendar,
-    easter,
+    easter, seasonstart,
     isweekend, isnewyearsday, isaustraliaday, isanzacday, iseaster,
-    ischristmasday, isboxingday,
+    ischristmasday, isboxingday, isseasonstart,
     isnewyearsholiday, isaustraliadayholiday, isanzacdayholiday, iseasterholiday,
-    ischristmasdayholiday, isboxingdayholiday,
+    ischristmasdayholiday, isboxingdayholiday, isseasonstartholiday,
     isgoodday,
     # calendars_au.jl
     AUFCalendar, AUSYFCalendar, AUMEFCalendar,
@@ -34,6 +34,7 @@ export
     # shifters.jl
     shift, tonthdayofweek
 
+include("constants.jl")
 include("calendars.jl")
 include("times.jl")
 include("business_day_conventions.jl")
