@@ -141,9 +141,9 @@ isgoodday(dt::TimeType, c = NoFCalendar()) = !isweekend(dt, c)
 # Other calendar methods
 #####
 
-include("calendars_au.jl")
-include("calendars_us.jl")
-include("calendars_gb.jl")
-include("calendars_euta.jl")
-include("calendars_jp.jl")
-include("calendars_nz.jl")
+include("calendars/calendars_au.jl")
+include("calendars/calendars_us.jl")
+include("calendars/calendars_gb.jl")
+include("calendars/calendars_euta.jl")
+include("calendars/calendars_jp.jl")
+include("calendars/calendars_nz.jl")
