@@ -34,6 +34,9 @@ export
     ismayholiday, ismarinedayholiday, isrespectforagedholiday,
     iscitizensdayholiday, ishealthandsportsdayholiday, isculturedayholiday,
     isemperorsbirthdayholiday,
+    # calendars_nz.jl
+    NZFCalendar, NZAUFCalendar, NZWEFCalendar,
+    iswaitangiday, iswaitangidayholiday, isanniversarydayholiday,
     # business_day_conventions.jl
     BusinessDayConvention, Unadjusted, Preceding, ModifiedPreceding,
     Following, ModifiedFollowing, Succeeding, adjust,
