@@ -136,6 +136,9 @@ end
 #####
 
 isgoodday(dt::TimeType, c = NoFCalendar()) = !isweekend(dt, c)
+function isgoodday(dt::TimeType, c::(FinCalendar...), rule = all)
+    rule([ isgoodday(dt, ci) for ci in c ])
+end
 
 #####
 # Other calendar methods
