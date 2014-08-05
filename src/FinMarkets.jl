@@ -29,7 +29,9 @@ export
 include("constants.jl")
 include("calendars.jl")
 include("times.jl")
-include("business_day_conventions.jl")
+include("businessdayconventions.jl")
 include("shifters.jl")
 include("schedule.jl")
+include("currencies.jl")
+include("indices.jl")
 end
