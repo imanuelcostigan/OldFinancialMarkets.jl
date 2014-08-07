@@ -48,6 +48,7 @@ function ischristmasdayholiday(dt::TimeType, c::USFCalendar)
             (day(dt) == 26 && dayofweek(dt) == Mon)) && month(dt) == Dec))
 end
 function isgoodday(dt::TimeType, c::USFCalendar)
+    # http://en.wikipedia.org/wiki/New_York_State_government_holidays
     !(isweekend(dt) || isnewyearsholiday(dt, c) ||
         ismlkdayholiday(dt, c) || iswashingtonsbdayholiday(dt, c) ||
         ismemorialdayholiday(dt, c) || isindependencedayholiday(dt, c) ||

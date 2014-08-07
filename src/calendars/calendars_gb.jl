@@ -42,6 +42,11 @@ function isroyalweddingholiday(dt::TimeType, c::GBFCalendar)
     day(dt) == 29 && month(dt) == 4 && year(dt) == 2011
 end
 function isgoodday(dt::TimeType, c::GBFCalendar)
+    # http://en.wikipedia.org/wiki/Public_holidays_in_the_United_Kingdom
+    # http://en.wikipedia.org/wiki/Bank_holiday [2002, 2012 spring bank hol moved
+    # to 4 Jun for Queen's jubilee]
+    # http://www.timeanddate.com/holidays/uk/spring-bank-holiday#obs
+    # http://www.legislation.gov.uk/ukpga/1971/80
     !(isweekend(dt) || isnewyearsholiday(dt, c) ||
         iseasterholiday(dt, c) || isbankholiday(dt, c) ||
         isqueensjubileeholiday(dt, c) || isbankholiday(dt, c) ||
