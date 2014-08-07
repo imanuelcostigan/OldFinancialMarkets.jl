@@ -2,7 +2,13 @@
 # Types
 #####
 
+
 abstract BusinessDayConvention
+
+# Sources:
+# 1. ISDA 2006 definitions
+# 2. Opengamma: Interest rate instruments and market conventions guide
+
 immutable Unadjusted <: BusinessDayConvention end
 immutable Preceding <: BusinessDayConvention end
 immutable ModifiedPreceding <: BusinessDayConvention end

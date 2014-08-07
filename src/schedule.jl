@@ -12,6 +12,11 @@ immutable LongBackStub <: BackStub end
 
 # Schedules
 abstract DateSchedule
+
+# Sources:
+# 1. Opengamma: Interest rate instruments and market conventions guide
+# 2. Quantlib.org
+
 immutable SwapDateSchedule <: DateSchedule
     dates::Array{TimeType, 1}
     tenor::Period

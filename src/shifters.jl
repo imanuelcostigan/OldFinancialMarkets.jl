@@ -1,3 +1,7 @@
+# Sources:
+# 1. Opengamma: Interest rate instruments and market conventions guide
+# 2. Quantlib.org
+
 function shift(dt::TimeType, p::Period, bdc = Unadjusted(), c = NoFCalendar(),
     eom = true)
     result = dt

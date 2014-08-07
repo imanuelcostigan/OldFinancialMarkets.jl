@@ -3,6 +3,11 @@
 #####
 
 abstract DayCountFraction
+
+# Sources:
+# 1. ISDA 2006 definitions
+# 2. Opengamma: Interest rate instruments and market conventions guide
+
 immutable A365 <: DayCountFraction
     name::String
 end

@@ -3,6 +3,11 @@
 ####
 
 abstract Currency
+
+# Sources:
+# 1. ISDA 2006 definitions
+# 2. Opengamma: Interest rate instruments and market conventions guide
+
 immutable AUD <: Currency
     calendar::(FinCalendar, FinCalendar)
     function AUD(calendar)
