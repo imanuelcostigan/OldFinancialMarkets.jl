@@ -24,7 +24,7 @@ export
     BusinessDayConvention, Unadjusted, Preceding, ModifiedPreceding,
     Following, ModifiedFollowing, Succeeding, adjust,
     # shifters.jl
-    shift, tonthdayofweek
+    shift, tonthdayofweek,
     # schedule.jl
     Stub, FrontStub, BackStub, ShortFrontStub, LongFrontStub, ShortBackStub,
     LongBackStub, DateSchedule, SwapDateSchedule,
