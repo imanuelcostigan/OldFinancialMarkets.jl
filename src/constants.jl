@@ -1,5 +1,6 @@
 # Seasonal constants to determine start of seasons (more precisely, equinoxes
 # ands solstices)
+# See Meeus, Ch 26
 const SEASON_MAR = [2451623.80984, 365242.37404, 0.05169, -0.00411, -0.00057]
 const SEASON_JUN = [2451716.56767, 365241.62603, 0.00325, 0.00888, -0.00030]
 const SEASON_SEP = [2451810.21715, 365242.01767, -0.11575,  0.00337,  0.00078]
