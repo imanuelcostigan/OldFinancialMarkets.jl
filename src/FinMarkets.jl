@@ -25,6 +25,11 @@ export
     Following, ModifiedFollowing, Succeeding, adjust,
     # shifters.jl
     shift, tonthdayofweek
+    # schedule.jl
+    Stub, FrontStub, BackStub, ShortFrontStub, LongFrontStub, ShortBackStub,
+    LongBackStub, DateSchedule, SwapDateSchedule,
+    # currencies.jl
+    Currency, AUD, EUR, GBP, NZD, USD,
 
 include("constants.jl")
 include("calendars.jl")
