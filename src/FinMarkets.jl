@@ -29,7 +29,7 @@ export
     Stub, FrontStub, BackStub, ShortFrontStub, LongFrontStub, ShortBackStub,
     LongBackStub, DateSchedule, SwapDateSchedule,
     # currencies.jl
-    Currency, AUD, EUR, GBP, NZD, USD
+    Currency, AUD, EUR, GBP, JPY, NZD, USD
 
 include("constants.jl")
 include("calendars.jl")

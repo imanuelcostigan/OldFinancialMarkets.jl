@@ -36,6 +36,15 @@ immutable GBP <: Currency
 end
 GBP() = GBP(GBLOFCalendar())
 
+immutable JPY <: Currency
+    calendar::FinCalendar
+    function JPY(calendar)
+        valid_cals = calendar == JPTOFCalendar()
+        valid_cals ? new(calendar) : error("Must use JPTO calendar.")
+    end
+end
+JPY() = JPY(JPTOFCalendar())
+
 immutable NZD <: Currency
     calendar::(FinCalendar, FinCalendar)
     function NZD(calendar)
@@ -55,3 +64,11 @@ immutable USD <: Currency
 end
 USD() = USD(USNYFCalendar())
 
+# Source:
+# 2. Opengamma: Interest rate instruments and market conventions guide
+
+const CCY_STRENGTH = [EUR => 1,  GBP => 2, AUD => 3, NZD => 4, USD => 5,
+    JPY => 6]
+
+Base.isless(x::Currency, y::Currency) = (CCY_STRENGTH[typeof(x)] >
+    CCY_STRENGTH[typeof(y)])
