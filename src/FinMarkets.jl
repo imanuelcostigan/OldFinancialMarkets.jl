@@ -14,7 +14,7 @@ export
     # calendars_au.jl
     AUFCalendar, AUSYFCalendar, AUMEFCalendar,
     # calendars_us.jl
-    USFCalendar, USNYFCalendar,
+    USFCalendar, USNYFCalendar, USLIBORFCalendar,
     # calendars_gb.jl
     GBFCalendar, GBLOFCalendar,
     # calendars_eu.jl

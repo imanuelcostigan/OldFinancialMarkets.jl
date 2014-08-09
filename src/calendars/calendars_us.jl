@@ -4,6 +4,7 @@
 
 abstract USFCalendar <: FinCalendar
 immutable USNYFCalendar <: USFCalendar end
+immutable USLIBORFCalendar <: USFCalendar end
 
 #####
 # Methods
@@ -28,6 +29,10 @@ function isindependencedayholiday(dt::TimeType, c::USFCalendar)
         (day(dt) == 3 && dayofweek(dt) == Fri) ||
         (day(dt) == 5 && dayofweek(dt) == Mon)) && month(dt) == Jul)
 end
+function isindependencedayholiday(dt::TimeType, c::USLIBORFCalendar)
+    day(dt) == 4 && month(dt) == Jul
+end
+
 function islabourdayholiday(dt::TimeType, c::USFCalendar)
     dayofweekofmonth(dt) == 1 && dayofweek(dt) == Mon && month(dt) == Sep
 end
@@ -56,5 +61,12 @@ function isgoodday(dt::TimeType, c::USFCalendar)
         isveteransdayholiday(dt, c) || isthanksgivingdayholiday(dt, c) ||
         ischristmasdayholiday(dt, c))
 end
-
+function isgoodday(dt::TimeType, c::USLIBORFCalendar)
+    # Used for O/N USD LIBOR
+    # https://www.theice.com/iba/libor
+    !(ismlkdayholiday(dt, c) || iswashingtonsbdayholiday(dt, c) ||
+        isindependencedayholiday(dt, c) || islabourdayholiday(dt, c) ||
+        iscolumbusdayholiday(dt, c) || isveteransdayholiday(dt, c) ||
+        isthanksgivingdayholiday(dt, c))
+end
 
