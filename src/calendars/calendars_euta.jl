@@ -4,6 +4,7 @@
 
 abstract EUFCalendar <: FinCalendar
 immutable EUTAFCalendar <: EUFCalendar end
+immutable EULIBORFCalendar <: EUFCalendar end
 
 #####
 # Methods
@@ -40,3 +41,4 @@ function isgoodday(dt::TimeType, c::EUTAFCalendar)
         iseasterholiday(dt, c) || ischristmasdayholiday(dt, c) ||
         islabourdayholiday(dt, c) || istargetclosed(dt, c))
 end
+isgoodday(dt::TimeType, c::EULIBORFCalendar) = !islabourdayholiday(dt, c)

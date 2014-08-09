@@ -9,6 +9,8 @@ export
     # times.jl
     DayCountFraction, A365, A360, ActActISDA, Thirty360, ThirtyE360,
     ThirtyEP360, years,
+    # interestrates.jl
+    InterestRate, DiscountFactor,
     # calendars.jl
     FinCalendar, NoFCalendar, isweekend, isgoodday,
     # calendars_au.jl
@@ -18,7 +20,7 @@ export
     # calendars_gb.jl
     GBFCalendar, GBLOFCalendar,
     # calendars_eu.jl
-    EUFCalendar, EUTAFCalendar,
+    EUFCalendar, EUTAFCalendar, EULIBORFCalendar,
     # calendars_jp.jl
     JPFCalendar, JPTOFCalendar,
     # calendars_nz.jl
@@ -33,8 +35,9 @@ export
     LongBackStub, DateSchedule, SwapDateSchedule,
     # currencies.jl
     Currency, AUD, EUR, GBP, JPY, NZD, USD,
-    # interestrates.jl
-    InterestRate, DiscountFactor
+    # indices.jl
+    Index, InterestRateIndex, IBOR, AUDBBSW, EURLIBOR, EURIBOR, GBPLIBOR,
+    JPYLIBOR, JPYTIBOR, NZDBKBM, USDLIBOR
 
 include("constants.jl")
 include("calendars.jl")
@@ -44,5 +47,5 @@ include("businessdayconventions.jl")
 include("shifters.jl")
 include("schedule.jl")
 include("currencies.jl")
-# include("indices.jl")
+include("indices.jl")
 end
