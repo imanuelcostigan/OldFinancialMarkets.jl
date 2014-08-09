@@ -16,3 +16,12 @@ const SEASON_C = [1934.136, 32964.467, 20.186, 445267.112, 45036.886, 22518.443,
     65928.934, 3034.906, 9037.513, 33718.147, 150.678, 2281.226, 29929.562,
     31555.956, 4443.417, 67555.328, 4562.452, 62894.029, 31436.921, 14577.848,
     31931.756, 34777.259, 1222.114, 16859.074]
+
+# Compounding constants
+(const Simply, Annually, SemiAnnually, TriAnnually, Quarterly, BiMonthly,
+    Monthly, Fortnightly, Weekly, Daily, Continuously =
+    0, 1, 2, 3, 4, 6, 12, 24, 52, 365, 1000)
+const COMPOUNDINGS = [0 => "simply", 1 => "annually", 2 => "semi-annually",
+    3 => "tri-annually", 4 => "quarterly", 6 => "bi-monthly", 12 => "monthly",
+    24 => "fornightly", 52 => "weekly", 365 => "daily", 1000 => "continuously"]
+

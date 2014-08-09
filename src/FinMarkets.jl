@@ -3,6 +3,9 @@ module FinMarkets
 using Dates
 
 export
+    # constants.jl
+    Simply, Annually, SemiAnnually, TriAnnually, Quarterly, BiMonthly,
+    Monthly, Fortnightly, Weekly, Daily, Continuously,
     # times.jl
     DayCountFraction, A365, A360, ActActISDA, Thirty360, ThirtyE360,
     ThirtyEP360, years,
