@@ -2,7 +2,7 @@
 # Type declarations
 #####
 
-abstract USFCalendar <: FinCalendar
+abstract USFCalendar <: SingleFinCalendar
 immutable USNYFCalendar <: USFCalendar end
 immutable USLIBORFCalendar <: USFCalendar end
 

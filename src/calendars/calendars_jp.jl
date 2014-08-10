@@ -2,7 +2,7 @@
 # Type declarations
 #####
 
-abstract JPFCalendar <: FinCalendar
+abstract JPFCalendar <: SingleFinCalendar
 immutable JPTOFCalendar <: JPFCalendar end
 
 #####

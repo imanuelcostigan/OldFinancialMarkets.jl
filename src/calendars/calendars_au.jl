@@ -2,7 +2,7 @@
 # Type declarations
 #####
 
-abstract AUFCalendar <: FinCalendar
+abstract AUFCalendar <: SingleFinCalendar
 
 #####
 # Methods
