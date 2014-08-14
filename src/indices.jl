@@ -12,10 +12,6 @@ immutable CashIndex <: InterestRateIndex
     calendar::MultipleFinCalendar
     bdc::BusinessDayConvention
     daycount::DayCountFraction
-    function CashIndex(currency, calendar, bdc, daycount)
-        haskey(COMPOUNDINGS, compounding) || error("Invalid compounding.")
-        new(currency, calendar, bdc, compounding, daycount)
-    end
 end
 
 # OpenGamma: Interest rate instruments & market conventions guide
