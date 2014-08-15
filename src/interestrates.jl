@@ -75,14 +75,22 @@ function Base.convert(InterestRate, x::InterestRate, compounding::Int,
     convert(InterestRate, df, compounding, daycount)
 end
 
+function equivalent(to::InterestRate, x::InterestRate)
+    flag = !(x.compounding == to.compounding && x.daycount == to.daycount)
+    flag ? convert(InterestRate, x, to.compounding, to.daycount) : x
+end
+
 # arithmetic operations
-for op in (:+, :*, :%, :/)
-    @eval (($op)(x::InterestRate, y::Real) =
-        InterestRate($op(x.rate, y), x.compounding, x.daycount))
+for op in (:+, :*, :-, :/)
     @eval begin
-        function (($op))(x::InterestRate, y::InterestRate)
-            yx = convert(InterestRate, y, x.compounding, x.daycount)
-            InterestRate($op(x.rate, yx.rate), x.compounding, x.daycount)
+        function ($op)(x::InterestRate, y::Real)
+            InterestRate(($op)(x.rate, y), x.compounding, x.daycount)
+        end
+    end
+    @eval begin
+        function ($op)(x::InterestRate, y::InterestRate)
+            InterestRate(($op)(x.rate, equivalent(x, y).rate), x.compounding,
+                x.daycount)
         end
     end
 end
@@ -100,20 +108,21 @@ function (*)(x::DiscountFactor, y::DiscountFactor)
     end
 end
 function (/)(x::DiscountFactor, y::DiscountFactor)
-    (x.startdate == y.startdate ||
-        error("The discount factors must start at the same instant."))
-    DiscountFactor(x.discountfactor / y.discountfactor,
+    if x.startdate == y.startdate
+        return DiscountFactor(x.discountfactor / y.discountfactor,
             min(x.enddate, y.enddate), max(x.enddate, y.enddate))
+    else
+        error("The discount factors must start at the same instant.")
+    end
 end
 
 # comparison operations
-for op in (:==, !=, :<, :<=, :>, :>=)
+for op in (:(==), :!=, :<, :<=, :>, :>=)
     @eval begin
         function ($op)(x::InterestRate, y::InterestRate)
-            yx = convert(InterestRate, y, x.compounding, x.daycount)
-            return $op(x.rate, yx.rate)
+            return ($op)(x.rate, equivalent(x, y).rate)
         end
         (($op)(x::DiscountFactor, y::DiscountFactor) =
-            $op(x.discountfactor, y.discountfactor))
+            ($op)(x.discountfactor, y.discountfactor))
     end
 end
