@@ -107,3 +107,13 @@ function (/)(x::DiscountFactor, y::DiscountFactor)
 end
 
 # comparison operations
+for op in (:==, !=, :<, :<=, :>, :>=)
+    @eval begin
+        function ($op)(x::InterestRate, y::InterestRate)
+            yx = convert(InterestRate, y, x.compounding, x.daycount)
+            return x.rate $op yx.rate
+        end
+        (($op)(x::DiscountFactor, y::DiscountFactor) =
+            x.discountfactor $op y.discountfactor)
+    end
+end
