@@ -77,27 +77,17 @@ end
 
 # operations
 
-(+)(x::InterestRate, y::Real) = InterestRate(x.rate + y, x.compounding, x.daycount)
-(*)(x::InterestRate, y::Real) = InterestRate(x.rate * y, x.compounding, x.daycount)
-(-)(x::InterestRate, y::Real) = InterestRate(x.rate - y, x.compounding, x.daycount)
-(/)(x::InterestRate, y::Real) = InterestRate(x.rate / y, x.compounding, x.daycount)
+for op in (:+, :*, :%, :/)
+    @eval (($op)(x::InterestRate, y::Real) =
+        InterestRate(x.rate $op y, x.compounding, x.daycount))
+    @eval begin
+        function (($op))(x::InterestRate, y::InterestRate)
+            yx = convert(InterestRate, y, x.compounding, x.daycount)
+            InterestRate(x.rate $op yx.rate, x.compounding, x.daycount)
+        end
+    end
+end
 (+)(x::Real, y::InterestRate) = y + x
 (*)(x::Real, y::InterestRate) = y * x
 (-)(x::Real, y::InterestRate) = -1(y - x)
 (/)(x::Real, y::InterestRate) = InterestRate(x / y.rate, y.compounding, y.daycount)
-function (+)(x::InterestRate, y::InterestRate)
-    yx = convert(InterestRate, y, x.compounding, x.daycount)
-    InterestRate(x.rate + yx.rate, x.compounding, x.daycount)
-end
-function (*)(x::InterestRate, y::InterestRate)
-    yx = convert(InterestRate, y, x.compounding, x.daycount)
-    InterestRate(x.rate * yx.rate, x.compounding, x.daycount)
-end
-function (-)(x::InterestRate, y::InterestRate)
-    yx = convert(InterestRate, y, x.compounding, x.daycount)
-    InterestRate(x.rate - yx.rate, x.compounding, x.daycount)
-end
-function (/)(x::InterestRate, y::InterestRate)
-    yx = convert(InterestRate, y, x.compounding, x.daycount)
-    InterestRate(x.rate / yx.rate, x.compounding, x.daycount)
-end
