@@ -76,3 +76,28 @@ function Base.convert(InterestRate, x::InterestRate, compounding::Int,
 end
 
 # operations
+
+(+)(x::InterestRate, y::Real) = InterestRate(x.rate + y, x.compounding, x.daycount)
+(*)(x::InterestRate, y::Real) = InterestRate(x.rate * y, x.compounding, x.daycount)
+(-)(x::InterestRate, y::Real) = InterestRate(x.rate - y, x.compounding, x.daycount)
+(/)(x::InterestRate, y::Real) = InterestRate(x.rate / y, x.compounding, x.daycount)
+(+)(x::Real, y::InterestRate) = y + x
+(*)(x::Real, y::InterestRate) = y * x
+(-)(x::Real, y::InterestRate) = -1(y - x)
+(/)(x::Real, y::InterestRate) = InterestRate(x / y.rate, y.compounding, y.daycount)
+function (+)(x::InterestRate, y::InterestRate)
+    yx = convert(InterestRate, y, x.compounding, x.daycount)
+    InterestRate(x.rate + yx.rate, x.compounding, x.daycount)
+end
+function (*)(x::InterestRate, y::InterestRate)
+    yx = convert(InterestRate, y, x.compounding, x.daycount)
+    InterestRate(x.rate * yx.rate, x.compounding, x.daycount)
+end
+function (-)(x::InterestRate, y::InterestRate)
+    yx = convert(InterestRate, y, x.compounding, x.daycount)
+    InterestRate(x.rate - yx.rate, x.compounding, x.daycount)
+end
+function (/)(x::InterestRate, y::InterestRate)
+    yx = convert(InterestRate, y, x.compounding, x.daycount)
+    InterestRate(x.rate / yx.rate, x.compounding, x.daycount)
+end
