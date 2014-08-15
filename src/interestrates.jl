@@ -78,11 +78,11 @@ end
 # arithmetic operations
 for op in (:+, :*, :%, :/)
     @eval (($op)(x::InterestRate, y::Real) =
-        InterestRate(x.rate $op y, x.compounding, x.daycount))
+        InterestRate($op(x.rate, y), x.compounding, x.daycount))
     @eval begin
         function (($op))(x::InterestRate, y::InterestRate)
             yx = convert(InterestRate, y, x.compounding, x.daycount)
-            InterestRate(x.rate $op yx.rate, x.compounding, x.daycount)
+            InterestRate($op(x.rate, yx.rate), x.compounding, x.daycount)
         end
     end
 end
@@ -111,9 +111,9 @@ for op in (:==, !=, :<, :<=, :>, :>=)
     @eval begin
         function ($op)(x::InterestRate, y::InterestRate)
             yx = convert(InterestRate, y, x.compounding, x.daycount)
-            return x.rate $op yx.rate
+            return $op(x.rate, yx.rate)
         end
         (($op)(x::DiscountFactor, y::DiscountFactor) =
-            x.discountfactor $op y.discountfactor)
+            $op(x.discountfactor, y.discountfactor))
     end
 end
