@@ -75,8 +75,7 @@ function Base.convert(InterestRate, x::InterestRate, compounding::Int,
     convert(InterestRate, df, compounding, daycount)
 end
 
-# operations
-
+# arithmetic operations
 for op in (:+, :*, :%, :/)
     @eval (($op)(x::InterestRate, y::Real) =
         InterestRate(x.rate $op y, x.compounding, x.daycount))
@@ -91,3 +90,20 @@ end
 (*)(x::Real, y::InterestRate) = y * x
 (-)(x::Real, y::InterestRate) = -1(y - x)
 (/)(x::Real, y::InterestRate) = InterestRate(x / y.rate, y.compounding, y.daycount)
+
+function (*)(x::DiscountFactor, y::DiscountFactor)
+    if x.enddate == y.enddate || y.startdate == x.enddate
+        return DiscountFactor(x.discountfactor * y.discountfactor,
+            min(x.startdate, y.startdate), max(x.enddate, y.enddate))
+    else
+        error("The discount factors must represent two cotinguous spans of time.")
+    end
+end
+function (/)(x::DiscountFactor, y::DiscountFactor)
+    (x.startdate == y.startdate ||
+        error("The discount factors must start at the same instant."))
+    DiscountFactor(x.discountfactor / y.discountfactor,
+            min(x.enddate, y.enddate), max(x.enddate, y.enddate))
+end
+
+# comparison operations
