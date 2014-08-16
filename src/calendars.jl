@@ -7,11 +7,8 @@ abstract SingleFinCalendar <: FinCalendar
 immutable MultipleFinCalendar <: FinCalendar
     calendars::(SingleFinCalendar...)
 end
-function MultipleFinCalendar(calendar::SingleFinCalendar...)
-    MultipleFinCalendar(calendar)
-end
-function Base.convert(MultipleFinCalendar, x::SingleFinCalendar)
-   MultipleFinCalendar(x)
+function MultipleFinCalendar(c::SingleFinCalendar...)
+    MultipleFinCalendar(c)
 end
 immutable NoFCalendar <: SingleFinCalendar end
 
@@ -147,7 +144,10 @@ end
 
 isgoodday(dt::TimeType, c = NoFCalendar()) = !isweekend(dt, c)
 function isgoodday(dt::TimeType, c::MultipleFinCalendar, rule = all)
-    rule([ isgoodday(dt, ci) for ci in c ])
+    rule([ isgoodday(dt, ci) for ci in c.calendars ])
+end
+function isgoodday(dt::TimeType, c::(SingleFinCalendar...), rule = all)
+    isgoodday(dt, MultipleFinCalendar(c), rule)
 end
 
 #####
