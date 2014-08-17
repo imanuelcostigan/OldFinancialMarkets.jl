@@ -36,13 +36,13 @@ end
 
 function SwapDateSchedule(dates::Array{TimeType, 1}, tenor::Period,
     stub = ShortFrontStub(), calendar = NoFCalendar(), bdc = Unadjusted(),
-    eom = true)
+    eom = false)
     return SwapDateSchedule(dates, tenor, stub, calendar, bdc, eom)
 end
 
 function SwapDateSchedule(effectivedate::TimeType, terminationdate::TimeType,
     tenor::Period, stub = ShortFrontStub(), calendar = NoFCalendar(),
-    bdc = Unadjusted(), eom = true)
+    bdc = Unadjusted(), eom = false)
 
     # Set up
     α = sign(stub)
