@@ -58,7 +58,7 @@ function SwapDateSchedule(effectivedate::TimeType, terminationdate::TimeType,
         i += 1
     end
 
-    # Check if exit date is in dates and replace first element if not
+    # Check if exit date is in dates and replace first/last element if not
     if !(exitdate in dates)
         dates = (isbackward ? [exitdate, dates[2:end]] :
             [dates[1:(end - 1)], exitdate])
