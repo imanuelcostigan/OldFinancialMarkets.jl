@@ -46,28 +46,29 @@ function SwapDateSchedule(effectivedate::TimeType, terminationdate::TimeType,
 
     # Set up
     α = sign(stub)
-    isa(stub, FrontStub) && (seeddate = terminationdate;
-        exitdate = effectivedate)
-    isa(stub, BackStub) && (seeddate = effectivedate;
-        exitdate = terminationdate)
-    i = 1; dates = [seed]
+    isbackward = isa(stub, FrontStub)
+    isbackward && (seeddate = terminationdate; exitdate = effectivedate)
+    !isbackward && (seeddate = effectivedate; exitdate = terminationdate)
+    i = 1; dates = [seeddate]
 
     # Unadjusted dates
-    while dates[1] > exitdate
-        insert!(dates, 1, [seed + α * i * tenor])
+    while isbackward $ (dates[1] < exitdate)
+        newdate = seeddate + α * i * tenor
+        dates = isbackward ? [newdate, dates] : [dates, newdate]
         i += 1
     end
 
     # Check if exit date is in dates and replace first element if not
     if !(exitdate in dates)
-        isa(stub, FrontStub) && insert!(dates[2:end], 1, exitdate)
-        isa(stub, BackStub) && push!(dates[1:(end - 1)], exitdate)
+        dates = (isbackward ? [exitdate, dates[2:end]] :
+            [dates[1:(end - 1)], exitdate])
     end
     # EOM and other adjustments
-    toeom = (month(adjust(seed+Day(1), Following(), calendar)) != month(seed) &&
-        eom)
-    toeom && (dates = [dates[1], lastdayofmonth(dates[2:(end - 1)]), dates[end]])
-    dates = adjust(dates, bdc, calendar)
+    toeom = (month(adjust(seeddate + Day(1), Following(), calendar)) !=
+        month(seeddate) && eom)
+    toeom && (dates = [dates[1], lastdayofmonth(dates[2:(end - 1)]),
+        dates[end]])
+    dates = [adjust(date, bdc, calendar) for date in dates]
 
     # Return
     return SwapDateSchedule(dates, tenor, stub, calendar, bdc, eom)
