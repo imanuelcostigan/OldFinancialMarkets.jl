@@ -29,6 +29,10 @@ end
 ####
 # Methods & constructors
 ####
+function Base.show(io::IO, schedule::SwapDateSchedule)
+    show(io, schedule.dates)
+end
+
 function Base.sign(stub::Stub)
     isa(stub, FrontStub) && (return -1)
     isa(stub, BackStub) && (return 1)
