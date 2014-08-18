@@ -20,33 +20,40 @@ abstract DateSchedule
 immutable SwapDateSchedule <: DateSchedule
     dates::Array{TimeType, 1}
     tenor::Period
-    stub::Stub
     calendar::FinCalendar
     bdc::BusinessDayConvention
+    stub::Stub
     eom::Bool
 end
 
 ####
 # Methods & constructors
 ####
-function Base.show(io::IO, schedule::SwapDateSchedule)
-    show(io, schedule.dates)
-end
 
 function Base.sign(stub::Stub)
     isa(stub, FrontStub) && (return -1)
     isa(stub, BackStub) && (return 1)
 end
 
+function Base.show(io::IO, sds::SwapDateSchedule)
+    direction = sign(sds.stub) == -1 ? "backwards" : "forwards"
+    iseom = sds.eom ? "" : "not"
+    println(io, string("SwapDateSchedule: generated ", direction, " with ",
+        "frequency of ", sds.tenor, ". Bad days are rolled using the ", sds.bdc,
+        " convention on bad ", sds.calendar, " days. Rolls do ", iseom,
+        " follow the EOM convention."))
+    show(sds.dates)
+end
+
 function SwapDateSchedule(dates::Array{TimeType, 1}, tenor::Period,
-    stub = ShortFrontStub(), calendar = NoFCalendar(), bdc = Unadjusted(),
+    calendar = NoFCalendar(), bdc = Unadjusted(), stub = ShortFrontStub(),
     eom = false)
     return SwapDateSchedule(dates, tenor, stub, calendar, bdc, eom)
 end
 
 function SwapDateSchedule(effectivedate::TimeType, terminationdate::TimeType,
-    tenor::Period, stub = ShortFrontStub(), calendar = NoFCalendar(),
-    bdc = Unadjusted(), eom = false)
+    tenor::Period, calendar = NoFCalendar(), bdc = Unadjusted(),
+    stub = ShortFrontStub(), eom = false)
 
     # Set up
     α = sign(stub)
