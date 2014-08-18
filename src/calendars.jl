@@ -7,13 +7,10 @@ abstract SingleFCalendar <: FinCalendar
 immutable JointFCalendar <: FinCalendar
     calendars::(SingleFCalendar...)
 end
-function JointFCalendar(c::SingleFCalendar...)
-    JointFCalendar(c)
-end
-function join(c::SingleFCalendar...)
-    JointFCalendar(c)
-end
 immutable NoFCalendar <: SingleFCalendar end
+
+JointFCalendar(c::SingleFCalendar...) = JointFCalendar(c)
+join(c::SingleFCalendar...) = JointFCalendar(c)
 
 #####
 # Epochs and their checkers
