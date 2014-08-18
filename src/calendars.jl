@@ -10,6 +10,9 @@ end
 function JointFCalendar(c::SingleFCalendar...)
     JointFCalendar(c)
 end
+function join(c::SingleFCalendar...)
+    JointFCalendar(c)
+end
 immutable NoFCalendar <: SingleFCalendar end
 
 #####

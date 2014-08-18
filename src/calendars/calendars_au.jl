@@ -2,7 +2,7 @@
 # Type declarations
 #####
 
-abstract AUFCalendar <: JointFCalendar
+abstract AUFCalendar <: SingleFCalendar
 
 #####
 # Methods
