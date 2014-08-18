@@ -12,7 +12,7 @@ export
     # interestrates.jl
     InterestRate, DiscountFactor,
     # calendars.jl
-    FinCalendar, SingleFinCalendar, MultipleFinCalendar, NoFCalendar, isweekend,
+    FinCalendar, SingleFinCalendar, JointFCalendar, NoFCalendar, isweekend,
     isgoodday,
     # calendars_au.jl
     AUFCalendar, AUSYFCalendar, AUMEFCalendar,

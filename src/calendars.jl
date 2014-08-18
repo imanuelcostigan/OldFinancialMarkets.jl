@@ -4,11 +4,11 @@
 
 abstract FinCalendar
 abstract SingleFinCalendar <: FinCalendar
-immutable MultipleFinCalendar <: FinCalendar
+immutable JointFCalendar <: FinCalendar
     calendars::(SingleFinCalendar...)
 end
-function MultipleFinCalendar(c::SingleFinCalendar...)
-    MultipleFinCalendar(c)
+function JointFCalendar(c::SingleFinCalendar...)
+    JointFCalendar(c)
 end
 immutable NoFCalendar <: SingleFinCalendar end
 
@@ -143,11 +143,11 @@ end
 #####
 
 isgoodday(dt::TimeType, c = NoFCalendar()) = !isweekend(dt, c)
-function isgoodday(dt::TimeType, c::MultipleFinCalendar, rule = all)
+function isgoodday(dt::TimeType, c::JointFCalendar, rule = all)
     rule([ isgoodday(dt, ci) for ci in c.calendars ])
 end
 function isgoodday(dt::TimeType, c::(SingleFinCalendar...), rule = all)
-    isgoodday(dt, MultipleFinCalendar(c), rule)
+    isgoodday(dt, JointFCalendar(c), rule)
 end
 
 #####

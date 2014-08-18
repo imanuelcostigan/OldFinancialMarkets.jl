@@ -9,7 +9,7 @@ abstract InterestRateIndex <: Index
 
 immutable CashIndex <: InterestRateIndex
     currency::Currency
-    calendar::MultipleFinCalendar
+    calendar::JointFCalendar
     bdc::BusinessDayConvention
     daycount::DayCountFraction
 end
@@ -29,7 +29,7 @@ immutable IBOR <: InterestRateIndex
     spotlag::Period
     tenor::Period
     # Use currency's calendar to determine value date
-    calendar::MultipleFinCalendar
+    calendar::JointFCalendar
     bdc::BusinessDayConvention
     eom::Bool
     daycount::DayCountFraction
