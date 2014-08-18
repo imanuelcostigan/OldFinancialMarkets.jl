@@ -3,14 +3,14 @@
 #####
 
 abstract FinCalendar
-abstract SingleFinCalendar <: FinCalendar
+abstract SingleFCalendar <: FinCalendar
 immutable JointFCalendar <: FinCalendar
-    calendars::(SingleFinCalendar...)
+    calendars::(SingleFCalendar...)
 end
-function JointFCalendar(c::SingleFinCalendar...)
+function JointFCalendar(c::SingleFCalendar...)
     JointFCalendar(c)
 end
-immutable NoFCalendar <: SingleFinCalendar end
+immutable NoFCalendar <: SingleFCalendar end
 
 #####
 # Epochs and their checkers
@@ -146,7 +146,7 @@ isgoodday(dt::TimeType, c = NoFCalendar()) = !isweekend(dt, c)
 function isgoodday(dt::TimeType, c::JointFCalendar, rule = all)
     rule([ isgoodday(dt, ci) for ci in c.calendars ])
 end
-function isgoodday(dt::TimeType, c::(SingleFinCalendar...), rule = all)
+function isgoodday(dt::TimeType, c::(SingleFCalendar...), rule = all)
     isgoodday(dt, JointFCalendar(c), rule)
 end
 
