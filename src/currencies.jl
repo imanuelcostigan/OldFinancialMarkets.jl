@@ -9,7 +9,7 @@ abstract Currency
 # 2. Opengamma: Interest rate instruments and market conventions guide
 
 immutable AUD <: Currency
-    calendar::(FinCalendar, FinCalendar)
+    calendar::FinCalendar
     function AUD(calendar)
         cals = join(AUSYFCalendar(), AUMEFCalendar())
         valid_cals = all([ c in cals for c in calendar ])
@@ -46,7 +46,7 @@ end
 JPY() = JPY(JPTOFCalendar())
 
 immutable NZD <: Currency
-    calendar::(FinCalendar, FinCalendar)
+    calendar::FinCalendar
     function NZD(calendar)
         cals = join(NZAUFCalendar(), NZWEFCalendar())
         valid_cals = all([ c in cals for c in calendar ])
