@@ -63,7 +63,7 @@ function SwapDateSchedule(effectivedate::TimeType, terminationdate::TimeType,
     i = 1; dates = [seeddate]
 
     # Unadjusted dates
-    while isbackward $ (dates[1] < exitdate)
+    while isbackward $ (dates[isbackward ? 1 : end] < exitdate)
         newdate = seeddate + α * i * tenor
         dates = isbackward ? [newdate, dates] : [dates, newdate]
         i += 1
