@@ -15,11 +15,11 @@ immutable CashIndex <: InterestRateIndex
 end
 
 # OpenGamma: Interest rate instruments & market conventions guide
-AONIA() = CashIndex(AUD(), (AUSYFCalendar(), AUMEFCalendar()), Following(), A365())
+AONIA() = CashIndex(AUD(), join(AUSYFCalendar(), AUMEFCalendar()), Following(), A365())
 EONIA() = CashIndex(EUR(), EUTAFCalendar(), Following(), A360())
 SONIA() = CashIndex(GBP(), GBLOFCalendar(), Following(), A365())
 TONAR() = CashIndex(JPY(), JPTOFCalendar(), Following(), A365())
-NZIONA() = CashIndex(NZD(), (NZAUFCalendar(), NZWEFCalendar()), Following(), A365())
+NZIONA() = CashIndex(NZD(), join(NZAUFCalendar(), NZWEFCalendar()), Following(), A365())
 FedFund() = CashIndex(USD(), USNYFCalendar(), Following(), A360())
 
 ### LIBOR
@@ -58,7 +58,7 @@ function EURLIBOR(tenor::Period)
         spotlag = Day(2)
         bdc = ModifiedFollowing()
     end
-    IBOR(GBP(), spotlag, tenor, (GBLOFCalendar(), EULIBORFCalendar()), bdc,
+    IBOR(GBP(), spotlag, tenor, join(GBLOFCalendar(), EULIBORFCalendar()), bdc,
         true, A360())
 end
 
@@ -116,8 +116,8 @@ function NZDBKBM(tenor::Period)
     # http://www.nzfma.org/includes/download.aspx?ID=130053
     # OpenGamma: Interest rate instruments & market conventions guide
     tenor < Month(1) && error("The tenor must be no less than 1 month.")
-    IBOR(NZD(), Day(0), tenor, (NZAUFCalendar(), NZWEFCalendar()), bdc, false,
-        A365())
+    IBOR(NZD(), Day(0), tenor, join(NZAUFCalendar(), NZWEFCalendar()), bdc,
+        false, A365())
 end
 
 function USDLIBOR(tenor::Period)
@@ -127,7 +127,8 @@ function USDLIBOR(tenor::Period)
     if tenor < Month(1)
         spotlag = Day(0)
         bdc = Following()
-        (tenor == Day(1) ? calendar = (GBLOFCalendar(), USLIBORFCalendar()) :
+        (tenor == Day(1) ?
+            calendar = join(GBLOFCalendar(), USLIBORFCalendar()) :
             calendar = GBLOFCalendar())
     else
         spotlag = Day(2)

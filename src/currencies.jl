@@ -11,12 +11,12 @@ abstract Currency
 immutable AUD <: Currency
     calendar::(FinCalendar, FinCalendar)
     function AUD(calendar)
-        cals = (AUSYFCalendar(), AUMEFCalendar())
+        cals = join(AUSYFCalendar(), AUMEFCalendar())
         valid_cals = all([ c in cals for c in calendar ])
         valid_cals ? new(calendar) : error("Must use AUSY & AUME calendars.")
     end
 end
-AUD() = AUD((AUSYFCalendar(), AUMEFCalendar()))
+AUD() = AUD(join(AUSYFCalendar(), AUMEFCalendar()))
 
 immutable EUR <: Currency
     calendar::FinCalendar
@@ -48,12 +48,12 @@ JPY() = JPY(JPTOFCalendar())
 immutable NZD <: Currency
     calendar::(FinCalendar, FinCalendar)
     function NZD(calendar)
-        cals = (NZAUFCalendar(), NZWEFCalendar())
+        cals = join(NZAUFCalendar(), NZWEFCalendar())
         valid_cals = all([ c in cals for c in calendar ])
         valid_cals ? new(calendar) : error("Must use NZAU & NZWE calendars.")
     end
 end
-NZD() = NZD((NZAUFCalendar(), NZWEFCalendar()))
+NZD() = NZD(join(NZAUFCalendar(), NZWEFCalendar()))
 
 immutable USD <: Currency
     calendar::FinCalendar
