@@ -5,13 +5,19 @@
 abstract FinCalendar
 abstract SingleFCalendar <: FinCalendar
 immutable JointFCalendar <: FinCalendar
-    calendars::(SingleFCalendar...)
+    calendars::Vector{SingleFCalendar}
     onbad::Bool
 end
 immutable NoFCalendar <: SingleFCalendar end
 
-JointFCalendar(c::SingleFCalendar...) = JointFCalendar(c, true)
-Base.join(c::SingleFCalendar...) = JointFCalendar(c, true)
+function JointFCalendar(c::SingleFCalendar...)
+    JointFCalendar([ ci for ci in c ], true)
+end
++(c1::SingleFCalendar, c2::SingleFCalendar) = JointFCalendar([c1, c2], true)
+*(c1::SingleFCalendar, c2::SingleFCalendar) = JointFCalendar([c1, c2], false)
+function +(jc::JointFCalendar, c::SingleFCalendar)
+    JointFCalendar([jc.calendars, c], jc.onbad)
+end
 
 #####
 # Epochs and their checkers

@@ -9,14 +9,14 @@ abstract Currency
 # 2. Opengamma: Interest rate instruments and market conventions guide
 
 immutable AUD <: Currency
-    calendar::FinCalendar
+    calendar::JointFCalendar
     function AUD(calendar)
-        cals = join(AUSYFCalendar(), AUMEFCalendar())
-        valid_cals = all([ c in cals for c in calendar ])
+        cals = [AUSYFCalendar(), AUMEFCalendar()]
+        valid_cals = all([ c in cals for c in calendar.calendars ])
         valid_cals ? new(calendar) : error("Must use AUSY & AUME calendars.")
     end
 end
-AUD() = AUD(join(AUSYFCalendar(), AUMEFCalendar()))
+AUD() = AUD(+(AUSYFCalendar(), AUMEFCalendar()))
 
 immutable EUR <: Currency
     calendar::FinCalendar
@@ -46,14 +46,15 @@ end
 JPY() = JPY(JPTOFCalendar())
 
 immutable NZD <: Currency
-    calendar::FinCalendar
+    calendar::JointFCalendar
     function NZD(calendar)
-        cals = join(NZAUFCalendar(), NZWEFCalendar())
-        valid_cals = all([ c in cals for c in calendar ])
+        cals = [NZAUFCalendar(), NZWEFCalendar()]
+        valid_cals = all([ c in cals for c in calendar.calendars ])
         valid_cals ? new(calendar) : error("Must use NZAU & NZWE calendars.")
     end
+
 end
-NZD() = NZD(join(NZAUFCalendar(), NZWEFCalendar()))
+NZD() = NZD(+(NZAUFCalendar(), NZWEFCalendar()))
 
 immutable USD <: Currency
     calendar::FinCalendar

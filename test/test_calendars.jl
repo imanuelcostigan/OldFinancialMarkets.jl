@@ -80,6 +80,6 @@
 # Good day testers
 @test !isgoodday(Date(2014, 7, 20), NoFCalendar())
 @test isgoodday(Date(2014, 7, 21), NoFCalendar())
-@test !isgoodday(Date(2015, 11, 3), join(AUSYFCalendar(), AUMEFCalendar()))
+@test !isgoodday(Date(2015, 11, 3), +(AUSYFCalendar(), AUMEFCalendar()))
 @test isgoodday(Date(2015, 11, 3),
-    JointFCalendar((AUSYFCalendar(), AUMEFCalendar()), false))
+    JointFCalendar([AUSYFCalendar(), AUMEFCalendar()], false))
