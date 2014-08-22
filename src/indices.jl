@@ -15,11 +15,13 @@ immutable CashIndex <: InterestRateIndex
 end
 
 # OpenGamma: Interest rate instruments & market conventions guide
-AONIA() = CashIndex(AUD(), +(AUSYFCalendar(), AUMEFCalendar()), Following(), A365())
+AONIA() = CashIndex(AUD(), +(AUSYFCalendar(), AUMEFCalendar()), Following(),
+    A365())
 EONIA() = CashIndex(EUR(), EUTAFCalendar(), Following(), A360())
 SONIA() = CashIndex(GBP(), GBLOFCalendar(), Following(), A365())
 TONAR() = CashIndex(JPY(), JPTOFCalendar(), Following(), A365())
-NZIONA() = CashIndex(NZD(), +(NZAUFCalendar(), NZWEFCalendar()), Following(), A365())
+NZIONA() = CashIndex(NZD(), +(NZAUFCalendar(), NZWEFCalendar()), Following(),
+    A365())
 FedFund() = CashIndex(USD(), USNYFCalendar(), Following(), A360())
 
 ### LIBOR
