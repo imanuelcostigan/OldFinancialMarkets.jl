@@ -42,6 +42,9 @@ ThirtyEP360() = ThirtyEP360("30E+/360 (ISDA)")
 # Day count basis methods
 ####
 
+Base.string(dc::DayCountFraction) = dc.name
+Base.show(io::IO, dc::DayCountFraction) = print(io, string(dc))
+
 function years(date1::TimeType, date2::TimeType, dc::A365)
     date1 == date2 && return 0
     (Date(date2) - Date(date1)).value / 365
