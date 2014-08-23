@@ -18,6 +18,7 @@ end
 function +(jc::JointFCalendar, c::SingleFCalendar)
     JointFCalendar([jc.calendars, c], jc.onbad)
 end
+Base.convert(::Type{JointFCalendar}, c::SingleFCalendar) = JointFCalendar(c)
 
 #####
 # Epochs and their checkers

@@ -36,7 +36,6 @@ immutable IBOR <: InterestRateIndex
     eom::Bool
     daycount::DayCountFraction
     function IBOR(currency, spotlag, tenor, calendar, bdc, eom, daycount)
-        haskey(COMPOUNDINGS, compounding) || error("Invalid compounding.")
         new(currency, spotlag, tenor, calendar, bdc, eom, daycount)
     end
 end
