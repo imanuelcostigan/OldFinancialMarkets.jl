@@ -19,7 +19,7 @@ end
 AUD() = AUD(+(AUSYFCalendar(), AUMEFCalendar()))
 
 immutable EUR <: Currency
-    calendar::FinCalendar
+    calendar::JointFCalendar
     function EUR(calendar)
         valid_cals = calendar == EUTAFCalendar()
         valid_cals ? new(calendar) : error("Must use EUTA calendar.")
@@ -28,7 +28,7 @@ end
 EUR() = EUR(EUTAFCalendar())
 
 immutable GBP <: Currency
-    calendar::FinCalendar
+    calendar::JointFCalendar
     function GBP(calendar)
         valid_cals = calendar == GBLOFCalendar()
         valid_cals ? new(calendar) : error("Must use GBLO calendar.")
@@ -37,7 +37,7 @@ end
 GBP() = GBP(GBLOFCalendar())
 
 immutable JPY <: Currency
-    calendar::FinCalendar
+    calendar::JointFCalendar
     function JPY(calendar)
         valid_cals = calendar == JPTOFCalendar()
         valid_cals ? new(calendar) : error("Must use JPTO calendar.")
@@ -57,7 +57,7 @@ end
 NZD() = NZD(+(NZAUFCalendar(), NZWEFCalendar()))
 
 immutable USD <: Currency
-    calendar::FinCalendar
+    calendar::JointFCalendar
     function USD(calendar)
         valid_cals = calendar == USNYFCalendar()
         valid_cals ? new(calendar) : error("Must use USNY calendar.")
