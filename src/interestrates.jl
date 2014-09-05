@@ -31,10 +31,16 @@ end
 # IO
 function Base.string(r::InterestRate)
     (@sprintf("%05f", 100 * r.rate) * "%," *
-        uppercase(COMPOUNDINGS[r.compounding]) *
-        "," * string(r.daycount))
+        uppercase(COMPOUNDINGS[r.compounding]) * "," *
+        uppercase(string(r.daycount)))
 end
 Base.show(io::IO, r::InterestRate) = print(io, string(r))
+
+function Base.string(df::DiscountFactor)
+   ("DF: " * @sprintf("%06f", df.discountfactor) * ", " * string(df.startdate) *
+        "--" * string(df.enddate))
+end
+Base.show(io::IO, df::DiscountFactor) = print(io, string(df))
 
 # conversions
 function Base.convert(::Type{DiscountFactor}, x::InterestRate, startdate::TimeType,
