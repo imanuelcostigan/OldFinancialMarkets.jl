@@ -10,6 +10,11 @@ immutable JointFCalendar <: FinCalendar
 end
 immutable NoFCalendar <: SingleFCalendar end
 
+
+#####
+# Methods
+#####
+
 function JointFCalendar(c::SingleFCalendar...)
     JointFCalendar([ ci for ci in c ], true)
 end

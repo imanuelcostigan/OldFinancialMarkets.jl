@@ -11,12 +11,11 @@ abstract Currency
 immutable AUD <: Currency
     calendar::JointFCalendar
     function AUD(calendar)
-        cals = [AUSYFCalendar(), AUMEFCalendar()]
-        valid_cals = all([ c in cals for c in calendar.calendars ])
-        valid_cals ? new(calendar) : error("Must use AUSY & AUME calendars.")
+        valid_cals = calendar == AUSYFCalendar()
+        valid_cals ? new(calendar) : error("Must use AUSY calendar.")
     end
 end
-AUD() = AUD(+(AUSYFCalendar(), AUMEFCalendar()))
+AUD() = AUD(AUSYFCalendar())
 
 immutable EUR <: Currency
     calendar::JointFCalendar
@@ -52,7 +51,6 @@ immutable NZD <: Currency
         valid_cals = all([ c in cals for c in calendar.calendars ])
         valid_cals ? new(calendar) : error("Must use NZAU & NZWE calendars.")
     end
-
 end
 NZD() = NZD(+(NZAUFCalendar(), NZWEFCalendar()))
 
