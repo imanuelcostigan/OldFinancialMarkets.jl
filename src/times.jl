@@ -31,12 +31,12 @@ end
 # Constructors
 ####
 
-A365() = A365("Actual/365 (Fixed)")
-A360() = A360("Actual/360")
-ActActISDA() = ActActISDA("Actual/Actual (ISDA)")
+A365() = A365("Act/365F")
+A360() = A360("Act/360")
+ActActISDA() = ActActISDA("Act/Act(ISDA)")
 Thirty360() = Thirty360("30/360")
-ThirtyE360() = ThirtyE360("30E/360 (ISDA)")
-ThirtyEP360() = ThirtyEP360("30E+/360 (ISDA)")
+ThirtyE360() = ThirtyE360("30E/360(ISDA)")
+ThirtyEP360() = ThirtyEP360("30E+/360(ISDA)")
 
 ####
 # Day count basis methods

@@ -28,6 +28,14 @@ end
 # Methods
 ####
 
+# IO
+function Base.string(r::InterestRate)
+    (@sprintf("%05f", 100 * r.rate) * "%," *
+        uppercase(COMPOUNDINGS[r.compounding]) *
+        "," * string(r.daycount))
+end
+Base.show(io::IO, r::InterestRate) = print(io, string(r))
+
 # conversions
 function Base.convert(::Type{DiscountFactor}, x::InterestRate, startdate::TimeType,
     enddate::TimeType)
