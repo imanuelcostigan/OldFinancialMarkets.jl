@@ -15,7 +15,7 @@ immutable CashIndex <: InterestRateIndex
 end
 
 # OpenGamma: Interest rate instruments & market conventions guide
-AONIA() = CashIndex(AUD(), +(AUSYFCalendar(), AUMEFCalendar()), Following(),
+AONIA() = CashIndex(AUD(), *(AUSYFCalendar(), AUMEFCalendar()), Following(),
     A365())
 EONIA() = CashIndex(EUR(), EUTAFCalendar(), Following(), A360())
 SONIA() = CashIndex(GBP(), GBLOFCalendar(), Following(), A365())
@@ -66,7 +66,7 @@ end
 function EURIBOR(tenor::Period)
     # http://www.emmi-benchmarks.eu/assets/files/Euribor_tech_features.pdf
     # OpenGamma: Interest rate instruments & market conventions guide
-    IBOR(EUR(), Day(2), tenor, EUTAFCalendar(), ModifiedFollowing(), false,
+    IBOR(EUR(), Day(2), tenor, EUTAFCalendar(), ModifiedFollowing(), true,
         A360())
 end
 
