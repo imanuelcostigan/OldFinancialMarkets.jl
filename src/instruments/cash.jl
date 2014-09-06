@@ -15,5 +15,5 @@ end
 ####
 function Cash(currency::Currency, startdate::TimeType, enddate::TimeType,
     rate::Real, amount = 1e6)
-    Cash(amount, qrate, startdate, enddate, CashIndex(currency))
+    Cash(amount, rate, startdate, enddate, CashIndex(currency))
 end
