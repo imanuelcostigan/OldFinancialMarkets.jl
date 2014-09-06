@@ -146,3 +146,10 @@ function USDLIBOR(tenor::Period)
     end
     IBOR(USD(), spotlag, tenor, calendar, bdc, true, A360())
 end
+
+IBOR(currency::AUD, tenor::Period) = AUDBBSW(tenor)
+IBOR(currency::EUR, tenor::Period) = EURIBOR(tenor)
+IBOR(currency::GBP, tenor::Period) = GBPLIBOR(tenor)
+IBOR(currency::JPY, tenor::Period) = JPYLIBOR(tenor)
+IBOR(currency::NZD, tenor::Period) = NZDBKBM(tenor)
+IBOR(currency::USD, tenor::Period) = USDLIBOR(tenor)
