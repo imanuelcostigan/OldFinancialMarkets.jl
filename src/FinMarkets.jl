@@ -38,7 +38,9 @@ export
     Currency, AUD, EUR, GBP, JPY, NZD, USD,
     # indices.jl
     Index, InterestRateIndex, IBOR, AUDBBSW, EURLIBOR, EURIBOR, GBPLIBOR,
-    JPYLIBOR, JPYTIBOR, NZDBKBM, USDLIBOR
+    JPYLIBOR, JPYTIBOR, NZDBKBM, USDLIBOR,
+    # instruments.jl
+    Instrument, Cash
 
 include("constants.jl")
 include("calendars.jl")
@@ -49,4 +51,5 @@ include("shifters.jl")
 include("schedule.jl")
 include("currencies.jl")
 include("indices.jl")
+include("instruments.jl")
 end
