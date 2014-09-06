@@ -71,3 +71,6 @@ const CCY_STRENGTH = [EUR => 1,  GBP => 2, AUD => 3, NZD => 4, USD => 5,
 
 Base.isless(x::Currency, y::Currency) = (CCY_STRENGTH[typeof(x)] >
     CCY_STRENGTH[typeof(y)])
+
+=={T<:Currency}(ccy1::T, ccy2::T) = true
+==(ccy1::Currency, ccy2::Currency) = false
