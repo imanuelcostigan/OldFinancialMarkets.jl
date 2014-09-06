@@ -14,7 +14,8 @@ end
 # Methods
 ####
 
-function Cash(currency::Currency, startdate::TimeType, enddate::TimeType,
-    rate::Real, amount = 1e6)
-    Cash(amount, rate, startdate, enddate, CashIndex(currency))
+function Cash(currency::Currency, rate::Real, startdate = today(), amount = 1e6)
+    index = CashIndex(currency)
+    enddate = adjust(startdate + Day(1), index.bdc, index.calendar)
+    Cash(amount, rate, startdate, enddate, index)
 end
