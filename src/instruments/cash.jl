@@ -5,6 +5,7 @@
 type Cash <: Instrument
     amount::Real
     rate::Real
+    tradedate::TimeType
     startdate::TimeType
     enddate::TimeType
     index::CashIndex
@@ -18,5 +19,5 @@ function Cash(currency::Currency, rate::Real, tradedate = today(), amount = 1e6)
     index = CashIndex(currency)
     startdate = tradedate
     enddate = adjust(tradedate + Day(1), index.bdc, index.calendar)
-    Cash(amount, rate, startdate, enddate, index)
+    Cash(amount, rate, tradedate, startdate, enddate, index)
 end
