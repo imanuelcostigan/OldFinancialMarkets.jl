@@ -30,7 +30,7 @@ export
     BusinessDayConvention, Unadjusted, Preceding, ModifiedPreceding,
     Following, ModifiedFollowing, Succeeding, adjust,
     # shifters.jl
-    shift, tonthdayofweek,
+    shift,
     # schedule.jl
     Stub, FrontStub, BackStub, ShortFrontStub, LongFrontStub, ShortBackStub,
     LongBackStub, DateSchedule, SwapDateSchedule,
@@ -40,7 +40,8 @@ export
     Index, InterestRateIndex, IBOR, AUDBBSW, EURLIBOR, EURIBOR, GBPLIBOR,
     JPYLIBOR, JPYTIBOR, NZDBKBM, USDLIBOR,
     # instruments.jl
-    Instrument, Cash
+    Instrument, Cash, Deposit, Future, STIRFuture,
+    settlementdate
 
 include("constants.jl")
 include("calendars.jl")
