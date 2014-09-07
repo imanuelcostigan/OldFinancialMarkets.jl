@@ -1,0 +1,5 @@
+@test FinMarkets.settlement(1, 3, Wed, Day(0), Date(2014, 9, 7)) == Date(2014, 9, 17)
+@test FinMarkets.settlement(1, 3, Wed, Day(0), Date(2014, 9, 27)) == Date(2014, 12, 17)
+@test FinMarkets.settlement(2, 3, Wed, Day(0), Date(2014, 9, 27)) == Date(2015, 3, 18)
+@test FinMarkets.settlement(1, 2, Fri, Day(0), Date(2014, 9, 27)) == Date(2014, 12, 12)
+@test FinMarkets.settlement(1, 1, Wed, Day(8), Date(2014, 9, 27)) == Date(2014, 12, 10)
