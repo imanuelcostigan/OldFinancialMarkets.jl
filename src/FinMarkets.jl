@@ -40,8 +40,7 @@ export
     Index, InterestRateIndex, IBOR, AUDBBSW, EURLIBOR, EURIBOR, GBPLIBOR,
     JPYLIBOR, JPYTIBOR, NZDBKBM, USDLIBOR,
     # instruments.jl
-    Instrument, Cash, Deposit, Future, STIRFuture,
-    settlementdate
+    Instrument, Cash, Deposit, Future, STIRFuture
 
 include("constants.jl")
 include("calendars.jl")
