@@ -52,7 +52,7 @@ function ischristmasdayholiday(dt::TimeType, c::USFCalendar)
         (((day(dt) == 24 && dayofweek(dt) == Fri) ||
             (day(dt) == 26 && dayofweek(dt) == Mon)) && month(dt) == Dec))
 end
-function isgoodday(dt::TimeType, c::USFCalendar)
+function isgood(dt::TimeType, c::USFCalendar)
     # http://en.wikipedia.org/wiki/New_York_State_government_holidays
     !(isweekend(dt) || isnewyearsholiday(dt, c) ||
         ismlkdayholiday(dt, c) || iswashingtonsbdayholiday(dt, c) ||
@@ -61,7 +61,7 @@ function isgoodday(dt::TimeType, c::USFCalendar)
         isveteransdayholiday(dt, c) || isthanksgivingdayholiday(dt, c) ||
         ischristmasdayholiday(dt, c))
 end
-function isgoodday(dt::TimeType, c::USLIBORFCalendar)
+function isgood(dt::TimeType, c::USLIBORFCalendar)
     # Used for O/N USD LIBOR
     # https://www.theice.com/iba/libor
     !(ismlkdayholiday(dt, c) || iswashingtonsbdayholiday(dt, c) ||

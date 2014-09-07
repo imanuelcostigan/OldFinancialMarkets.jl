@@ -13,7 +13,7 @@ function isanniversarydayholiday(dt::TimeType, c::NZAUFCalendar)
         (day(dt) == 1 && month(dt) == Feb)))
 end
 
-function isgoodday(dt::TimeType, c::NZAUFCalendar)
+function isgood(dt::TimeType, c::NZAUFCalendar)
     # http://en.wikipedia.org/wiki/Public_holidays_in_New_Zealand
     # http://www.dol.govt.nz/er/holidaysandleave/publicholidays/publicholidaydates/future-dates.asp
     !(isweekend(dt) || isnewyearsholiday(dt, c) ||

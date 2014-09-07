@@ -22,13 +22,13 @@ immutable Succeeding <: BusinessDayConvention end
 
 adjust(dt::TimeType, bdc::Unadjusted, c = NoFCalendar()) = dt
 function adjust(dt::TimeType, bdc::Preceding, c = NoFCalendar())
-    while !isgoodday(dt, c)
+    while !isgood(dt, c)
         dt -= Day(1)
     end
     return dt
 end
 function adjust(dt::TimeType, bdc::Following, c = NoFCalendar())
-    while !isgoodday(dt, c)
+    while !isgood(dt, c)
         dt += Day(1)
     end
     return dt

@@ -7,6 +7,6 @@ targetholidays = [Date(2013, 1, 1), Date(2013, 3, 29), Date(2013, 4, 1),
   dt = Date(2013)
   while year(dt) <= 2013
     @test !((dt in targetholidays || isweekend(dt)) $
-        !isgoodday(dt, EUTAFCalendar()))
+        !isgood(dt, EUTAFCalendar()))
     dt += Day(1)
 end

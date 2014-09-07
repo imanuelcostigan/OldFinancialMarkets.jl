@@ -12,6 +12,6 @@ usholidays = [Date(2012, 1, 1), Date(2012, 1, 2), Date(2012, 1, 16),
 dt = Date(2012)
 while year(dt) <= 2013
     @test !((dt in usholidays || isweekend(dt)) $
-        !isgoodday(dt, USNYFCalendar()))
+        !isgood(dt, USNYFCalendar()))
     dt += Day(1)
 end

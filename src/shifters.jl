@@ -14,7 +14,7 @@ function shift(dt::TimeType, p::Period, bdc = Unadjusted(), c = NoFCalendar(),
     if pt == Day
         while abs(n) > 0
             result += Day(sign(n))
-            isgoodday(result, c) && (n -= sign(n))
+            isgood(result, c) && (n -= sign(n))
         end
         return result
     elseif pt == Week

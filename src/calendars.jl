@@ -152,13 +152,13 @@ isseasonstart(Date(dt), m) || (dayofweek(dt) == Mon &&
 end
 
 #####
-# isgoodday methods
+# isgood methods
 #####
 
-isgoodday(dt::TimeType, c = NoFCalendar()) = !isweekend(dt, c)
-function isgoodday(dt::TimeType, c::JointFCalendar)
+isgood(dt::TimeType, c = NoFCalendar()) = !isweekend(dt, c)
+function isgood(dt::TimeType, c::JointFCalendar)
     rule = c.onbad ? all : any
-    rule([ isgoodday(dt, ci) for ci in c.calendars ])
+    rule([ isgood(dt, ci) for ci in c.calendars ])
 end
 
 #####

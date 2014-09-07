@@ -13,7 +13,7 @@ end
 function islabourdayholiday(dt::TimeType, c::AUSYFCalendar)
     dayofweek(dt) == Mon && dayofweekofmonth(dt) == 1 && month(dt) == Oct
 end
-function isgoodday(dt::TimeType, c::AUSYFCalendar)
+function isgood(dt::TimeType, c::AUSYFCalendar)
     # http://en.wikipedia.org/wiki/Public_holidays_in_Australia
     # http://www.legislation.nsw.gov.au/maintop/view/inforce/act+115+2010+cd+0+N
     !(isweekend(dt) || isnewyearsholiday(dt, c) ||

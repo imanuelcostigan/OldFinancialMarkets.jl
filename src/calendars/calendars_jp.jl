@@ -71,7 +71,7 @@ function isemperorsbirthdayholiday(dt::TimeType, c::JPFCalendar)
     (month(dt) == Dec && (day(dt) == 23 ||
         (day(dt) == 24 && dayofweek(dt) == Mon)))
 end
-function isgoodday(dt::TimeType, c::JPFCalendar)
+function isgood(dt::TimeType, c::JPFCalendar)
     #   http://en.wikipedia.org/wiki/Public_holidays_in_Japan
     !(isweekend(dt) || isnewyearsholiday(dt, c) || isbankholiday(dt, c) ||
         iscomingofageholiday(dt, c) || isfoundationdayholiday(dt, c) ||

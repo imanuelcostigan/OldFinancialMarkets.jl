@@ -25,7 +25,7 @@ end
 function istargetclosed(dt::TimeType, c::EUTAFCalendar)
     day(dt) == 31 && month(dt) == 12 && year(dt) in [1999, 2001]
 end
-function isgoodday(dt::TimeType, c::EUTAFCalendar)
+function isgood(dt::TimeType, c::EUTAFCalendar)
     # EUR holiday calendar
     # http://www.ecb.europa.eu/home/html/holidays.en.html
     # Closing days (1999):
@@ -41,4 +41,4 @@ function isgoodday(dt::TimeType, c::EUTAFCalendar)
         iseasterholiday(dt, c) || ischristmasdayholiday(dt, c) ||
         islabourdayholiday(dt, c) || istargetclosed(dt, c))
 end
-isgoodday(dt::TimeType, c::EULIBORFCalendar) = !islabourdayholiday(dt, c)
+isgood(dt::TimeType, c::EULIBORFCalendar) = !islabourdayholiday(dt, c)

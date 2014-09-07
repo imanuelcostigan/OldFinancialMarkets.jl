@@ -18,6 +18,6 @@ jpholidays = [Date(2014, 1, 1), Date(2014, 1, 2), Date(2014, 1, 3),
 dt = Date(2013)
 while year(dt) <= 2014
     @test !((dt in jpholidays || isweekend(dt)) $
-        !isgoodday(dt, JPTOFCalendar()))
+        !isgood(dt, JPTOFCalendar()))
     dt += Day(1)
 end

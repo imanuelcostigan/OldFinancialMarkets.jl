@@ -78,8 +78,8 @@
 @test FinMarkets.isseasonstartholiday(DateTime(1997, 12, 21), Dec, [Sat, Sun])
 
 # Good day testers
-@test !isgoodday(Date(2014, 7, 20), NoFCalendar())
-@test isgoodday(Date(2014, 7, 21), NoFCalendar())
-@test !isgoodday(Date(2015, 11, 3), +(AUSYFCalendar(), AUMEFCalendar()))
-@test isgoodday(Date(2015, 11, 3),
+@test !isgood(Date(2014, 7, 20), NoFCalendar())
+@test isgood(Date(2014, 7, 21), NoFCalendar())
+@test !isgood(Date(2015, 11, 3), +(AUSYFCalendar(), AUMEFCalendar()))
+@test isgood(Date(2015, 11, 3),
     JointFCalendar([AUSYFCalendar(), AUMEFCalendar()], false))

@@ -12,7 +12,7 @@ function isanniversarydayholiday(dt::TimeType, c::NZWEFCalendar)
     dayofweek(dt) == Mon && 19 <= day(dt) <= 25 && month(dt) == Jan
 end
 
-function isgoodday(dt::TimeType, c::NZWEFCalendar)
+function isgood(dt::TimeType, c::NZWEFCalendar)
     # http://en.wikipedia.org/wiki/Public_holidays_in_New_Zealand
     # http://www.dol.govt.nz/er/holidaysandleave/publicholidays/publicholidaydates/future-dates.asp
     # Same as Auckland except for different provincial anniversary holiday

@@ -13,7 +13,7 @@ end
 function ismelbournecupholiday(dt::TimeType, c::AUMEFCalendar)
     dayofweek(dt) == Tue && dayofweekofmonth(dt) == 1 && month(dt) == Nov
 end
-function isgoodday(dt::TimeType, c::AUMEFCalendar)
+function isgood(dt::TimeType, c::AUMEFCalendar)
     # http://en.wikipedia.org/wiki/Public_holidays_in_Australia
     !(isweekend(dt) || isnewyearsholiday(dt, c) ||
         isaustraliadayholiday(dt, c) || isanzacdayholiday(dt, c) ||
