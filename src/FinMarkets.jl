@@ -39,6 +39,7 @@ export
     # indices.jl
     Index, InterestRateIndex, IBOR, AUDBBSW, EURLIBOR, EURIBOR, GBPLIBOR,
     JPYLIBOR, JPYTIBOR, NZDBKBM, USDLIBOR,
+    CashIndex, AONIA, EONIA, SONIA, TONAR, NZIONA, FedFund,
     # instruments.jl
     Instrument, Cash, Deposit, Future, STIRFuture
 

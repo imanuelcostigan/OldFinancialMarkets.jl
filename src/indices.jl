@@ -15,23 +15,18 @@ immutable CashIndex <: InterestRateIndex
 end
 
 # OpenGamma: Interest rate instruments & market conventions guide
-CashIndex(currency::AUD) = CashIndex(currency, *(AUSYFCalendar(), AUMEFCalendar()), Following(), A365())
-CashIndex(currency::EUR) = CashIndex(currency, EUTAFCalendar(), Following(),
-    A360())
-CashIndex(currency::GBP) = CashIndex(currency, GBLOFCalendar(), Following(),
-    A365())
-CashIndex(currency::JPY) = CashIndex(currency, JPTOFCalendar(), Following(),
-    A365())
-CashIndex(currency::NZD) = CashIndex(currency,
-    +(NZAUFCalendar(), NZWEFCalendar()), Following(), A365())
-CashIndex(currency::USD) = CashIndex(USD(), USNYFCalendar(), Following(),
-    A360())
-AONIA() = CashIndex(AUD())
-EONIA() = CashIndex(EUR())
-SONIA() = CashIndex(GBP())
-TONAR() = CashIndex(JPY())
-NZIONA() = CashIndex(NZD())
-FedFund() = CashIndex(USD())
+AONIA() = CashIndex(AUD(), *(AUSYFCalendar(), AUMEFCalendar()), Following(), A365())
+EONIA() = CashIndex(EUR(), EUTAFCalendar(), Following(), A360())
+SONIA() = CashIndex(GBP(), GBLOFCalendar(), Following(), A365())
+TONAR() = CashIndex(JPY(), JPTOFCalendar(), Following(), A365())
+NZIONA() = CashIndex(NZD(), +(NZAUFCalendar(), NZWEFCalendar()), Following(), A365())
+FedFund() = CashIndex(USD(), USNYFCalendar(), Following(), A360())
+CashIndex(currency::AUD) = AONIA()
+CashIndex(currency::EUR) = EONIA()
+CashIndex(currency::GBP) = SONIA()
+CashIndex(currency::JPY) = TONAR()
+CashIndex(currency::NZD) = NZIONA()
+CashIndex(currency::USD) = FedFund()
 
 ### LIBOR
 immutable IBOR <: InterestRateIndex
