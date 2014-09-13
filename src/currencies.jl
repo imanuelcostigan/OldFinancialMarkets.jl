@@ -76,3 +76,4 @@ Base.isless(x::Currency, y::Currency) = (CCY_STRENGTH[typeof(x)] >
 ==(ccy1::Currency, ccy2::Currency) = false
 Base.string(ccy::Currency) = string(typeof(ccy))
 Base.show(io::IO, ccy::Currency) = print(string(ccy))
+@vectorize_1arg Currency Base.string
