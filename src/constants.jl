@@ -1,3 +1,6 @@
+# Session variables
+const EVAL_DATE = today()
+
 # Seasonal constants to determine start of seasons (more precisely, equinoxes
 # ands solstices)
 # See Meeus, Ch 26

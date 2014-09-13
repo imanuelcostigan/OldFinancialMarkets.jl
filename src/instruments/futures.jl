@@ -32,7 +32,7 @@ function to_nth_dayofweek(dt::TimeType, n::Integer, dow::Integer)
 end
 
 function settlement(prompt::Integer, nth::Integer, dow::Integer, offset::Period,
-    dt::TimeType = today())
+    dt::TimeType = EVAL_DATE)
     # Assumes:
     # 1. settlement on IMM months only (Mar, Jun, Sep & Dec)
     # 2. prompt > 0
@@ -43,7 +43,7 @@ function settlement(prompt::Integer, nth::Integer, dow::Integer, offset::Period,
 end
 
 function STIRFuture(ccy::Currency, prompt::Integer, price::Real,
-    tradedate::TimeType = today(), amount::Real = 1)
+    tradedate::TimeType = EVAL_DATE, amount::Real = 1)
     # Get STIR settlement details
     SP = stirsettlementparameters(ccy)
     # Build underlying depo

@@ -16,7 +16,7 @@ end
 ####
 
 function Deposit(currency::Currency, term::Period, rate::Real,
-    tradedate::TimeType = today(), amount = 1e6)
+    tradedate::TimeType = EVAL_DATE, amount = 1e6)
     index = IBOR(currency, term)
     startdate = shift(tradedate, index.spotlag, index.bdc, index.calendar, false)
     enddate = shift(startdate, term, index.bdc, index.calendar, index.eom)

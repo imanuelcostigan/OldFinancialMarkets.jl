@@ -148,3 +148,8 @@ IBOR(currency::GBP, tenor::Period) = GBPLIBOR(tenor)
 IBOR(currency::JPY, tenor::Period) = JPYLIBOR(tenor)
 IBOR(currency::NZD, tenor::Period) = NZDBKBM(tenor)
 IBOR(currency::USD, tenor::Period) = USDLIBOR(tenor)
+
+#####
+# Methods
+#####
+currency(index::Index) = index.currency
