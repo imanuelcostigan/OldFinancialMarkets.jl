@@ -1,6 +1,6 @@
 module FinMarkets
 
-using Dates
+using Dates, DataFrames
 
 export
     # constants.jl
@@ -36,6 +36,8 @@ export
     LongBackStub, DateSchedule, SwapDateSchedule,
     # currencies.jl
     Currency, AUD, EUR, GBP, JPY, NZD, USD,
+    # cashflow.jl
+    # CashFlow,
     # indices.jl
     Index, InterestRateIndex, IBOR, AUDBBSW, EURLIBOR, EURIBOR, GBPLIBOR,
     JPYLIBOR, JPYTIBOR, NZDBKBM, USDLIBOR,
@@ -51,6 +53,7 @@ include("businessdayconventions.jl")
 include("shifters.jl")
 include("schedule.jl")
 include("currencies.jl")
+include("cashflow.jl")
 include("indices.jl")
 include("instruments.jl")
 end

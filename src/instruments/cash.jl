@@ -29,3 +29,10 @@ function price(instr::Cash, date::TimeType)
     date == tradedate || error("Trade and pricing dates are not the same.")
     return instr.amount
 end
+
+function CashFlow(instr::Cash)
+    ccy = currency(instr)
+    tau = years(instr.startdate, instr.enddate, instr.index.daycount)
+    CashFlow([ccy, ccy], [instr.startdate, instr.enddate],
+        instr.amount * [-1, 1 + tau * instr.rate])
+end
