@@ -23,16 +23,13 @@ function Cash(currency::Currency, rate::Real, tradedate::TimeType = EVAL_DATE,
     Cash(amount, rate, tradedate, startdate, enddate, index)
 end
 
-currency(instr::Cash) = currency(instr.index)
+currency(cash::Cash) = currency(cash.index)
+rate(cash::Cash) = InterestRate(cash.rate, Simply, cash.index.daycount)
+price(cash::Cash) = cash.amount
 
-function price(instr::Cash, date::TimeType)
-    date == tradedate || error("Trade and pricing dates are not the same.")
-    return instr.amount
-end
-
-function CashFlow(instr::Cash)
-    ccy = currency(instr)
-    tau = years(instr.startdate, instr.enddate, instr.index.daycount)
-    CashFlow([ccy, ccy], [instr.startdate, instr.enddate],
-        instr.amount * [-1, 1 + tau * instr.rate])
+function CashFlow(cash::Cash)
+    ccy = currency(cash)
+    dt1 = cash.startdate; dt2 = cash.enddate
+    cap = 1 / value(convert(DiscountFactor, rate(cash), dt1, dt2))
+    CashFlow([ccy, ccy], [dt1, dt2], cash.amount * [-1, cap])
 end
