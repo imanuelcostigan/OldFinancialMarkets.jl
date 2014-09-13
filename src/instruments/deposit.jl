@@ -22,3 +22,16 @@ function Deposit(currency::Currency, term::Period, rate::Real,
     enddate = shift(startdate, term, index.bdc, index.calendar, index.eom)
     Deposit(amount, rate, tradedate, startdate, enddate, index)
 end
+
+currency(depo::Deposit) = currency(depo.index)
+rate(depo::Deposit) = InterestRate(depo.rate, Simply, depo.index.daycount)
+
+function price(depo::Deposit)
+    value(convert(DiscountFactor, rate(depo), depo.startdate, depo.enddate))
+end
+
+function CashFlow(depo::Deposit)
+    ccy = currency(depo)
+    CashFlow([ccy, ccy], [depo.startdate, depo.enddate],
+        depo.amount * [-price(depo), 1])
+end
