@@ -28,16 +28,20 @@ end
 # Methods
 ####
 
+# Value extraction
+value(r::InterestRate) = r.rate
+value(df::DiscountFactor) = df.discountfactor
+
 # IO
 function Base.string(r::InterestRate)
-    (@sprintf("%05f", 100 * r.rate) * "%," *
+    (@sprintf("%05f", 100 * value(x)) * "%," *
         uppercase(COMPOUNDINGS[r.compounding]) * "," *
         uppercase(string(r.daycount)))
 end
 Base.show(io::IO, r::InterestRate) = print(io, string(r))
 
 function Base.string(df::DiscountFactor)
-   ("DF: " * @sprintf("%06f", df.discountfactor) * ", " * string(df.startdate) *
+   ("DF: " * @sprintf("%06f", value(df)) * ", " * string(df.startdate) *
         "--" * string(df.enddate))
 end
 Base.show(io::IO, df::DiscountFactor) = print(io, string(df))
@@ -47,11 +51,11 @@ function Base.convert(::Type{DiscountFactor}, x::InterestRate, startdate::TimeTy
     enddate::TimeType)
     t = years(startdate, enddate, x.daycount)
     if x.compounding == Continuously
-        df = exp(-x.rate * t)
+        df = exp(-value(x) * t)
     elseif x.compounding == Simply
-        df = 1 / (1 + t * x.rate)
+        df = 1 / (1 + t * value(x))
     else
-        df = 1 / ((1 + x.rate / x.compounding) ^ (x.compounding * t))
+        df = 1 / ((1 + value(x) / x.compounding) ^ (x.compounding * t))
     end
     return DiscountFactor(df, startdate, enddate)
 end
@@ -60,12 +64,12 @@ function Base.convert(::Type{InterestRate}, x::DiscountFactor, compounding::Int,
     daycount::DayCountFraction)
     t = years(x.startdate, x.enddate, daycount)
     if compounding == Continuously
-        rate = -log(x.discountfactor) / t
+        rate = -log(value(x)) / t
     elseif compounding == Simply
-        rate = (1 / x.discountfactor - 1) / t
+        rate = (1 / value(x) - 1) / t
     else
         rate = (compounding *
-            ((1 / x.discountfactor) ^ (1 / (compounding * t)) - 1))
+            ((1 / value(x)) ^ (1 / (compounding * t)) - 1))
     end
     return InterestRate(rate, compounding, daycount)
 end
@@ -98,12 +102,12 @@ end
 for op in (:+, :*, :-, :/)
     @eval begin
         function ($op)(x::InterestRate, y::Real)
-            InterestRate(($op)(x.rate, y), x.compounding, x.daycount)
+            InterestRate(($op)(value(x), y), x.compounding, x.daycount)
         end
     end
     @eval begin
         function ($op)(x::InterestRate, y::InterestRate)
-            InterestRate(($op)(x.rate, equivalent(x, y).rate), x.compounding,
+            InterestRate(($op)(value(x), value(equivalent(x, y))), x.compounding,
                 x.daycount)
         end
     end
@@ -111,11 +115,12 @@ end
 (+)(x::Real, y::InterestRate) = y + x
 (*)(x::Real, y::InterestRate) = y * x
 (-)(x::Real, y::InterestRate) = -1(y - x)
-(/)(x::Real, y::InterestRate) = InterestRate(x / y.rate, y.compounding, y.daycount)
+(/)(x::Real, y::InterestRate) = InterestRate(x / value(y), y.compounding,
+    y.daycount)
 
 function (*)(x::DiscountFactor, y::DiscountFactor)
     if x.enddate == y.enddate || y.startdate == x.enddate
-        return DiscountFactor(x.discountfactor * y.discountfactor,
+        return DiscountFactor(value(x) * value(y),
             min(x.startdate, y.startdate), max(x.enddate, y.enddate))
     else
         error("The discount factors must represent two cotinguous spans of time.")
@@ -123,7 +128,7 @@ function (*)(x::DiscountFactor, y::DiscountFactor)
 end
 function (/)(x::DiscountFactor, y::DiscountFactor)
     if x.startdate == y.startdate
-        return DiscountFactor(x.discountfactor / y.discountfactor,
+        return DiscountFactor(value(x) / value(y),
             min(x.enddate, y.enddate), max(x.enddate, y.enddate))
     else
         error("The discount factors must start at the same instant.")
@@ -134,9 +139,9 @@ end
 for op in (:(==), :!=, :<, :<=, :>, :>=)
     @eval begin
         function ($op)(x::InterestRate, y::InterestRate)
-            return ($op)(x.rate, equivalent(x, y).rate)
+            return ($op)(value(x), value(equivalent(x, y)))
         end
         (($op)(x::DiscountFactor, y::DiscountFactor) =
-            ($op)(x.discountfactor, y.discountfactor))
+            ($op)(value(x), value(y)))
     end
 end
