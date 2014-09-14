@@ -5,32 +5,47 @@
 abstract Index
 abstract InterestRateIndex <: Index
 
+##############################################################################
 ### Cash
+##############################################################################
 
-immutable CashIndex <: InterestRateIndex
-    currency::Currency
+immutable CashIndex{CCY<:Currency} <: InterestRateIndex
+    currency::CCY
     calendar::JointFCalendar
     bdc::BusinessDayConvention
     daycount::DayCountFraction
 end
 
 # OpenGamma: Interest rate instruments & market conventions guide
-AONIA() = CashIndex(AUD(), *(AUSYFCalendar(), AUMEFCalendar()), Following(), A365())
-EONIA() = CashIndex(EUR(), EUTAFCalendar(), Following(), A360())
-SONIA() = CashIndex(GBP(), GBLOFCalendar(), Following(), A365())
-TONAR() = CashIndex(JPY(), JPTOFCalendar(), Following(), A365())
-NZIONA() = CashIndex(NZD(), +(NZAUFCalendar(), NZWEFCalendar()), Following(), A365())
-FedFund() = CashIndex(USD(), USNYFCalendar(), Following(), A360())
-CashIndex(currency::AUD) = AONIA()
-CashIndex(currency::EUR) = EONIA()
-CashIndex(currency::GBP) = SONIA()
-CashIndex(currency::JPY) = TONAR()
-CashIndex(currency::NZD) = NZIONA()
-CashIndex(currency::USD) = FedFund()
+CashIndex{AUD}(::AUD) = CashIndex{AUD}(AUD(), *(AUSYFCalendar(), AUMEFCalendar()),
+    Following(), A365())
+CashIndex{EUR}(::EUR) = CashIndex{EUR}(EUR(), EUTAFCalendar(), Following(), A360())
+CashIndex{GBP}(::GBP) = CashIndex{GBP}(GBP(), GBLOFCalendar(), Following(), A365())
+CashIndex{JPY}(::JPY) = CashIndex{JPY}(JPY(), JPTOFCalendar(), Following(), A365())
+CashIndex{NZD}(::NZD) = CashIndex{NZD}(NZD(), +(NZAUFCalendar(), NZWEFCalendar()),
+    Following(), A365())
+CashIndex{USD}(::USD) = CashIndex{USD}(USD(), USNYFCalendar(), Following(), A360())
 
+typealias AONIA CashIndex{AUD}
+typealias EONIA CashIndex{EUR}
+typealias SONIA CashIndex{GBP}
+typealias TONAR CashIndex{JPY}
+typealias NZIONA CashIndex{NZD}
+typealias FedFund CashIndex{USD}
+
+AONIA() = CashIndex(AUD())
+EONIA() = CashIndex(EUR())
+SONIA() = CashIndex(GBP())
+TONAR() = CashIndex(JPY())
+NZIONA() = CashIndex(NZD())
+FedFund() = CashIndex(USD())
+
+##############################################################################
 ### LIBOR
-immutable IBOR <: InterestRateIndex
-    currency::Currency
+##############################################################################
+
+immutable IBOR{CCY<:Currency} <: InterestRateIndex
+    currency::CCY
     spotlag::Period
     tenor::Period
     # Use currency's calendar to determine value date
@@ -38,20 +53,37 @@ immutable IBOR <: InterestRateIndex
     bdc::BusinessDayConvention
     eom::Bool
     daycount::DayCountFraction
-    function IBOR(currency, spotlag, tenor, calendar, bdc, eom, daycount)
-        new(currency, spotlag, tenor, calendar, bdc, eom, daycount)
-    end
 end
 
-function AUDBBSW(tenor::Period)
+function IBOR{AUD}(::AUD, tenor::Period)
     # http://www.afma.com.au/standards/market-conventions/Bank%20Bill%20Swap%20(BBSW)%20Benchmark%20Rate%20Conventions.pdf
     # OpenGamma: Interest rate instruments & market conventions guide
     # NB: Spot lag is 1 day because assuming end-of-day instance of IBOR
     #     Spot lag of 0 day applies only to transactions prior to 10am
-    IBOR(AUD(), Day(1), tenor, AUSYFCalendar(), Succeeding(), false, A365())
+    IBOR{AUD}(AUD(), Day(1), tenor, AUSYFCalendar(), Succeeding(), false, A365())
 end
-
-function EURLIBOR(tenor::Period)
+function IBOR{EUR}(::EUR, tenor::Period, libor = false)
+    if libor
+        # https://www.theice.com/iba/libor
+        # http://www.bbalibor.com/technical-aspects/fixing-value-and-maturity
+        # OpenGamma: Interest rate instruments & market conventions guide
+        if tenor < Month(1)
+            spotlag = Day(0)
+            bdc = Following()
+        else
+            spotlag = Day(2)
+            bdc = ModifiedFollowing()
+        end
+        return IBOR{EUR}(EUR(), spotlag, tenor,
+            +(GBLOFCalendar(), EULIBORFCalendar()), bdc, true, A360())
+    else
+        # http://www.emmi-benchmarks.eu/assets/files/Euribor_tech_features.pdf
+        # OpenGamma: Interest rate instruments & market conventions guide
+        return IBOR{EUR}(EUR(), Day(2), tenor, EUTAFCalendar(),
+            ModifiedFollowing(), true, A360())
+    end
+end
+function IBOR{GBP}(::GBP, tenor::Period)
     # https://www.theice.com/iba/libor
     # http://www.bbalibor.com/technical-aspects/fixing-value-and-maturity
     # OpenGamma: Interest rate instruments & market conventions guide
@@ -62,21 +94,9 @@ function EURLIBOR(tenor::Period)
         spotlag = Day(2)
         bdc = ModifiedFollowing()
     end
-    IBOR(GBP(), spotlag, tenor, +(GBLOFCalendar(), EULIBORFCalendar()), bdc,
-        true, A360())
+    IBOR{GBP}(GBP(), spotlag, tenor, GBLOFCalendar(), bdc, true, A365())
 end
-
-function EURIBOR(tenor::Period)
-    # http://www.emmi-benchmarks.eu/assets/files/Euribor_tech_features.pdf
-    # OpenGamma: Interest rate instruments & market conventions guide
-    IBOR(EUR(), Day(2), tenor, EUTAFCalendar(), ModifiedFollowing(), true,
-        A360())
-end
-
-function GBPLIBOR(tenor::Period)
-    # https://www.theice.com/iba/libor
-    # http://www.bbalibor.com/technical-aspects/fixing-value-and-maturity
-    # OpenGamma: Interest rate instruments & market conventions guide
+function IBOR{JPY}(::JPY, tenor::Period, libor = true)
     if tenor < Month(1)
         spotlag = Day(0)
         bdc = Following()
@@ -84,47 +104,29 @@ function GBPLIBOR(tenor::Period)
         spotlag = Day(2)
         bdc = ModifiedFollowing()
     end
-    IBOR(GBP(), spotlag, tenor, GBLOFCalendar(), bdc, true, A365())
-end
-
-function JPYLIBOR(tenor::Period)
-    # https://www.theice.com/iba/libor
-    # http://www.bbalibor.com/technical-aspects/fixing-value-and-maturity
-    # OpenGamma: Interest rate instruments & market conventions guide
-    if tenor < Month(1)
-        spotlag = Day(0)
-        bdc = Following()
+    if libor
+        # https://www.theice.com/iba/libor
+        # http://www.bbalibor.com/technical-aspects/fixing-value-and-maturity
+        # OpenGamma: Interest rate instruments & market conventions guide
+        cal = GBLOFCalendar()
+        eom = true
     else
-        spotlag = Day(2)
-        bdc = ModifiedFollowing()
+        # TIBOR
+        # http://www.jbatibor.or.jp/english/public/pdf/JBA%20TIBOR%20Operational%20RulesE.pdf
+        # OpenGamma: Interest rate instruments & market conventions guide
+        cal = JPTOFCalendar()
+        eom = false
     end
-    IBOR(JPY(), spotlag, tenor, GBLOFCalendar(), bdc, true, A360())
+    IBOR{JPY}(JPY(), spotlag, tenor, cal, bdc, eom, A360())
 end
-
-function JPYTIBOR(tenor::Period)
-    # http://www.jbatibor.or.jp/english/public/pdf/JBA%20TIBOR%20Operational%20RulesE.pdf
-    # OpenGamma: Interest rate instruments & market conventions guide
-    if tenor < Month(1)
-        # Assume this to be the case. O/W maturity won't make sense. Think for
-        # example 1w TIBOR depo out of 23 Jun where 30 June is bad.
-        spotlag = Day(0)
-        bdc = Following()
-    else
-        spotlag = Day(2)
-        bdc = ModifiedFollowing()
-    end
-    IBOR(JPY(), spotlag, tenor, JPTOFCalendar(), bdc, false, A365())
-end
-
-function NZDBKBM(tenor::Period)
+function IBOR{NZD}(::NZD, tenor::Period)
     # http://www.nzfma.org/includes/download.aspx?ID=130053
     # OpenGamma: Interest rate instruments & market conventions guide
     tenor < Month(1) && error("The tenor must be no less than 1 month.")
-    IBOR(NZD(), Day(0), tenor, +(NZAUFCalendar(), NZWEFCalendar()), bdc,
+    IBOR{NZD}(NZD(), Day(0), tenor, +(NZAUFCalendar(), NZWEFCalendar()), bdc,
         false, A365())
 end
-
-function USDLIBOR(tenor::Period)
+function IBOR{USD}(::USD, tenor::Period)
     # https://www.theice.com/iba/libor
     # http://www.bbalibor.com/technical-aspects/fixing-value-and-maturity
     # OpenGamma: Interest rate instruments & market conventions guide
@@ -139,17 +141,27 @@ function USDLIBOR(tenor::Period)
         bdc = ModifiedFollowing()
         calendar = GBLOFCalendar()
     end
-    IBOR(USD(), spotlag, tenor, calendar, bdc, true, A360())
+    IBOR{USD}(USD(), spotlag, tenor, calendar, bdc, true, A360())
 end
 
-IBOR(currency::AUD, tenor::Period) = AUDBBSW(tenor)
-IBOR(currency::EUR, tenor::Period) = EURIBOR(tenor)
-IBOR(currency::GBP, tenor::Period) = GBPLIBOR(tenor)
-IBOR(currency::JPY, tenor::Period) = JPYLIBOR(tenor)
-IBOR(currency::NZD, tenor::Period) = NZDBKBM(tenor)
-IBOR(currency::USD, tenor::Period) = USDLIBOR(tenor)
+typealias AUDBBSW IBOR{AUD}
+typealias EURIBOR IBOR{EUR}
+typealias GBPLIBOR IBOR{GBP}
+typealias JPYLIBOR IBOR{JPY}
+typealias NZDBKBM IBOR{NZD}
+typealias USDLIBOR IBOR{USD}
+
+AUDBBSW(tenor) = IBOR(AUD(), tenor)
+EURIBOR(tenor) = IBOR(EUR(), tenor)
+EURLIBOR(tenor) = IBOR(EUR(), tenor, true)
+GBPLIBOR(tenor) = IBOR(GBP(), tenor)
+JPYLIBOR(tenor) = IBOR(JPY(), tenor)
+JPYTIBOR(tenor) = IBOR(JPY(), tenor, false)
+NZDBKBM(tenor) = IBOR(NZD(), tenor)
+USDLIBOR(tenor) = IBOR(USD(), tenor)
 
 #####
 # Methods
 #####
+
 currency(index::Index) = index.currency
