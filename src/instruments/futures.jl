@@ -49,7 +49,8 @@ function STIRFuture(ccy::Currency, prompt::Integer, price::Real,
     # Build underlying depo
     is90d = ccy in [AUD(), NZD()]
     uterm = is90d ? Day(90) : Month(3)
-    uindex = IBOR(ccy, uterm)
+    # JPY futures are TIBOR not LIBOR
+    uindex = ccy == JPY() ? IBOR(ccy, uterm, false) : IBOR(ccy, uterm)
     ustartdate = settlement(prompt, SP["nth"], SP["day"], SP["off"], tradedate)
     utradedate = shift(ustartdate, -SP["delay"], uindex.bdc, uindex.calendar,
         uindex.eom)
