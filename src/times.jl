@@ -8,41 +8,18 @@ abstract DayCountFraction
 # 1. ISDA 2006 definitions
 # 2. Opengamma: Interest rate instruments and market conventions guide
 
-immutable A365 <: DayCountFraction
-    name::String
-end
-immutable A360 <: DayCountFraction
-    name::String
-end
-immutable ActActISDA <: DayCountFraction
-    name::String
-end
-immutable Thirty360 <: DayCountFraction
-    name::String
-end
-immutable ThirtyE360 <: DayCountFraction
-    name::String
-end
-immutable ThirtyEP360 <: DayCountFraction
-    name::String
-end
-
-####
-# Constructors
-####
-
-A365() = A365("Act/365F")
-A360() = A360("Act/360")
-ActActISDA() = ActActISDA("Act/Act(ISDA)")
-Thirty360() = Thirty360("30/360")
-ThirtyE360() = ThirtyE360("30E/360(ISDA)")
-ThirtyEP360() = ThirtyEP360("30E+/360(ISDA)")
+immutable A365 <: DayCountFraction end
+immutable A360 <: DayCountFraction end
+immutable ActActISDA <: DayCountFraction end
+immutable Thirty360 <: DayCountFraction end
+immutable ThirtyE360 <: DayCountFraction end
+immutable ThirtyEP360 <: DayCountFraction end
 
 ####
 # Day count basis methods
 ####
 
-Base.string(dc::DayCountFraction) = dc.name
+Base.string(dc::DayCountFraction) = string(typeof(dc))
 Base.show(io::IO, dc::DayCountFraction) = print(io, string(dc))
 
 function years(date1::TimeType, date2::TimeType, dc::A365)
