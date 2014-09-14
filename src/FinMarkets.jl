@@ -37,7 +37,7 @@ export
     # currencies.jl
     Currency, AUD, EUR, GBP, JPY, NZD, USD,
     # cashflow.jl
-    # CashFlow,
+    CashFlow,
     # indices.jl
     Index, InterestRateIndex, IBOR, AUDBBSW, EURLIBOR, EURIBOR, GBPLIBOR,
     JPYLIBOR, JPYTIBOR, NZDBKBM, USDLIBOR,
