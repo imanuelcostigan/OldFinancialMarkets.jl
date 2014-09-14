@@ -27,7 +27,8 @@ currency(depo::Deposit) = currency(depo.index)
 rate(depo::Deposit) = InterestRate(depo.rate, Simply, depo.index.daycount)
 
 function price(depo::Deposit)
-    value(convert(DiscountFactor, rate(depo), depo.startdate, depo.enddate))
+    depo.amount * value(convert(DiscountFactor, rate(depo),
+        depo.startdate, depo.enddate))
 end
 
 function CashFlow(depo::Deposit)

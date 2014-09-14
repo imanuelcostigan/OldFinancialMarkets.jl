@@ -47,16 +47,31 @@ function STIRFuture(ccy::Currency, prompt::Integer, price::Real,
     # Get STIR settlement details
     SP = stirsettlementparameters(ccy)
     # Build underlying depo
-    uterm = ccy in [AUD(), NZD()] ? Day(90) : Month(3)
-    uindex = IBOR(ccy, term)
+    is90d = ccy in [AUD(), NZD()]
+    uterm = is90d ? Day(90) : Month(3)
+    uindex = IBOR(ccy, uterm)
     ustartdate = settlement(prompt, SP["nth"], SP["day"], SP["off"], tradedate)
     utradedate = shift(ustartdate, -SP["delay"], uindex.bdc, uindex.calendar,
         uindex.eom)
-    uenddate = shift(ustartdate, uindex.tenor, uindex.bdc, uindex.calendar,
-        uindex.eom)
+    if is90d
+        uenddate = adjust(ustartdate + Day(90), uindex.bdc, uindex.calendar)
+    else
+        uenddate = shift(ustartdate, Month(3), uindex.bdc, uindex.calendar,
+            uindex.eom)
+    end
     urate = 1 - price / 100
     underlying = Deposit(1e6, urate, utradedate, ustartdate, uenddate,
         uindex)
     # Build STIR future
     STIRFuture(amount, price, tradedate, underlying)
+end
+
+currency(stir::STIRFuture) = currency(stir.underlying.index)
+rate(stir::STIRFuture) = rate(stir.underlying)
+price(stir::STIRFuture) = price(stir.underlying) * stir.amount
+
+function CashFlow(stir::STIRFuture)
+    ccy = currency(stir)
+    CashFlow([ccy, ccy], [stir.underlying.startdate, stir.underlying.enddate],
+        stir.amount * [-price(stir), stir.underlying.amount])
 end
