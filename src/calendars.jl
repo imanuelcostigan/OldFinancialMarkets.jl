@@ -20,9 +20,8 @@ function JointFCalendar(c::SingleFCalendar...)
 end
 +(c1::SingleFCalendar, c2::SingleFCalendar) = JointFCalendar([c1, c2], true)
 *(c1::SingleFCalendar, c2::SingleFCalendar) = JointFCalendar([c1, c2], false)
-function +(jc::JointFCalendar, c::SingleFCalendar)
-    JointFCalendar([jc.calendars, c], jc.onbad)
-end
++(jc::JointFCalendar, c::SingleFCalendar) = JointFCalendar([jc.calendars, c],
+    jc.onbad)
 Base.convert(::Type{JointFCalendar}, c::SingleFCalendar) = JointFCalendar(c)
 
 #####
