@@ -15,10 +15,11 @@ end
 # Methods
 ####
 
-function FRA(currency::Currency, startterm::Period, endterm::Period,
-    rate::Real, tradedate::TimeType = EVAL_DATE, amount::Real = 1e6)
-    index = IBOR(currency, term)
+function FRA(currency::Currency, startterm::Period, endterm::Period, rate::Real,
+    tradedate::TimeType = EVAL_DATE, amount::Real = 1e6)
+    index = IBOR(currency, endterm - startterm)
     startdate = shift(tradedate, index.spotlag, index.bdc, index.calendar, false)
-    enddate = shift(startdate, term, index.bdc, index.calendar, index.eom)
-    Deposit(amount, rate, tradedate, startdate, enddate, index)
+    enddate = shift(startdate, endterm, index.bdc, index.calendar, index.eom)
+    startdate = shift(startdate, startterm, index.bdc, index.calendar, index.eom)
+    FRA(amount, rate, tradedate, startdate, enddate, index)
 end
