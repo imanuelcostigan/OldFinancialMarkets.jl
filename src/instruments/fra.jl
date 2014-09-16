@@ -23,3 +23,6 @@ function FRA(currency::Currency, startterm::Period, endterm::Period, rate::Real,
     startdate = shift(startdate, startterm, index.bdc, index.calendar, index.eom)
     FRA(amount, rate, tradedate, startdate, enddate, index)
 end
+
+currency(fra::FRA) = currency(fra.index)
+rate(fra::FRA) = InterestRate(fra.rate, Simply, fra.index.daycount)
