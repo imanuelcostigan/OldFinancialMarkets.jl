@@ -1,6 +1,6 @@
-#####
-# Epochs and their checkers
-#####
+###############################################################################
+### Easter methods
+###############################################################################
 
 function easter(y::Integer)
     # Using Meeus/Jones/Butcher algorithm
@@ -22,7 +22,7 @@ function easter(y::Integer)
     return Date(y, n, p + 1)
 end
 
-function easter(y::Integer, day)
+function easter(y::Integer, day::Integer)
     msg = "The day must be either Fri, Sat, Sun or Mon."
     day in [Fri, Sat, Sun, Mon] || throw(ArgumentError(msg))
     day == Fri && return easter(y) - Day(2)
@@ -31,7 +31,14 @@ function easter(y::Integer, day)
     day == Mon && return easter(y) + Day(1)
 end
 
-easter(dt::TimeType, day) = easter(year(dt), day)
+easter(dt::TimeType, day::Integer) = easter(year(dt), day)
+
+iseaster(dt::TimeType) = (easter(dt) == Date(dt))
+iseaster(dt::TimeType, day::Integer) = (easter(dt, day) == Date(dt))
+
+###############################################################################
+### Seasonal epochs, solstices & equinox
+###############################################################################
 
 function seasonstart(y::Integer, m::Integer)
     # From Jean Meeus' Astronomical Algorithms (1st Ed, 1991). See Chapter 26.
@@ -56,6 +63,9 @@ function seasonstart(y::Integer, m::Integer)
     # Convert from Julian day to calendar date
     return julian2datetime(jde0 + 0.00001ss / δλ)
 end
+
 seasonstart(dt::DateTime, m::Integer) = seasonstart(year(dt), m)
 seasonstart(dt::Date, m::Integer) = Date(seasonstart(year(dt), m))
 
+isseasonstart(dt::DateTime, m::Integer) = (seasonstart(dt, m) == dt)
+isseasonstart(dt::Date, m::Integer) = (dt == seasonstart(dt, m))
