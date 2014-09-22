@@ -9,25 +9,32 @@ abstract AUFCalendar <: SingleFCalendar
 #####
 
 function isnewyearsholiday(dt::TimeType, c::AUFCalendar)
-    isnewyearsholiday(dt, [Sat, Sun])
+    (dayofyear(dt) == 1 || # Sat, Sun are Mondayised
+        (dayofwweek(dt) == Mon && (dayofyear(dt) in [2, 3])))
 end
 function isaustraliadayholiday(dt::TimeType, c::AUFCalendar)
-    isaustraliadayholiday(dt, [Sat, Sun])
+    (dayofyear(dt) == 26 || # Sat, Sun are Mondayised
+        (dayofwweek(dt) == Mon && (dayofyear(dt) in [27, 28])))
 end
 function isanzacdayholiday(dt::TimeType, c::AUFCalendar)
-    isanzacdayholiday(dt)
+    (month(dt) == Apr && (day(dt) == 25 || # Sat, Sun Mondayised
+        (dayofweek(dt) == Mon && day(dt) in [26, 27])))
 end
 function iseasterholiday(dt::TimeType, c::AUFCalendar)
-    iseasterholiday(dt, [Fri, Mon])
+    iseaster(dt, Fri) || iseaster(dt, Mon)
 end
 function isqueensbirthdayholiday(dt::TimeType, c::AUFCalendar)
     dayofweek(dt) == Mon && dayofweekofmonth(dt) == 2 && month(dt) == Jun
 end
 function ischristmasdayholiday(dt::TimeType, c::AUFCalendar)
-    ischristmasdayholiday(dt, true)
+    (month(dt) == Dec && (day(dt) == 25 ||
+        # Mondayised accounting for Boxing day
+        (day(dt) == 27 && dayofweek(dt) in [Mon, Tue])))
 end
 function isboxingdayholiday(dt::TimeType, c::AUFCalendar)
-    isboxingdayholiday(dt, true)
+    (month(dt) == Dec && (day(dt) == 26 ||
+        # Mondayised accounting for Christmas day possibly being Mondayised
+        (day(dt) == 28 && dayofweek(dt) in [Mon, Tue])))
 end
 
 include("calendars_ausy.jl")
