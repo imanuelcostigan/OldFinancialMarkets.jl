@@ -11,7 +11,7 @@ immutable JPTOFCalendar <: JPFCalendar end
 #####
 
 function isnewyearsholiday(dt::TimeType, c::JPFCalendar)
-    isnewyearsholiday(dt)
+    dayofyear(dt) == 1
 end
 function isbankholiday(dt::TimeType, c::JPFCalendar)
     ((month(dt) == Jan && day(dt) in [2, 3]) ||
@@ -52,8 +52,12 @@ function iscitizensdayholiday(dt::TimeType, c::JPFCalendar)
 end
 function isseasonstartholiday(dt::TimeType, c::JPFCalendar)
     # Vernal & autumnal equinoxes (both Mondayised)
-    (isseasonstartholiday(Date(dt), Mar, [Sun]) ||
-        isseasonstartholiday(Date(dt), Sep, [Sun]))
+    ((isseasonstart(Date(dt), Mar) || # Sunday is mondayised
+        (dayofweek(dt) == Mon &&
+            (Date(dt) == seasonstart(Date(dt), m) + Day(1)))) ||
+    (isseasonstart(Date(dt), Sep) || # Sunday is mondayised
+        (dayofweek(dt) == Mon &&
+            (Date(dt) == seasonstart(Date(dt), m) + Day(1)))))
 end
 function ishealthandsportsdayholiday(dt::TimeType, c::JPFCalendar)
     (month(dt) == Oct && ((year(dt) >= 2000 && dayofweek(dt) == Mon &&
