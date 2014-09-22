@@ -10,10 +10,11 @@ immutable GBLOFCalendar <: GBFCalendar end
 #####
 
 function isnewyearsholiday(dt::TimeType, c::GBFCalendar)
-    isnewyearsholiday(dt, [Sat, Sun])
+    (dayofyear(dt) == 1 || # Sat, Sun are Mondayised
+        (dayofwweek(dt) == Mon && (dayofyear(dt) in [2, 3])))
 end
 function iseasterholiday(dt::TimeType, c::GBFCalendar)
-    iseasterholiday(dt, [Fri, Mon])
+    iseaster(dt, Fri) || iseaster(dt, Mon)
 end
 function isbankholiday(dt::TimeType, c::GBFCalendar)
     # May Day
@@ -33,10 +34,12 @@ function isqueensjubileeholiday(dt::TimeType, c::GBFCalendar)
     day(dt) == 5 && month(dt) == Jun && year(dt) == 2012
 end
 function ischristmasdayholiday(dt::TimeType, c::GBFCalendar)
-    ischristmasdayholiday(dt, false)
+    month(dt) == Dec && day(dt) == 25
 end
 function isboxingdayholiday(dt::TimeType, c::GBFCalendar)
-    isboxingdayholiday(dt, true)
+    (month(dt) == Dec && (day(dt) == 26 ||
+        # Mondayised accounting for Christmas day possibly being Mondayised
+        (day(dt) == 27 && dayofweek(dt) in [Mon, Tue])))
 end
 function isroyalweddingholiday(dt::TimeType, c::GBFCalendar)
     day(dt) == 29 && month(dt) == 4 && year(dt) == 2011
