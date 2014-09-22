@@ -11,10 +11,10 @@ immutable EULIBORFCalendar <: EUFCalendar end
 #####
 
 function isnewyearsholiday(dt::TimeType, c::EUFCalendar)
-    isnewyearsholiday(dt)
+    dayofyear(dt) == 1
 end
 function iseasterholiday(dt::TimeType, c::EUFCalendar)
-    iseasterholiday(dt, [Fri, Mon]) && year(dt) >= 2000
+    (iseaster(dt, Fri) || iseaster(dt, Mon)) && year(dt) >= 2000
 end
 function islabourdayholiday(dt::TimeType, c::EUTAFCalendar)
     day(dt) == 1 && month(dt) == May && year(dt) >= 2000
@@ -36,9 +36,12 @@ function isgood(dt::TimeType, c::EUTAFCalendar)
     # http://www.ecb.europa.eu/press/pr/date/2000/html/pr000525_2.en.html
     # Other slosing days:
     # http://www.ecb.europa.eu/press/pr/date/2000/html/pr001214_4.en.html
-    year(dt) <= 1998 && error("TARGET only existed after 1998.")
+    year(dt) <= 1998 && throw(ArgumentError("TARGET only existed after 1998."))
     !(isweekend(dt) || isnewyearsholiday(dt, c) ||
         iseasterholiday(dt, c) || ischristmasdayholiday(dt, c) ||
         islabourdayholiday(dt, c) || istargetclosed(dt, c))
 end
-isgood(dt::TimeType, c::EULIBORFCalendar) = !islabourdayholiday(dt, c)
+function isgood(dt::TimeType, c::EULIBORFCalendar)
+    # https://www.theice.com/iba/libor
+    isgood(dt, GBLOFCalendar()) && !islabourdayholiday(dt, EUTAFCalendar())
+end
