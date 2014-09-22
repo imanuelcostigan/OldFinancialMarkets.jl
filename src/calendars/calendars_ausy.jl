@@ -20,7 +20,6 @@ function isgood(dt::TimeType, c::AUSYFCalendar)
         isaustraliadayholiday(dt, c) || isanzacdayholiday(dt, c) ||
         ischristmasdayholiday(dt, c) || isboxingdayholiday(dt, c) ||
         iseasterholiday(dt, c) || isqueensbirthdayholiday(dt, c) ||
-        isqueensbirthdayholiday(dt, c) || isbankholiday(dt, c) ||
-        islabourdayholiday(dt, c))
+        isbankholiday(dt, c) || islabourdayholiday(dt, c))
 end
 

@@ -19,7 +19,6 @@ function isgood(dt::TimeType, c::AUMEFCalendar)
         isaustraliadayholiday(dt, c) || isanzacdayholiday(dt, c) ||
         ischristmasdayholiday(dt, c) || isboxingdayholiday(dt, c) ||
         iseasterholiday(dt, c) || isqueensbirthdayholiday(dt, c) ||
-        isqueensbirthdayholiday(dt, c) || ismelbournecupholiday(dt, c) ||
-        islabourdayholiday(dt, c))
+        ismelbournecupholiday(dt, c) || islabourdayholiday(dt, c))
 end
 
