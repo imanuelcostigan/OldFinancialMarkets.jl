@@ -11,7 +11,7 @@ immutable USLIBORFCalendar <: USFCalendar end
 #####
 
 function isnewyearsholiday(dt::TimeType, c::USFCalendar)
-    (isnewyearsday(dt) ||
+    (dayofyear(dt) == 1 ||
         (day(dt) == 31 && month(dt) == Dec && dayofweek(dt) == Fri) ||
         (day(dt) == 2 && month(dt) == Jan && dayofweek(dt) == Mon))
 end
