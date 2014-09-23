@@ -10,11 +10,11 @@ abstract AUFCalendar <: SingleFCalendar
 
 function isnewyearsholiday(dt::TimeType, c::AUFCalendar)
     (dayofyear(dt) == 1 || # Sat, Sun are Mondayised
-        (dayofwweek(dt) == Mon && (dayofyear(dt) in [2, 3])))
+        (dayofweek(dt) == Mon && (dayofyear(dt) in [2, 3])))
 end
 function isaustraliadayholiday(dt::TimeType, c::AUFCalendar)
     (dayofyear(dt) == 26 || # Sat, Sun are Mondayised
-        (dayofwweek(dt) == Mon && (dayofyear(dt) in [27, 28])))
+        (dayofweek(dt) == Mon && (dayofyear(dt) in [27, 28])))
 end
 function isanzacdayholiday(dt::TimeType, c::AUFCalendar)
     (month(dt) == Apr && (day(dt) == 25 || # Sat, Sun Mondayised
