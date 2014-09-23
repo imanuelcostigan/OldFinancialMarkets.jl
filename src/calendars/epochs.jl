@@ -21,6 +21,7 @@ function easter(y::Integer)
     p = mod(hh + ll - 7m + 114, 31)
     return Date(y, n, p + 1)
 end
+easter(dt::TimeType) = easter(year(dt))
 
 function easter(y::Integer, day::Integer)
     msg = "The day must be either Fri, Sat, Sun or Mon."
@@ -30,7 +31,6 @@ function easter(y::Integer, day::Integer)
     day == Sun && return easter(y)
     day == Mon && return easter(y) + Day(1)
 end
-
 easter(dt::TimeType, day::Integer) = easter(year(dt), day)
 
 iseaster(dt::TimeType) = (easter(dt) == Date(dt))
