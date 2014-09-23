@@ -48,16 +48,16 @@ function isrespectforagedholiday(dt::TimeType, c::JPFCalendar)
 end
 function iscitizensdayholiday(dt::TimeType, c::JPFCalendar)
     (year(dt) >= 2003 && month(dt) == Sep && dayofweek(dt) == Tue &&
-        dayofweekofmonth(dt) == 3 && isseasonstartholiday(dt + Day(1), Sep))
+        dayofweekofmonth(dt) == 3 && isseasonstart(dt + Day(1), Sep))
 end
 function isseasonstartholiday(dt::TimeType, c::JPFCalendar)
     # Vernal & autumnal equinoxes (both Mondayised)
     ((isseasonstart(Date(dt), Mar) || # Sunday is mondayised
         (dayofweek(dt) == Mon &&
-            (Date(dt) == seasonstart(Date(dt), m) + Day(1)))) ||
+            (Date(dt) == seasonstart(Date(dt), Mar) + Day(1)))) ||
     (isseasonstart(Date(dt), Sep) || # Sunday is mondayised
         (dayofweek(dt) == Mon &&
-            (Date(dt) == seasonstart(Date(dt), m) + Day(1)))))
+            (Date(dt) == seasonstart(Date(dt), Sep) + Day(1)))))
 end
 function ishealthandsportsdayholiday(dt::TimeType, c::JPFCalendar)
     (month(dt) == Oct && ((year(dt) >= 2000 && dayofweek(dt) == Mon &&

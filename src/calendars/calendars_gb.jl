@@ -11,7 +11,7 @@ immutable GBLOFCalendar <: GBFCalendar end
 
 function isnewyearsholiday(dt::TimeType, c::GBFCalendar)
     (dayofyear(dt) == 1 || # Sat, Sun are Mondayised
-        (dayofwweek(dt) == Mon && (dayofyear(dt) in [2, 3])))
+        (dayofweek(dt) == Mon && (dayofyear(dt) in [2, 3])))
 end
 function iseasterholiday(dt::TimeType, c::GBFCalendar)
     iseaster(dt, Fri) || iseaster(dt, Mon)

@@ -4,7 +4,7 @@
 
 abstract USFCalendar <: SingleFCalendar
 immutable USNYFCalendar <: USFCalendar end
-immutable USLIBORFCalendar <: USFCalendar end
+    immutable USLIBORFCalendar <: USFCalendar end
 
 #####
 # Methods
@@ -48,9 +48,8 @@ function isthanksgivingdayholiday(dt::TimeType, c::USFCalendar)
     dayofweekofmonth(dt) == 4 && dayofweek(dt) == Thu && month(dt) == Nov
 end
 function ischristmasdayholiday(dt::TimeType, c::USFCalendar)
-    (ischristmasday(dt) ||
-        (((day(dt) == 24 && dayofweek(dt) == Fri) ||
-            (day(dt) == 26 && dayofweek(dt) == Mon)) && month(dt) == Dec))
+    ((day(dt) == 25 || (day(dt) == 24 && dayofweek(dt) == Fri) ||
+        (day(dt) == 26 && dayofweek(dt) == Mon)) && month(dt) == Dec)
 end
 function isgood(dt::TimeType, c::USFCalendar)
     # http://en.wikipedia.org/wiki/New_York_State_government_holidays

@@ -17,8 +17,8 @@ function isaustraliadayholiday(dt::TimeType, c::AUFCalendar)
         (dayofweek(dt) == Mon && (dayofyear(dt) in [27, 28])))
 end
 function isanzacdayholiday(dt::TimeType, c::AUFCalendar)
-    (month(dt) == Apr && (day(dt) == 25 || # Sat, Sun Mondayised
-        (dayofweek(dt) == Mon && day(dt) in [26, 27])))
+    # Not mondayised in either Syd or Mel
+    month(dt) == Apr && day(dt) == 25
 end
 function iseasterholiday(dt::TimeType, c::AUFCalendar)
     iseaster(dt, Fri) || iseaster(dt, Mon)
