@@ -7,7 +7,8 @@ type InterestRate
     compounding::Int
     daycount::DayCountFraction
     function InterestRate(rate, compounding, daycount)
-        haskey(COMPOUNDINGS, compounding) || error("Invalid compounding.")
+        msg = "Invalid compounding."
+        haskey(COMPOUNDINGS, compounding) || throw(ArgumentError(msg))
         new(rate, compounding, daycount)
     end
 end
@@ -18,7 +19,8 @@ type DiscountFactor
     startdate::TimeType
     enddate::TimeType
     function DiscountFactor(discountfactor, startdate, enddate)
-        startdate <= enddate || error("Start occurs after the end date.")
+        msg = "Start occurs after the end date."
+        startdate <= enddate || throw(ArgumentError(msg))
         new(discountfactor, startdate, enddate)
     end
 end
@@ -119,20 +121,17 @@ end
     y.daycount)
 
 function (*)(x::DiscountFactor, y::DiscountFactor)
-    if x.enddate == y.enddate || y.startdate == x.enddate
-        return DiscountFactor(value(x) * value(y),
-            min(x.startdate, y.startdate), max(x.enddate, y.enddate))
-    else
-        error("The discount factors must represent two cotinguous spans of time.")
-    end
+    msg = "The discount factors must represent two cotinguous spans of time."
+    (x.enddate == y.enddate || y.startdate == x.enddate) || throw(
+        ArgumentError(msg))
+    DiscountFactor(value(x) * value(y), min(x.startdate, y.startdate),
+        max(x.enddate, y.enddate))
 end
 function (/)(x::DiscountFactor, y::DiscountFactor)
-    if x.startdate == y.startdate
-        return DiscountFactor(value(x) / value(y),
-            min(x.enddate, y.enddate), max(x.enddate, y.enddate))
-    else
-        error("The discount factors must start at the same instant.")
-    end
+    msg = "The discount factors must start at the same instant."
+    (x.startdate == y.startdate) || throw(ArgumentError(msg))
+    DiscountFactor(value(x) / value(y), min(x.enddate, y.enddate),
+        max(x.enddate, y.enddate))
 end
 
 # comparison operations

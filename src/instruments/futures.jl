@@ -36,7 +36,8 @@ function settlement(prompt::Integer, nth::Integer, dow::Integer, offset::Period,
     # Assumes:
     # 1. settlement on IMM months only (Mar, Jun, Sep & Dec)
     # 2. prompt > 0
-    prompt > 0 || error("prompt must be greater than zero.")
+    msg = "prompt must be greater than zero."
+    prompt > 0 || throw(ArgumentError(msg))
     p1start = firstdayofmonth(lastdayofquarter(dt)) + offset
     to_nth_dayofweek(p1start, nth, dow) <= dt && (p1start += Month(3))
     to_nth_dayofweek(p1start + Month(3(prompt - 1)), nth, dow)

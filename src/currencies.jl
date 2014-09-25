@@ -34,7 +34,12 @@ JPY() = JPY(JPTOFCalendar())
 
 immutable NZD <: Currency
     calendar::JointFCalendar
-    NZD(calendar::Union(NZAUFCalendar, NZWEFCalendar)) = new(calendar)
+    function NZD(calendar::JointFCalendar)
+        cals = [NZAUFCalendar(), NZWEFCalendar()]
+        valid_cals = all([ c in cals for c in calendar.calendars ])
+        msg = "Must use NZAU & NZWE calendars."
+        valid_cals ? new(calendar) : throw(ArgumentError(msg))
+    end
 end
 NZD() = NZD(+(NZAUFCalendar(), NZWEFCalendar()))
 
