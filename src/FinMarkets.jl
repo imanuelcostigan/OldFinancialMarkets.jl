@@ -1,6 +1,11 @@
 module FinMarkets
 
-using Dates, DataFrames
+if VERSION < v"0.4-"
+    using Dates
+else
+    using Base.Dates
+end
+using DataFrames: DataFrame
 
 export
     # constants.jl
