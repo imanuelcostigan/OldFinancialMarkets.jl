@@ -10,56 +10,37 @@ abstract Currency
 
 immutable AUD <: Currency
     calendar::JointFCalendar
-    function AUD(calendar)
-        valid_cals = calendar == AUSYFCalendar()
-        valid_cals ? new(calendar) : error("Must use AUSY calendar.")
-    end
+    AUD(calendar::AUSYFCalendar) = new(calendar)
 end
 AUD() = AUD(AUSYFCalendar())
 
 immutable EUR <: Currency
     calendar::JointFCalendar
-    function EUR(calendar)
-        valid_cals = calendar == EUTAFCalendar()
-        valid_cals ? new(calendar) : error("Must use EUTA calendar.")
-    end
+    EUR(calendar::EUTAFCalendar) = new(calendar)
 end
 EUR() = EUR(EUTAFCalendar())
 
 immutable GBP <: Currency
     calendar::JointFCalendar
-    function GBP(calendar)
-        valid_cals = calendar == GBLOFCalendar()
-        valid_cals ? new(calendar) : error("Must use GBLO calendar.")
-    end
+    GBP(calendar::GBLOFCalendar) = new(calendar)
 end
 GBP() = GBP(GBLOFCalendar())
 
 immutable JPY <: Currency
     calendar::JointFCalendar
-    function JPY(calendar)
-        valid_cals = calendar == JPTOFCalendar()
-        valid_cals ? new(calendar) : error("Must use JPTO calendar.")
-    end
+    JPY(calendar::JPTOFCalendar) = new(calendar)
 end
 JPY() = JPY(JPTOFCalendar())
 
 immutable NZD <: Currency
     calendar::JointFCalendar
-    function NZD(calendar)
-        cals = [NZAUFCalendar(), NZWEFCalendar()]
-        valid_cals = all([ c in cals for c in calendar.calendars ])
-        valid_cals ? new(calendar) : error("Must use NZAU & NZWE calendars.")
-    end
+    NZD(calendar::Union(NZAUFCalendar, NZWEFCalendar)) = new(calendar)
 end
 NZD() = NZD(+(NZAUFCalendar(), NZWEFCalendar()))
 
 immutable USD <: Currency
     calendar::JointFCalendar
-    function USD(calendar)
-        valid_cals = calendar == USNYFCalendar()
-        valid_cals ? new(calendar) : error("Must use USNY calendar.")
-    end
+    USD(calendar::USNYFCalendar) = new(calendar)
 end
 USD() = USD(USNYFCalendar())
 
