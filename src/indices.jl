@@ -17,14 +17,14 @@ immutable CashIndex{CCY<:Currency} <: InterestRateIndex
 end
 
 # OpenGamma: Interest rate instruments & market conventions guide
-CashIndex{AUD}(::AUD) = CashIndex{AUD}(AUD(), *(AUSYFCalendar(), AUMEFCalendar()),
+CashIndex(::AUD) = CashIndex{AUD}(AUD(), *(AUSYFCalendar(), AUMEFCalendar()),
     Following(), A365())
-CashIndex{EUR}(::EUR) = CashIndex{EUR}(EUR(), EUTAFCalendar(), Following(), A360())
-CashIndex{GBP}(::GBP) = CashIndex{GBP}(GBP(), GBLOFCalendar(), Following(), A365())
-CashIndex{JPY}(::JPY) = CashIndex{JPY}(JPY(), JPTOFCalendar(), Following(), A365())
-CashIndex{NZD}(::NZD) = CashIndex{NZD}(NZD(), +(NZAUFCalendar(), NZWEFCalendar()),
+CashIndex(::EUR) = CashIndex{EUR}(EUR(), EUTAFCalendar(), Following(), A360())
+CashIndex(::GBP) = CashIndex{GBP}(GBP(), GBLOFCalendar(), Following(), A365())
+CashIndex(::JPY) = CashIndex{JPY}(JPY(), JPTOFCalendar(), Following(), A365())
+CashIndex(::NZD) = CashIndex{NZD}(NZD(), +(NZAUFCalendar(), NZWEFCalendar()),
     Following(), A365())
-CashIndex{USD}(::USD) = CashIndex{USD}(USD(), USNYFCalendar(), Following(), A360())
+CashIndex(::USD) = CashIndex{USD}(USD(), USNYFCalendar(), Following(), A360())
 
 typealias AONIA CashIndex{AUD}
 typealias EONIA CashIndex{EUR}
@@ -55,14 +55,14 @@ immutable IBOR{CCY<:Currency} <: InterestRateIndex
     daycount::DayCountFraction
 end
 
-function IBOR{AUD}(::AUD, tenor::Period)
+function IBOR(::AUD, tenor::Period)
     # http://www.afma.com.au/standards/market-conventions/Bank%20Bill%20Swap%20(BBSW)%20Benchmark%20Rate%20Conventions.pdf
     # OpenGamma: Interest rate instruments & market conventions guide
     # NB: Spot lag is 1 day because assuming end-of-day instance of IBOR
     #     Spot lag of 0 day applies only to transactions prior to 10am
     IBOR{AUD}(AUD(), Day(1), tenor, AUSYFCalendar(), Succeeding(), false, A365())
 end
-function IBOR{EUR}(::EUR, tenor::Period, libor = false)
+function IBOR(::EUR, tenor::Period, libor = false)
     if libor
         # https://www.theice.com/iba/libor
         # http://www.bbalibor.com/technical-aspects/fixing-value-and-maturity
@@ -83,7 +83,7 @@ function IBOR{EUR}(::EUR, tenor::Period, libor = false)
             ModifiedFollowing(), true, A360())
     end
 end
-function IBOR{GBP}(::GBP, tenor::Period)
+function IBOR(::GBP, tenor::Period)
     # https://www.theice.com/iba/libor
     # http://www.bbalibor.com/technical-aspects/fixing-value-and-maturity
     # OpenGamma: Interest rate instruments & market conventions guide
@@ -96,7 +96,7 @@ function IBOR{GBP}(::GBP, tenor::Period)
     end
     IBOR{GBP}(GBP(), spotlag, tenor, GBLOFCalendar(), bdc, true, A365())
 end
-function IBOR{JPY}(::JPY, tenor::Period, libor = true)
+function IBOR(::JPY, tenor::Period, libor = true)
     if tenor < Month(1)
         spotlag = Day(0)
         bdc = Following()
@@ -119,7 +119,7 @@ function IBOR{JPY}(::JPY, tenor::Period, libor = true)
     end
     IBOR{JPY}(JPY(), spotlag, tenor, cal, bdc, eom, A360())
 end
-function IBOR{NZD}(::NZD, tenor::Period)
+function IBOR(::NZD, tenor::Period)
     # http://www.nzfma.org/includes/download.aspx?ID=130053
     # OpenGamma: Interest rate instruments & market conventions guide
     msg = "The tenor must be no less than 1 month."
@@ -127,7 +127,7 @@ function IBOR{NZD}(::NZD, tenor::Period)
     IBOR{NZD}(NZD(), Day(0), tenor, +(NZAUFCalendar(), NZWEFCalendar()), bdc,
         false, A365())
 end
-function IBOR{USD}(::USD, tenor::Period)
+function IBOR(::USD, tenor::Period)
     # https://www.theice.com/iba/libor
     # http://www.bbalibor.com/technical-aspects/fixing-value-and-maturity
     # OpenGamma: Interest rate instruments & market conventions guide
