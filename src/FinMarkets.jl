@@ -48,7 +48,8 @@ export
     JPYLIBOR, JPYTIBOR, NZDBKBM, USDLIBOR,
     CashIndex, AONIA, EONIA, SONIA, TONAR, NZIONA, FedFund,
     # instruments.jl
-    Instrument, Cash, Deposit, Future, STIRFuture
+    Instrument, Cash, Deposit, Future, STIRFuture,
+    price
 
 include("constants.jl")
 include("calendars.jl")
