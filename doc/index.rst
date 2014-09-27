@@ -34,8 +34,7 @@ Objects such as:
 Modelling such as:
 
 - Year fraction calculations
-- Conversion between interest rates and discount factors and between different
-interest rates
+- Conversion between interest rates and discount factors and between different interest rates
 - Identifying good (and bad) days
 - Adjusting and shifting dates
 - Creating swap date schedules
