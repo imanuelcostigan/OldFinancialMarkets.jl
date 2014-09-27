@@ -11,11 +11,9 @@ For example::
     # Create US Dollar object
     USD = USD()
     # Create 3m USD LIBOR
-    Deposit(USD, Month(3), 0.05)
-
-Pricing this deposit at its trade date is easy::
-
-    price(Deposit(USD, Month(3), 0.05))
+    depo = Deposit(USD, Month(3), 0.05)
+    # Price depo at trade date
+    price(depo)
 
 Features
 -----
