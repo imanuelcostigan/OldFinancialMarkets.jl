@@ -42,7 +42,6 @@ function settlement(prompt::Integer, nth::Integer, dow::Integer, offset::Period,
     to_nth_dayofweek(p1start, nth, dow) <= dt && (p1start += Month(3))
     to_nth_dayofweek(p1start + Month(3(prompt - 1)), nth, dow)
 end
-
 function STIRFuture(ccy::Currency, prompt::Integer, price::Real,
     tradedate::TimeType = EVAL_DATE, amount::Real = 1)
     # Get STIR settlement details
