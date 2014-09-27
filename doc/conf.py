@@ -224,7 +224,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'FinMarkets.jl', u'FinMarkets.jl Documentation',
+    ('index', 'finmarketsjl', u'FinMarkets.jl Documentation',
      [AUTHORS], 1)
 ]
 
@@ -239,7 +239,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
   ('index', 'FinMarkets.jl', u'FinMarkets.jl Documentation',
-   AUTHORS, 'FinMarkets.jl',
+   AUTHORS, 'finmarkets.jl',
    'Describe and model financial markets objects using Julia', 'Miscellaneous'),
 ]
 
