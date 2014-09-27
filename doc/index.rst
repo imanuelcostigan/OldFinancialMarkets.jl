@@ -5,6 +5,7 @@ FinMarkets.jl will help you describe and model financial market objects in
 Julia.
 
 For example::
+
     # Load packages
     using Dates, FinMarkets
     # Create US Dollar object
