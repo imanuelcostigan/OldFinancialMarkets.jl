@@ -34,6 +34,7 @@ The ``years`` method will let you calculate the times (in years) between two dat
     d2 = Date(2015, 1, 1)
     years(d1, d2, A365()) # 1.0
     years(d1, d2, A360()) # 365/360
+    years(d2, d1, A365()) # -1.0
 
 Interface
 -------------------------------------------------------------------------------
