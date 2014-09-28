@@ -5,3 +5,4 @@ FinMarkets Documentation
     :maxdepth: 2
 
     overview
+    constants
