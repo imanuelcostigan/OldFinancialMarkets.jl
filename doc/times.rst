@@ -16,12 +16,12 @@ FinMarkets supports six of the main day count conventions: Actual/365 Fixed, Act
 ==========   ============
 OG section   Type name
 ==========   ============
-``A365``         3.8
-``A360``         3.7
-``ActActISDA``   3.12
-``Thirty360``    3.3
-``ThirtyE360``   3.4
-``ThirtyEP360``  3.6
+A365         3.8
+A360         3.7
+ActActISDA   3.12
+Thirty360    3.3
+ThirtyE360   3.4
+ThirtyEP360  3.6
 ==========   ============
 
 
