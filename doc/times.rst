@@ -38,10 +38,6 @@ The ``years`` method will let you calculate the times (in years) between two dat
 Interface documentation
 -------------------------------------------------------------------------------
 
-.. function:: ThirtyEP360() -> ThirtyEP360
-
-   Construct a ``ThirtyEP360`` type.
-
 .. function:: A365() -> A365
 
    Construct an ``A365`` type.
