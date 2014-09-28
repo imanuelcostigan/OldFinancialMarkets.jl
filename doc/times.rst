@@ -35,7 +35,7 @@ The ``years`` method will let you calculate the times (in years) between two dat
     years(d1, d2, A365()) # 1.0
     years(d1, d2, A360()) # 365/360
 
-Interface documentation
+Interface
 -------------------------------------------------------------------------------
 
 .. function:: A365() -> A365
