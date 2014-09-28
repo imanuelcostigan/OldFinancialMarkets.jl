@@ -73,9 +73,6 @@ Interface documentation
               years(date1::TimeType, date2::TimeType, dc::ThirtyE360) -> Real
               years(date1::TimeType, date2::TimeType, dc::ThirtyEP360) -> Real
 
-   Calculate the time in years between ``date1`` and ``date2`` using the `dc` day count convention.
-
-   The number of years between ``date1`` and ``date2`` using the ``A365``
-   day count convention
+   Calculate the time in years between ``date1`` and ``date2`` using the ``dc`` day count convention.
 
 .. _OpenGamma Interest Rate Instruments and Market Conventions Guide (Edition 2.0): http://developers.opengamma.com/quantitative-research/Interest-Rate-Instruments-and-Market-Conventions.pdf
