@@ -13,16 +13,16 @@ Supported conventions
 
 FinMarkets supports six of the main day count conventions: Actual/365 Fixed, Actual/360, Actual/Actual (ISDA), 30/360, 30E/360 and 30E+/360. These are defined as immutable types.
 
-============         ===========    ===========
-Day count            OG reference   Type name
-============         ===========    ===========
-Actual/365 Fixed     3.8            A365
-Actual/360           3.7            A360
-Actual/Actual (ISDA) 3.12           ActActISDA
-30/360               3.3            Thirty360
-30E/360              3.4            ThirtyE360
-30E+/360             3.6            ThirtyEP360
-============         ============   ===========
+============          ===========    ===========
+Day count             OG reference   Type name
+============          ===========    ===========
+Actual/365 Fixed      3.8            A365
+Actual/360            3.7            A360
+Actual/Actual (ISDA)  3.12           ActActISDA
+30/360                3.3            Thirty360
+30E/360               3.4            ThirtyE360
+30E+/360              3.6            ThirtyEP360
+============          ============   ===========
 
 Time calculations
 ----
