@@ -11,7 +11,7 @@ Each of the day count conventions that are supported by FinMarkets.jl are docume
 Supported conventions
 -------------------------------------------------------------------------------
 
-FinMarkets supports six of the main day count conventions: Actual/365 Fixed, Actual/360, Actual/Actual (ISDA), 30/360, 30E/360 and 30E+/360. These are defined as immutable types.
+FinMarkets supports six of the main day count conventions: Actual/365 Fixed, Actual/360, Actual/Actual (ISDA), 30/360, 30E/360 and 30E+/360. These are defined as immutable subtypes of the abstract ``DayCountFraction`` type.
 
 ================  ============
 Type name         OG section
@@ -34,5 +34,48 @@ The ``years`` method will let you calculate the times (in years) between two dat
     d2 = Date(2015, 1, 1)
     years(d1, d2, A365()) # 1.0
     years(d1, d2, A360()) # 365/360
+
+Interface documentation
+-------------------------------------------------------------------------------
+
+.. function:: ThirtyEP360() -> ThirtyEP360
+
+   Construct a ``ThirtyEP360`` type.
+
+.. function:: A365() -> A365
+
+   Construct an ``A365`` type.
+
+.. function:: A360() -> A360
+
+   Construct an ``A360`` type.
+
+.. function:: ActActISDA() -> ActActISDA
+
+   Construct an ``ActActISDA`` type.
+
+.. function:: Thirty360() -> Thirty360
+
+   Construct a ``Thirty360`` type.
+
+.. function:: ThirtyE360() -> ThirtyE360
+
+   Construct a ``ThirtyE360`` type.
+
+.. function:: ThirtyEP360() -> ThirtyEP360
+
+   Construct a ``ThirtyEP360`` type.
+
+.. function:: years(date1::TimeType, date2::TimeType, dc::A365) -> Real
+              years(date1::TimeType, date2::TimeType, dc::A360) -> Real
+              years(date1::TimeType, date2::TimeType, dc::ActActISDA) -> Real
+              years(date1::TimeType, date2::TimeType, dc::Thirty360) -> Real
+              years(date1::TimeType, date2::TimeType, dc::ThirtyE360) -> Real
+              years(date1::TimeType, date2::TimeType, dc::ThirtyEP360) -> Real
+
+   Calculate the time in years between ``date1`` and ``date2`` using the `dc` day count convention.
+
+   The number of years between ``date1`` and ``date2`` using the ``A365``
+   day count convention
 
 .. _OpenGamma Interest Rate Instruments and Market Conventions Guide (Edition 2.0): http://developers.opengamma.com/quantitative-research/Interest-Rate-Instruments-and-Market-Conventions.pdf
