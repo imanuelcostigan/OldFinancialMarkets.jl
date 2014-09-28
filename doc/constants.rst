@@ -1,5 +1,5 @@
 Constants
-=====
+===============================================================================
 
 A number of compounding frequency constants are available to you to more easily denote the compounding frequency of interest rates.
 
