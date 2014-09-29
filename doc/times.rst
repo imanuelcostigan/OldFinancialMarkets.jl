@@ -6,7 +6,7 @@ Introduction
 
 The calculation of lengths of times between financial events is one of the most basic elements of financial mathematics. For example, the interest earned on money lent will depend on the length of time over which it has been lent out. A number of different day count conventions have been developed and documented (e.g. ISDA 2006 definitions). Generally speaking each convention consists of two components: first, a rule that defines how days are counted (hence **day count** convention); and second, a rule that defines the number of days in a year. For example, 30/360 day count conventions (yes, there are a few different types) count each month to consist of 30 days and each year to consist of 360 days.
 
-Each of the day count conventions that are supported by FinMarkets.jl are documented extensively in the `OpenGamma Interest Rate Instruments and Market Conventions Guide (Edition 2.0)`_.
+Each of the day count conventions that are supported by FinMarkets.jl are documented extensively elsewhere [ogconventions]_ and won't be repeated here.
 
 Supported conventions
 -------------------------------------------------------------------------------
@@ -72,4 +72,4 @@ Interface
 
    Calculate the time in years between ``date1`` and ``date2`` using the ``dc`` day count convention.
 
-.. _OpenGamma Interest Rate Instruments and Market Conventions Guide (Edition 2.0): http://developers.opengamma.com/quantitative-research/Interest-Rate-Instruments-and-Market-Conventions.pdf
+.. [ogconventions]_ OpenGamma Interest Rate Instruments and Market Conventions Guide, Edition 2.0, http://developers.opengamma.com/quantitative-research/Interest-Rate-Instruments-and-Market-Conventions.pdf
