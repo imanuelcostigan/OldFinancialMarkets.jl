@@ -18,7 +18,7 @@ In general, financial events must occur on *good days* as defined by the applica
 Financial calendars
 -------------------------------------------------------------------------------
 
-**Good days** are those for which banks are open and able to settle transactions in a given financial centre. Generally speaking, all days are good excepting weekends, generally observed public holidays (e.g. Christmas day) or those applying specifically to banks (e.g. a bank holiday). As a consequence, good days are tied to a financial centre's location (New York, London, Sydney etc) which defines a **financial calendar**.
+*Good days* are those for which banks are open and able to settle transactions in a given financial centre. Generally speaking, all days are good excepting weekends, generally observed public holidays (e.g. Christmas day) or those applying specifically to banks (e.g. a bank holiday). As a consequence, good days are tied to a financial centre's location (New York, London, Sydney etc) which defines a *financial calendar*.
 
 FinMarkets.jl implements financial calendars as subtypes of the abstract ``SingleFCalendar`` abstract type which is itself a subtype of the abstract ``FinCalendar`` type.
 
