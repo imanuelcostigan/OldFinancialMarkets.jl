@@ -4,7 +4,7 @@ Financial calendars
 Introduction
 -------------------------------------------------------------------------------
 
-In an earlier section, I explained why calculating the length of time between financial events was important to financial mathematics. In this section, I will how the dates of those financial events are a function of time periods interacting with financial calendars.
+In an earlier section, I explained why calculating the length of time between financial events was important to financial mathematics. In this section, I will describe how the dates of those financial events are a function of time periods interacting with financial calendars.
 
 Motivation
 -------------------------------------------------------------------------------
