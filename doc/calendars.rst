@@ -48,6 +48,19 @@ Name                    Locale                 Concrete    Supertype
 ``USLIBORFCalendar``    US LIBOR               ``true``    ``USFCalendar``
 =====================   =====================  ==========  ======================
 
+Good day methods have been implemented for these financial calendar types and for joint calendars::
+
+    using Dates, FinMarkets
+    # NSW Labour Day
+    d1 = Date(2014,10,6)
+    # No calendars => all weekdays are good; weekends bad
+    isgood(d1)
+    # Sydney calendar
+    isgood(d1, AUSYFCalendar())
+    # Sydney, Melbourne calendar joined on bad days
+    isgood(d1, +(AUSYFCalendar(), AUMEFCalendar()))
+    # Sydney, Melbourne calendar joined on good days
+    isgood(d1, *(AUSYFCalendar(), AUMEFCalendar()))
 
 
 Business day conventions
@@ -56,3 +69,10 @@ Business day conventions
 Where a date falls on a bad day (i.e. one that is not a good day), it is adjusted to a good day using a business day convention. These are defined in glorious legalise in the 2006 ISDA definitions and interpreted well into plain English elswhere [ogconventions]_ and won't be detailed again here.
 
 FinMarkets.jl implements these business day conventions as immutable subtypes of the abstract ``BusinessDayConvention`` type. These conventions include: ``Unadjusted``, ``Preceding``, ``ModifiedPreceding``, ``Following``, ``ModifiedFollowing`` and ``Succeeding``.
+
+Bad day can be adjusted using ``adjust`` methods using these business day conventions::
+
+    # Christmas Day
+    d2 = Date(2014,12,25)
+    adjust(d2, Unadjusted(), AUSYFCalendar())
+    adjust(d2, Following(), AUSYFCalendar())
