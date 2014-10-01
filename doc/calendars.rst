@@ -27,25 +27,27 @@ Additionally, the concrete ``JointFCalendar`` subtype of ``FinCalendar`` represe
 
 A number of commonly used locale-specific ``SingleFCalendar`` subtypes are defined by FinMarkets.jl.
 
-===================   =====================  ==========  ======================
-Name                  Locale                 Concrete    Supertype
-===================   =====================  ==========  ======================``AUFCalendar``       Australia              ``false``   ``SingleFCalendar``
-``AUSYFCalendar``     Sydney/Australia       ``true``    ``AUFCalendar``
-``AUMEFCalendar``     Melbourne/Australia    ``true``    ``AUFCalendar``
-``EUFCalendar``       Europe                 ``false``   ``SingleFCalendar``
-``EUTAFCalendar``     TARGET                 ``true``    ``EUFCalendar``
-``EULIBORFCalendar``  EUR LIBOR              ``true``    ``EUFCalendar``
-``GBFCalendar``       Great Britain          ``false``   ``SingleFCalendar``
-``GBLOFCalendar``     London/GB              ``true``    ``GBFCalendar``
-``JPFCalendar``       Japan                  ``false``   ``SingleFCalendar``
-``JPTOFCalendar``     Tokyo/Japan            ``true``    ``JPFCalendar``
-``NZFCalendar``       New Zealand            ``false``   ``SingleFCalendar``
-``NZAUFCalendar``     Auckland/NZ            ``true``    ``NZFCalendar``
-``NZWEFCalendar``     Wellington/NZ          ``true``    ``NZFCalendar``
-``USFCalendar``       United States          ``false``   ``SingleFCalendar``
-``USNYFCalendar``     New York/US            ``true``    ``USFCalendar``
-``USLIBORFCalendar``  US LIBOR               ``true``    ``USFCalendar``
-===================   =====================  ==========  ======================
+=====================   =====================  ==========  ======================
+Name                    Locale                 Concrete    Supertype
+=====================   =====================  ==========  ======================
+``AUFCalendar``         Australia              ``false``   ``SingleFCalendar``
+``AUSYFCalendar``       Sydney/Australia       ``true``    ``AUFCalendar``
+``AUMEFCalendar``       Melbourne/Australia    ``true``    ``AUFCalendar``
+``EUFCalendar``         Europe                 ``false``   ``SingleFCalendar``
+``EUTAFCalendar``       TARGET                 ``true``    ``EUFCalendar``
+``EULIBORFCalendar``    EUR LIBOR              ``true``    ``EUFCalendar``
+``GBFCalendar``         Great Britain          ``false``   ``SingleFCalendar``
+``GBLOFCalendar``       London/GB              ``true``    ``GBFCalendar``
+``JPFCalendar``         Japan                  ``false``   ``SingleFCalendar``
+``JPTOFCalendar``       Tokyo/Japan            ``true``    ``JPFCalendar``
+``NZFCalendar``         New Zealand            ``false``   ``SingleFCalendar``
+``NZAUFCalendar``       Auckland/NZ            ``true``    ``NZFCalendar``
+``NZWEFCalendar``       Wellington/NZ          ``true``    ``NZFCalendar``
+``USFCalendar``         United States          ``false``   ``SingleFCalendar``
+``USNYFCalendar``       New York/US            ``true``    ``USFCalendar``
+``USLIBORFCalendar``    US LIBOR               ``true``    ``USFCalendar``
+=====================   =====================  ==========  ======================
+
 
 
 Business day conventions
