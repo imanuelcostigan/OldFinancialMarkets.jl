@@ -15,6 +15,7 @@ For example, a deposit's termination date may occur three months after the depos
 
 In general, financial events must occur on *good days* as defined by the applicable *financial calendar*. If the calculated date of a financial event is not a good day in the applicable financial centre, then it must be *adjusted* by a *business day convention*.
 
+
 Financial calendars
 -------------------------------------------------------------------------------
 
@@ -24,6 +25,27 @@ FinMarkets.jl implements financial calendars as subtypes of the abstract ``Singl
 
 Additionally, the concrete ``JointFCalendar`` subtype of ``FinCalendar`` represents a vector of ``SingleFCalendar`` instances (the ``calendars`` field) and flags whether the calendars are joined by on the intersection of good or bad days (the ``onbad`` boolean typed field).
 
+A number of commonly used locale-specific ``SingleFCalendar`` subtypes are defined by FinMarkets.jl.
+
+===================   =====================  ==========  ======================
+Name                  Locale                 Concrete    Supertype
+===================   =====================  ==========  ======================``AUFCalendar``       Australia              ``false``   ``SingleFCalendar``
+``AUSYFCalendar``     Sydney/Australia       ``true``    ``AUFCalendar``
+``AUMEFCalendar``     Melbourne/Australia    ``true``    ``AUFCalendar``
+``EUFCalendar``       Europe                 ``false``   ``SingleFCalendar``
+``EUTAFCalendar``     TARGET                 ``true``    ``EUFCalendar``
+``EULIBORFCalendar``  EUR LIBOR              ``true``    ``EUFCalendar``
+``GBFCalendar``       Great Britain          ``false``   ``SingleFCalendar``
+``GBLOFCalendar``     London/GB              ``true``    ``GBFCalendar``
+``JPFCalendar``       Japan                  ``false``   ``SingleFCalendar``
+``JPTOFCalendar``     Tokyo/Japan            ``true``    ``JPFCalendar``
+``NZFCalendar``       New Zealand            ``false``   ``SingleFCalendar``
+``NZAUFCalendar``     Auckland/NZ            ``true``    ``NZFCalendar``
+``NZWEFCalendar``     Wellington/NZ          ``true``    ``NZFCalendar``
+``USFCalendar``       United States          ``false``   ``SingleFCalendar``
+``USNYFCalendar``     New York/US            ``true``    ``USFCalendar``
+``USLIBORFCalendar``  US LIBOR               ``true``    ``USFCalendar``
+===================   =====================  ==========  ======================
 
 
 Business day conventions

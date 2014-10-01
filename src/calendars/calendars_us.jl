@@ -4,7 +4,7 @@
 
 abstract USFCalendar <: SingleFCalendar
 immutable USNYFCalendar <: USFCalendar end
-    immutable USLIBORFCalendar <: USFCalendar end
+immutable USLIBORFCalendar <: USFCalendar end
 
 #####
 # Methods
