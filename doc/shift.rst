@@ -21,8 +21,7 @@ The ``shift`` method encapsulates and extends ``Dates.jl`` date/time arithmetic 
 Interface
 -------------------------------------------------------------------------------
 
-.. function:: shift(dt::TimeType, p::Period, bdc = Unadjusted(), c = NoFCalendar(),
-    eom = true) -> TimeType
+.. function:: shift(dt::TimeType, p::Period, bdc = Unadjusted(), c = NoFCalendar(), eom = true) -> TimeType
 
     Shifts ``dt`` by ``p`` observing the end-of-month conventions where appropriate when ``eom = true``. The resulting date is adjusted in accordance with ``bdc`` using the calendar ``c``.
 
