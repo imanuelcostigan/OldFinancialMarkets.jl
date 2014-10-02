@@ -72,4 +72,4 @@ Interface
 
    Calculate the time in years between ``date1`` and ``date2`` using the ``dc`` day count convention.
 
-.. [ogconventions] OpenGamma Interest Rate Instruments and Market Conventions Guide, Edition 2.0, http://developers.opengamma.com/quantitative-research/Interest-Rate-Instruments-and-Market-Conventions.pdf
+.. [ogconventions] `OpenGamma Interest Rate Instruments and Market Conventions Guide, Edition 2.0 <http://developers.opengamma.com/quantitative-research/Interest-Rate-Instruments-and-Market-Conventions.pdf>`_, Accessed 2 October 2014.

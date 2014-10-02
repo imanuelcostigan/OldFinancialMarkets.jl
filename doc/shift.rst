@@ -26,4 +26,4 @@ Interface
 
     Shifts ``dt`` by ``p`` observing the end-of-month conventions where appropriate when ``eom = true``. The resulting date is adjusted in accordance with ``bdc`` using the calendar ``c``.
 
-.. [wilmotteom] http://www.wilmott.com/messageview.cfm?catid=3&threadid=95080
+.. [wilmotteom] `Wilmott Forums: End of month convention <http://www.wilmott.com/messageview.cfm?catid=3&threadid=95080>`_, Accessed 2 October 2014.
