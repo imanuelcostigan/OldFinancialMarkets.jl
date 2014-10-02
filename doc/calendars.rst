@@ -76,3 +76,97 @@ Bad day can be adjusted using ``adjust`` methods using these business day conven
     d2 = Date(2014,12,25)
     adjust(d2, Unadjusted(), AUSYFCalendar())
     adjust(d2, Following(), AUSYFCalendar())
+
+Interface
+-------------------------------------------------------------------------------
+
+.. function:: NoFCalendar() -> NoFCalendar
+
+    Constructs a ``NoFCalendar`` type, a sub-type of ``SingleFCalendar``.
+
+.. function:: AUMEFCalendar() -> AUMEFCalendar
+
+    Constructs a ``AUMEFCalendar`` type, a sub-type of ``AUFCalendar``.
+
+.. function:: AUSYFCalendar() -> AUSYFCalendar
+
+    Constructs a ``AUSYFCalendar`` type, a sub-type of ``AUFCalendar`` which is a subtype of ``SingleFCalendar``.
+
+.. function:: AUSYFCalendar() -> AUSYFCalendar
+
+    Constructs a ``AUSYFCalendar`` type, a sub-type of ``AUFCalendar`` which is a subtype of ``SingleFCalendar``.
+
+.. function:: EUTAFCalendar() -> EUTAFCalendar
+
+    Constructs a ``EUTAFCalendar`` type, a sub-type of ``EUFCalendar`` which is a subtype of ``SingleFCalendar``.
+
+.. function:: EULIBORFCalendar() -> EULIBORFCalendar
+
+    Constructs a ``EULIBORFCalendar`` type, a sub-type of ``EUFCalendar`` which is a subtype of ``SingleFCalendar``.
+
+.. function:: GBLOFCalendar() -> GBLOFCalendar
+
+    Constructs a ``GBLOFCalendar`` type, a sub-type of ``GBFCalendar`` which is a subtype of ``SingleFCalendar``.
+
+.. function:: JPTOFCalendar() -> JPFCalendar
+
+    Constructs a ``JPTOFCalendar`` type, a sub-type of ``JPFCalendar`` which is a subtype of ``SingleFCalendar``.
+
+.. function:: NZAUFCalendar() -> NZAUFCalendar
+
+    Constructs a ``NZAUFCalendar`` type, a sub-type of ``NZFCalendar`` which is a subtype of ``SingleFCalendar``.
+
+.. function:: NZWEFCalendar() -> NZWEFCalendar
+
+    Constructs a ``NZWEFCalendar`` type, a sub-type of ``NZFCalendar`` which is a subtype of ``SingleFCalendar``.
+
+.. function:: USNYFCalendar() -> USNYFCalendar
+
+    Constructs a ``USNYFCalendar`` type, a sub-type of ``USFCalendar`` which is a subtype of ``SingleFCalendar``.
+
+.. function:: USLIBORFCalendar() -> USLIBORFCalendar
+
+    Constructs a ``USLIBORFCalendar`` type, a sub-type of ``USFCalendar`` which is a subtype of ``SingleFCalendar``.
+
+.. function:: JointFCalendar(calendars::Vector{SingleFCalendar}, onbad::Bool) -> JointFCalendar
+
+    Construct a ``JointFCalendar`` type. If ``onbad`` is ``true`` then the joint calendar's bad days are the union of the bad days of its constituent calendars. Otherwise, a calendar's bad days are the intersection of the bad days of its constituent calendars. ``JointFCalendar`` is a subtype of ``FCalendar``
+
+.. function:: +(c1::SingleFCalendar, c2::SingleFCalendar) -> JointFCalendar
+
+    Equivalent to calling ``JointFCalendar([c1, c2], true)``
+
+.. function:: *(c1::SingleFCalendar, c2::SingleFCalendar) -> JointFCalendar
+
+    Equivalent to calling ``JointFCalendar([c1, c2], false)``
+
+.. function:: +(jc::JointFCalendar, c::SingleFCalendar) -> JointFCalendar
+
+    Equivalent to calling ``JointFCalendar([jc.calendars, c],
+    jc.onbad)``
+
+.. function:: convert(::Type{JointFCalendar}, c::SingleFCalendar) -> JointFCalendar
+
+    Equivalent to ``JointFCalendar(c)``
+
+.. function:: isweekend(dt::TimeType) -> Boolean
+
+    Returns ``true`` if ``dt`` is on a weekend and vice-versa.
+
+.. function:: isgood(dt::TimeType, c::NoFCalendar = NoFCalendar()) -> Boolean
+              isgood(dt::TimeType, c::AUMEFCalendar) -> Boolean
+              isgood(dt::TimeType, c::AUSYFCalendar) -> Boolean
+              isgood(dt::TimeType, c::EUTAFCalendar) -> Boolean
+              isgood(dt::TimeType, c::EULIBORFCalendar) -> Boolean
+              isgood(dt::TimeType, c::GBFCalendar) -> Boolean
+              isgood(dt::TimeType, c::JPFCalendar) -> Boolean
+              isgood(dt::TimeType, c::NZAUFCalendar) -> Boolean
+              isgood(dt::TimeType, c::NZWEFCalendar) -> Boolean
+              isgood(dt::TimeType, c::USFCalendar) -> Boolean
+              isgood(dt::TimeType, c::USLIBORFCalendar) -> Boolean
+
+    Returns ``true`` if ``dt`` is good day in ``c``. This is ``true`` only if ``dt`` does not fall on a weekend (where ``c`` is ``NoFCalendar``) or a weekend or public holiday.
+
+.. function:: isgood(dt::TimeType, c::JointFCalendar) -> Boolean
+
+    Returns ``true`` if ``dt`` is good in ``c`` where ``c.onbad`` determines how to check across each of the calendars in the joint calendar. If ``c.onbad`` is ``true`` then ``dt`` must be good in each of the financial calendars making up ``c`` and vice-versa.
