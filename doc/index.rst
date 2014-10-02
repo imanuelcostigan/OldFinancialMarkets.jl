@@ -8,3 +8,4 @@ FinMarkets Documentation
     constants
     times
     calendars
+    shift
