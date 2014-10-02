@@ -14,8 +14,6 @@ export
     # times.jl
     DayCountFraction, A365, A360, ActActISDA, Thirty360, ThirtyE360,
     ThirtyEP360, years,
-    # interestrates.jl
-    InterestRate, DiscountFactor,
     # calendars.jl
     FinCalendar, SingleFCalendar, JointFCalendar, NoFCalendar,
     isweekend, isgood,
@@ -43,6 +41,8 @@ export
     Currency, AUD, EUR, GBP, JPY, NZD, USD,
     # cashflow.jl
     CashFlow,
+    # interestrates.jl
+    InterestRate, DiscountFactor,
     # indices.jl
     Index, InterestRateIndex, IBOR, AUDBBSW, EURLIBOR, EURIBOR, GBPLIBOR,
     JPYLIBOR, JPYTIBOR, NZDBKBM, USDLIBOR,
