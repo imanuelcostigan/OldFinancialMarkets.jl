@@ -9,3 +9,4 @@ FinMarkets Documentation
     times
     calendars
     shift
+    currencies
