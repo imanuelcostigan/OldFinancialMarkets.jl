@@ -34,9 +34,6 @@ export
     Following, ModifiedFollowing, Succeeding, adjust,
     # shifters.jl
     shift,
-    # schedule.jl
-    Stub, FrontStub, BackStub, ShortFrontStub, LongFrontStub, ShortBackStub,
-    LongBackStub, DateSchedule, SwapDateSchedule,
     # currencies.jl
     Currency, AUD, EUR, GBP, JPY, NZD, USD,
     # cashflow.jl
@@ -50,6 +47,9 @@ export
     # instruments.jl
     Instrument, Cash, Deposit, Future, STIRFuture,
     price
+    # schedule.jl
+    Stub, FrontStub, BackStub, ShortFrontStub, LongFrontStub, ShortBackStub,
+    LongBackStub, DateSchedule, SwapDateSchedule,
 
 include("constants.jl")
 include("calendars.jl")

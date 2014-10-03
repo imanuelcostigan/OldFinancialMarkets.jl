@@ -17,6 +17,15 @@ The ``shift`` method encapsulates and extends ``Dates.jl`` date/time arithmetic 
 1. It is *financial calendar aware*. This means, for example, that when a date is shifted by ``Day(n)``, it is shifted by ``n`` business days rather than calendar days. It also means that a bad resulting date is adjusted to a good date using a business day convention.
 2. It is *end-of-month convention aware*. This only applies when a date is shifted by a monthly or yearly period. In these cases, when the unadjusted start date is the last calendar day of the month, the shifted end date is also the last calendar day of that month. Adjustments to good days occurs after this [wilmotteom]_.
 
+These can be illustrated as follows::
+
+    using Dates, FinMarkets
+    # Financial calendar awareness
+    shift(Date(2014, 9, 25), Month(3), ModifiedFollowing(), AUSYFCalendar(), false)
+    # End of month convention aware
+    shift(Date(2014, 9, 30), Month(3), ModifiedFollowing(), AUSYFCalendar(), true)
+
+
 
 Interface
 -------------------------------------------------------------------------------
