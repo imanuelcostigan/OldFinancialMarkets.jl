@@ -32,7 +32,7 @@ It is impossible to create a currency with the incorrect calendar field type as 
     # Use incorrect calendar
     AUD(AUMEFCalendar())
 
-I have overloaded the equality operator (``==``) for currency objects and provided methods to represent a currency as a string and to print this pretty string to output. Additionally it is possible to determine the comparative "strength" of two or more currencies::
+I have overloaded the equality operator (``==``) for currency objects and provided methods to represent a currency as a string and to print this pretty string to output. Additionally it is possible to determine the comparative "strength" of two or more currencies [ogconventions]_::
 
     EUR() > GBP() > AUD() > NZD() > USD() > JPY()
 
