@@ -46,10 +46,10 @@ export
     CashIndex, AONIA, EONIA, SONIA, TONAR, NZIONA, FedFund,
     # instruments.jl
     Instrument, Cash, Deposit, Future, STIRFuture,
-    price
+    price,
     # schedule.jl
     Stub, FrontStub, BackStub, ShortFrontStub, LongFrontStub, ShortBackStub,
-    LongBackStub, DateSchedule, SwapDateSchedule,
+    LongBackStub, DateSchedule, SwapDateSchedule
 
 include("constants.jl")
 include("calendars.jl")
