@@ -80,9 +80,8 @@ function Base.convert(::Type{InterestRate}, x::DiscountFactor, compounding::Int,
     return InterestRate(rate, compounding, daycount)
 end
 
-function InterestRate(df::DiscountFactor, cmp::Int, dc::DayCountFraction)
-    convert(InterestRate, df, cmp, dc)
-end
+InterestRate(df::DiscountFactor, cmp::Int, dc::DayCountFraction) =  convert(
+    InterestRate, df, cmp, dc)
 
 function Base.convert(::Type{InterestRate}, x::InterestRate, compounding::Int)
     startdate, enddate = Date(2013, 1, 1), Date(2014, 1, 1)
