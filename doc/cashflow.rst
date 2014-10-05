@@ -14,7 +14,7 @@ Details
     using Dates, FinMarkets
     CashFlow([AUD(), AUD()], [Date(2014, 1, 1), Date(2014, 4, 1)], [1000, 1000])
 
-A ``CashFlow`` can be elegantly coerced to a ``DataFrame`` as you may have inferred from executing the last expression. A CashFlow with mixed currencies is possible:
+A ``CashFlow`` can be elegantly coerced to a ``DataFrame`` as you may have inferred from executing the last expression. A CashFlow with mixed currencies is possible::
 
     CashFlow([AUD(), USD()], [Date(2014, 1,1), Date(2014,2,1)], [100, 100])
 
