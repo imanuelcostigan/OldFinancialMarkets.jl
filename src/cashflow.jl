@@ -20,5 +20,6 @@ type CashFlow
     end
 end
 
-Base.show(io::IO, cf::CashFlow) = show(io, DataFrame(
-    Currency = string(cf.currency), Date = cf.date, Amount = cf.amount))
+DataFrame(cf::CashFlow) = DataFrame(Currency = string(cf.currency),
+    Date = cf.date, Amount = cf.amount)
+Base.show(io::IO, cf::CashFlow) = show(io, DataFrame(cf))

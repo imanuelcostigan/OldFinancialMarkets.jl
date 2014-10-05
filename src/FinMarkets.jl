@@ -5,7 +5,7 @@ if VERSION < v"0.4-"
 else
     using Base.Dates
 end
-using DataFrames: DataFrame
+import DataFrames.DataFrame
 
 export
     # constants.jl
