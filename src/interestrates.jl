@@ -49,8 +49,8 @@ end
 Base.show(io::IO, df::DiscountFactor) = print(io, string(df))
 
 # conversions
-function Base.convert(::Type{DiscountFactor}, x::InterestRate, startdate::TimeType,
-    enddate::TimeType)
+function Base.convert(::Type{DiscountFactor}, x::InterestRate,
+    startdate::TimeType, enddate::TimeType)
     t = years(startdate, enddate, x.daycount)
     if x.compounding == Continuously
         df = exp(-value(x) * t)
@@ -60,6 +60,10 @@ function Base.convert(::Type{DiscountFactor}, x::InterestRate, startdate::TimeTy
         df = 1 / ((1 + value(x) / x.compounding) ^ (x.compounding * t))
     end
     return DiscountFactor(df, startdate, enddate)
+end
+
+function DiscountFactor(r::InterestRate, dt1::TimeType, dt2::TimeType)
+    convert(DiscountFactor, r, dt1, dt2)
 end
 
 function Base.convert(::Type{InterestRate}, x::DiscountFactor, compounding::Int,
@@ -76,11 +80,17 @@ function Base.convert(::Type{InterestRate}, x::DiscountFactor, compounding::Int,
     return InterestRate(rate, compounding, daycount)
 end
 
+function InterestRate(df::DiscountFactor, cmp::Int, dc::DayCountFraction)
+    convert(InterestRate, df, cmp, dc)
+end
+
 function Base.convert(::Type{InterestRate}, x::InterestRate, compounding::Int)
-    startdate, enddate = (Date(2013, 1, 1), Date(2014, 1, 1))
+    startdate, enddate = Date(2013, 1, 1), Date(2014, 1, 1)
     df = convert(DiscountFactor, x, startdate, enddate)
     convert(InterestRate, df, compounding, x.daycount)
 end
+
+InterestRate(r::InterestRate, cmp::Int) = convert(InterestRate, r, cmp)
 
 function Base.convert(::Type{InterestRate}, x::InterestRate, daycount::DayCountFraction)
     startdate, enddate = (Date(2013, 1, 1), Date(2014, 1, 1))
@@ -88,12 +98,17 @@ function Base.convert(::Type{InterestRate}, x::InterestRate, daycount::DayCountF
     convert(InterestRate, df, x.compounding, daycount)
 end
 
+InterestRate(r::InterestRate, dc::DayCountFraction) = convert(InterestRate, r, dc)
+
 function Base.convert(::Type{InterestRate}, x::InterestRate, compounding::Int,
     daycount::DayCountFraction)
     startdate, enddate = (Date(2013, 1, 1), Date(2014, 1, 1))
     df = convert(DiscountFactor, x, startdate, enddate)
     convert(InterestRate, df, compounding, daycount)
 end
+
+InterestRate(r::InterestRate, cmp::Int, dc::DayCountFraction) = convert(
+    InterestRate, r, cmp, dc)
 
 function equivalent(to::InterestRate, x::InterestRate)
     flag = !(x.compounding == to.compounding && x.daycount == to.daycount)
