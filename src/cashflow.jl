@@ -2,23 +2,22 @@
 # Types
 ####
 
-type CashFlow{CCY<:Currency, TT<:TimeType, RR<:Real}
-    currency::Vector{CCY}
-    date::Vector{TT}
-    amount::Vector{RR}
+type CashFlow
+    currency::Vector{Currency}
+    date::Vector{TimeType}
+    amount::Vector{Real}
     function CashFlow(currency, date, amount)
-        n1 = length(currency)
-        n2 = length(date)
-        n3 = length(amount)
+        n1 = length(currency); n2 = length(date); n3 = length(amount)
         msg = "The constructor's arguments must have the same length."
         n1 == n2 == n3 || throw(ArgumentError(msg))
+        typeof(currency) <: Vector{Currency} || (currency =
+            Currency[ccy for ccy in currency])
+        typeof(date) <: Vector{TimeType} || (date =
+            TimeType[dt for dt in date])
+        typeof(amount) <: Vector{Real} || (amount =
+            Real[amt for amt in amount])
         new(currency, date, amount)
     end
-end
-
-function CashFlow{CCY<:Currency, TT<:TimeType, RR<:Real}(currency::Vector{CCY},
-    date::Vector{TT}, amount::Vector{RR})
-    CashFlow{CCY, TT, RR}(currency, date, amount)
 end
 
 Base.show(io::IO, cf::CashFlow) = show(io, DataFrame(
