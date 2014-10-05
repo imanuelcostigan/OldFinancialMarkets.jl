@@ -10,3 +10,4 @@ FinMarkets Documentation
     calendars
     shift
     currencies
+    cashflow
