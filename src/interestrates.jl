@@ -36,7 +36,7 @@ value(df::DiscountFactor) = df.discountfactor
 
 # IO
 function Base.string(r::InterestRate)
-    (@sprintf("%05f", 100 * value(x)) * "%," *
+    (@sprintf("%05f", 100 * value(r)) * "%," *
         uppercase(COMPOUNDINGS[r.compounding]) * "," *
         uppercase(string(r.daycount)))
 end
