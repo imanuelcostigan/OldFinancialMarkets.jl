@@ -39,7 +39,7 @@ export
     # cashflow.jl
     CashFlow,
     # interestrates.jl
-    InterestRate, DiscountFactor, equivalent
+    InterestRate, DiscountFactor,
     # indices.jl
     Index, InterestRateIndex, IBOR, AUDBBSW, EURLIBOR, EURIBOR, GBPLIBOR,
     JPYLIBOR, JPYTIBOR, NZDBKBM, USDLIBOR,
