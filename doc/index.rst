@@ -11,3 +11,4 @@ FinMarkets Documentation
     shift
     currencies
     cashflow
+    interestrates
