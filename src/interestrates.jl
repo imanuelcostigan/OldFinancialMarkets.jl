@@ -123,8 +123,8 @@ for op in (:+, :*, :-, :/)
     end
     @eval begin
         function ($op)(x::InterestRate, y::InterestRate)
-            InterestRate(($op)(value(x), value(equivalent(x, y))), x.compounding,
-                x.daycount)
+            InterestRate(($op)(value(x), value(equivalent(x, y))),
+                x.compounding, x.daycount)
         end
     end
 end
