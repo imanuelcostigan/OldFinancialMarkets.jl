@@ -8,7 +8,7 @@ type Cash <: Instrument
     tradedate::TimeType
     startdate::TimeType
     enddate::TimeType
-    index::CashIndex
+    index::ONIA
 end
 
 ####
@@ -17,7 +17,7 @@ end
 
 function Cash(currency::Currency, rate::Real, tradedate::TimeType = EVAL_DATE,
     amount::Real = 1e6)
-    index = CashIndex(currency)
+    index = ONIA(currency)
     startdate = tradedate
     enddate = adjust(tradedate + Day(1), index.bdc, index.calendar)
     Cash(amount, rate, tradedate, startdate, enddate, index)

@@ -9,7 +9,7 @@ abstract InterestRateIndex <: Index
 ### Cash
 ##############################################################################
 
-immutable CashIndex{CCY<:Currency} <: InterestRateIndex
+immutable ONIA{CCY<:Currency} <: InterestRateIndex
     currency::CCY
     calendar::JointFCalendar
     bdc::BusinessDayConvention
@@ -17,28 +17,28 @@ immutable CashIndex{CCY<:Currency} <: InterestRateIndex
 end
 
 # OpenGamma: Interest rate instruments & market conventions guide
-CashIndex(::AUD) = CashIndex{AUD}(AUD(), *(AUSYFCalendar(), AUMEFCalendar()),
+ONIA(::AUD) = ONIA{AUD}(AUD(), *(AUSYFCalendar(), AUMEFCalendar()),
     Following(), A365())
-CashIndex(::EUR) = CashIndex{EUR}(EUR(), EUTAFCalendar(), Following(), A360())
-CashIndex(::GBP) = CashIndex{GBP}(GBP(), GBLOFCalendar(), Following(), A365())
-CashIndex(::JPY) = CashIndex{JPY}(JPY(), JPTOFCalendar(), Following(), A365())
-CashIndex(::NZD) = CashIndex{NZD}(NZD(), +(NZAUFCalendar(), NZWEFCalendar()),
+ONIA(::EUR) = ONIA{EUR}(EUR(), EUTAFCalendar(), Following(), A360())
+ONIA(::GBP) = ONIA{GBP}(GBP(), GBLOFCalendar(), Following(), A365())
+ONIA(::JPY) = ONIA{JPY}(JPY(), JPTOFCalendar(), Following(), A365())
+ONIA(::NZD) = ONIA{NZD}(NZD(), +(NZAUFCalendar(), NZWEFCalendar()),
     Following(), A365())
-CashIndex(::USD) = CashIndex{USD}(USD(), USNYFCalendar(), Following(), A360())
+ONIA(::USD) = ONIA{USD}(USD(), USNYFCalendar(), Following(), A360())
 
-typealias AONIA CashIndex{AUD}
-typealias EONIA CashIndex{EUR}
-typealias SONIA CashIndex{GBP}
-typealias TONAR CashIndex{JPY}
-typealias NZIONA CashIndex{NZD}
-typealias FedFund CashIndex{USD}
+typealias AONIA ONIA{AUD}
+typealias EONIA ONIA{EUR}
+typealias SONIA ONIA{GBP}
+typealias TONAR ONIA{JPY}
+typealias NZIONA ONIA{NZD}
+typealias FedFund ONIA{USD}
 
-AONIA() = CashIndex(AUD())
-EONIA() = CashIndex(EUR())
-SONIA() = CashIndex(GBP())
-TONAR() = CashIndex(JPY())
-NZIONA() = CashIndex(NZD())
-FedFund() = CashIndex(USD())
+AONIA() = ONIA(AUD())
+EONIA() = ONIA(EUR())
+SONIA() = ONIA(GBP())
+TONAR() = ONIA(JPY())
+NZIONA() = ONIA(NZD())
+FedFund() = ONIA(USD())
 
 ##############################################################################
 ### LIBOR

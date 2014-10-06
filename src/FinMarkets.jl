@@ -41,9 +41,10 @@ export
     # interestrates.jl
     InterestRate, DiscountFactor,
     # indices.jl
-    Index, InterestRateIndex, IBOR, AUDBBSW, EURLIBOR, EURIBOR, GBPLIBOR,
-    JPYLIBOR, JPYTIBOR, NZDBKBM, USDLIBOR,
-    CashIndex, AONIA, EONIA, SONIA, TONAR, NZIONA, FedFund,
+    Index, InterestRateIndex,
+    ONIA, AONIA, EONIA, SONIA, TONAR, NZIONA, FedFund,
+    IBOR, AUDBBSW, EURLIBOR, EURIBOR, GBPLIBOR, JPYLIBOR, JPYTIBOR, NZDBKBM,
+    USDLIBOR,
     # instruments.jl
     Instrument, Cash, Deposit, Future, STIRFuture,
     price,
