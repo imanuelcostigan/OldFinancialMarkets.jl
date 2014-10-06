@@ -6,10 +6,10 @@ type InterestRate
     rate::Real
     compounding::Int
     daycount::DayCountFraction
-    function InterestRate(rate, compounding, daycount)
+    function InterestRate(r::Real, cmp::Int, dc::DayCountFraction)
         msg = "Invalid compounding."
-        haskey(COMPOUNDINGS, compounding) || throw(ArgumentError(msg))
-        new(rate, compounding, daycount)
+        haskey(COMPOUNDINGS, cmp) || throw(ArgumentError(msg))
+        new(r, cmp, dc)
     end
 end
 
@@ -18,10 +18,10 @@ type DiscountFactor
     discountfactor::Real
     startdate::TimeType
     enddate::TimeType
-    function DiscountFactor(discountfactor, startdate, enddate)
+    function DiscountFactor(df::DiscountFactor, dt1::TimeType, dt2::TimeType)
         msg = "Start occurs after the end date."
-        startdate <= enddate || throw(ArgumentError(msg))
-        new(discountfactor, startdate, enddate)
+        dt1 <= dt2 || throw(ArgumentError(msg))
+        new(df, dt1, dt2)
     end
 end
 
