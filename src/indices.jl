@@ -60,7 +60,8 @@ function IBOR(::AUD, tenor::Period)
     # OpenGamma: Interest rate instruments & market conventions guide
     # NB: Spot lag is 1 day because assuming end-of-day instance of IBOR
     #     Spot lag of 0 day applies only to transactions prior to 10am
-    IBOR{AUD}(AUD(), Day(1), tenor, AUSYFCalendar(), Succeeding(), false, A365())
+    IBOR{AUD}(AUD(), Day(1), tenor, AUSYFCalendar(), Succeeding(), false,
+        A365())
 end
 function IBOR(::EUR, tenor::Period, libor = false)
     if libor
