@@ -107,7 +107,7 @@ Interface
 
     A convenient constructor of USD LIBOR.
 
-    The spot lag is 2 GDs in ``GBLOFCalendar`` and is adjusted using the ``ModifiedFollowing`` convention when the ``tenor`` is no less than one month. Conversely, the spot lag is 0 GDs and is adjusted using the ``Following`` convention when the ``tenor is less than one month. When the ``tenor`` is one day, good days are those in ``GBLOFCalendar`` and ``USNYFCalendar``. The end-of-month convention is observed and the ``A360`` day count convention applies.
+    The spot lag is 2 GDs in ``GBLOFCalendar`` and is adjusted using the ``ModifiedFollowing`` convention when the ``tenor`` is no less than one month. Conversely, the spot lag is 0 GDs and is adjusted using the ``Following`` convention when the ``tenor`` is less than one month. When the ``tenor`` is one day, good days are those in ``GBLOFCalendar`` and ``USNYFCalendar``. The end-of-month convention is observed and the ``A360`` day count convention applies.
 
 .. function:: AUDBBSW(tenor) -> AUDBBSW (IBOR{AUD})
               EURIBOR(tenor) -> EURIBOR (IBOR{EUR})
