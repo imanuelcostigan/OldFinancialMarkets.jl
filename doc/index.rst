@@ -12,3 +12,4 @@ FinMarkets Documentation
     currencies
     cashflow
     interestrates
+    indices
