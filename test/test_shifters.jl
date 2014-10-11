@@ -34,6 +34,3 @@ sdt = shift(Date(2012, 2, 29), Month(1), u, nocal, true)
 sdt1 = shift(Date(2012, 2, 29), Month(24), mf, sydcal, true)
 sdt2 = shift(Date(2012, 2, 29), Year(2), mf, sydcal, true)
 @test sdt1 == sdt2
-
-# Test tonthdayofweek
-@test tonthdayofweek(Date(2014, 7, 27), 1, Mon) == Date(2014, 7, 28)

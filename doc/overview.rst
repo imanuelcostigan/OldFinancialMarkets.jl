@@ -1,4 +1,5 @@
-# FinMarkets
+Overview
+===============================================================================
 
 FinMarkets.jl will help you describe and model financial market objects in
 Julia.
@@ -14,7 +15,8 @@ For example::
     # Price depo at trade date
     price(depo)
 
-## Features
+Features
+-------------------------------------------------------------------------------
 
 Objects such as:
 
@@ -36,15 +38,27 @@ Modelling such as:
 - Creating swap date schedules
 - Pricing instruments
 
-## Installation
+Installation
+-------------------------------------------------------------------------------
 
 Install FinMarkets.jl by running::
 
     Pkg.clone("https://github.com/imanuelcostigan/FinMarkets.jl")
 
+Contribute
+-------------------------------------------------------------------------------
 
-## Obligatory badges
+- `Issue tracker`_
+- `Source code`_
 
-[![Build Status](https://travis-ci.org/imanuelcostigan/FinMarkets.jl.png)](https://travis-ci.org/imanuelcostigan/FinMarkets.jl)
-[![Coverage Status](https://coveralls.io/repos/imanuelcostigan/FinMarkets.jl/badge.png?branch=release%2F0.1)](https://coveralls.io/r/imanuelcostigan/FinMarkets.jl?branch=release%2F0.1)
-[![Documentation Status](https://readthedocs.org/projects/finmarketsjl/badge/?version=release-0.1)](https://readthedocs.org/projects/finmarketsjl/?badge=release-0.1)
+License
+-------------------------------------------------------------------------------
+
+The project is licensed under the GPL-2 license.
+
+
+
+.. _Issue tracker: https://github.com/imanuelcostigan/FinMarkets.jl/issues
+.. _Source code: https://github.com/imanuelcostigan/FinMarkets.jl
+
+
