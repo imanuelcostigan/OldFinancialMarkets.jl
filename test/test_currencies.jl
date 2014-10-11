@@ -1,0 +1,5 @@
+@test EUR() > GBP()
+@test GBP() > AUD()
+@test AUD() > NZD()
+@test NZD() > USD()
+@test USD() > JPY()

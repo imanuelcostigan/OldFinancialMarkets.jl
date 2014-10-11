@@ -3,15 +3,14 @@ compiler:
   - clang
 notifications:
   email: false
-env:
-    matrix:
-        - JULIAVERSION="julianightlies"
 before_install:
   - sudo add-apt-repository ppa:staticfloat/julia-deps -y
-  - sudo add-apt-repository ppa:staticfloat/julianightlies -y
+  - sudo add-apt-repository ppa:staticfloat/juliareleases -y
   - sudo apt-get update -qq -y
   - sudo apt-get install libpcre3-dev julia -y
 script:
-  - julia -e 'Pkg.init(); run(`ln -s $(pwd()) $(Pkg.dir("FinMarkets"))`); Pkg.pin("FinMarkets"); Pkg.resolve()'
+  - julia -e 'versioninfo(); Pkg.init(); run(`ln -s $(pwd()) $(Pkg.dir("FinMarkets"))`); Pkg.pin("FinMarkets"); Pkg.resolve()'
   - julia -e 'using FinMarkets; @assert isdefined(:FinMarkets); @assert typeof(FinMarkets) === Module'
-  - if [ $JULIAVERSION = "julianightlies" ]; then julia --code-coverage test/runtests.jl; fi
+  - julia -e 'Pkg.test("FinMarkets", coverage=true)'
+after_success:
+- julia -e 'cd(Pkg.dir("FinMarkets")); Pkg.add("Coverage"); using Coverage; Coveralls.submit(Coveralls.process_folder())'

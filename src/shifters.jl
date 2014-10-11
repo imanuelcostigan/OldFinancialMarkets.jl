@@ -1,3 +1,7 @@
+# Sources:
+# 1. Opengamma: Interest rate instruments and market conventions guide
+# 2. Quantlib.org
+
 function shift(dt::TimeType, p::Period, bdc = Unadjusted(), c = NoFCalendar(),
     eom = true)
     result = dt
@@ -10,7 +14,7 @@ function shift(dt::TimeType, p::Period, bdc = Unadjusted(), c = NoFCalendar(),
     if pt == Day
         while abs(n) > 0
             result += Day(sign(n))
-            isgoodday(result, c) && (n -= sign(n))
+            isgood(result, c) && (n -= sign(n))
         end
         return result
     elseif pt == Week
@@ -26,8 +30,4 @@ function shift(dt::TimeType, p::Period, bdc = Unadjusted(), c = NoFCalendar(),
             return adjust(result, bdc, c)
         end
     end
-end
-
-function tonthdayofweek(dt::TimeType, n::Int, dow::Int)
-    dt + Day(7 * (n - 1) + mod(dow - dayofweek(dt), 7))
 end
