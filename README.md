@@ -3,17 +3,18 @@
 FinMarkets.jl will help you describe and model financial market objects in
 Julia.
 
-For example::
+For example:
 
-    # Load packages
-    using Dates, FinMarkets
-    # Create US Dollar object
-    USD = USD()
-    # Create 3m USD LIBOR
-    depo = Deposit(USD, Month(3), 0.05)
-    # Price depo at trade date
-    price(depo)
-
+```julia
+# Load packages
+using Dates, FinMarkets
+# Create US Dollar object
+USD = USD()
+# Create 3m USD LIBOR
+depo = Deposit(USD, Month(3), 0.05)
+# Price depo at trade date
+price(depo)
+```
 ## Features
 
 Objects such as:
@@ -38,10 +39,11 @@ Modelling such as:
 
 ## Installation
 
-Install FinMarkets.jl by running::
+Install FinMarkets.jl by running:
 
-    Pkg.clone("https://github.com/imanuelcostigan/FinMarkets.jl")
-
+```julia
+Pkg.clone("https://github.com/imanuelcostigan/FinMarkets.jl")
+```
 
 ## Obligatory badges
 
