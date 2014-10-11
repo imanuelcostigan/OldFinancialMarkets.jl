@@ -3,7 +3,7 @@
 FinMarkets.jl will help you describe and model financial market objects in
 Julia.
 
-For example::
+For example:
 
 ```julia
 # Load packages
@@ -39,7 +39,7 @@ Modelling such as:
 
 ## Installation
 
-Install FinMarkets.jl by running::
+Install FinMarkets.jl by running:
 
 ```julia
 Pkg.clone("https://github.com/imanuelcostigan/FinMarkets.jl")
