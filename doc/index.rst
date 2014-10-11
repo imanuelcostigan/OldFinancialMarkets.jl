@@ -13,4 +13,4 @@ FinMarkets Documentation
     cashflow
     interestrates
     indices
-    instruments
+    instrument
