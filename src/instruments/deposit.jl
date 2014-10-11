@@ -34,5 +34,5 @@ end
 function CashFlow(depo::Deposit)
     ccy = currency(depo)
     CashFlow([ccy, ccy], [depo.startdate, depo.enddate],
-        depo.amount * [-price(depo), 1])
+        [-price(depo), 1])
 end
