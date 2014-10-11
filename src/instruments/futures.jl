@@ -14,18 +14,12 @@ end
 # Methods
 ####
 
-stirsettlementparameters(ccy::AUD) = ["nth" => 2, "day" => Fri, "off" => Day(0),
-    "delay" => Day(1)]
-stirsettlementparameters(ccy::EUR) = ["nth" => 3, "day" => Wed, "off" => Day(0),
-    "delay" => Day(2)]
-stirsettlementparameters(ccy::GBP) = ["nth" => 3, "day" => Wed, "off" => Day(0),
-    "delay" => Day(1)]
-stirsettlementparameters(ccy::JPY) = ["nth" => 3, "day" => Wed, "off" => Day(0),
-    "delay" => Day(2)]
-stirsettlementparameters(ccy::NZD) = ["nth" => 1, "day" => Wed, "off" => Day(8),
-    "delay" => Day(1)]
-stirsettlementparameters(ccy::USD) = ["nth" => 3, "day" => Wed, "off" => Day(0),
-    "delay" => Day(2)]
+stirsettlementparameters(ccy::AUD) = ["nth" => 2, "day" => Fri, "off" => Day(0)]
+stirsettlementparameters(ccy::EUR) = ["nth" => 3, "day" => Wed, "off" => Day(0)]
+stirsettlementparameters(ccy::GBP) = ["nth" => 3, "day" => Wed, "off" => Day(0)]
+stirsettlementparameters(ccy::JPY) = ["nth" => 3, "day" => Wed, "off" => Day(0)]
+stirsettlementparameters(ccy::NZD) = ["nth" => 1, "day" => Wed, "off" => Day(8)]
+stirsettlementparameters(ccy::USD) = ["nth" => 3, "day" => Wed, "off" => Day(0)]
 
 function to_nth_dayofweek(dt::TimeType, n::Integer, dow::Integer)
     dt + Day(7 * (n - 1) + mod(dow - dayofweek(dt), 7))
@@ -52,7 +46,7 @@ function STIRFuture(ccy::Currency, prompt::Integer, price::Real,
     # JPY futures are TIBOR not LIBOR
     uindex = ccy == JPY() ? IBOR(ccy, uterm, false) : IBOR(ccy, uterm)
     ustartdate = settlement(prompt, SP["nth"], SP["day"], SP["off"], tradedate)
-    utradedate = shift(ustartdate, -SP["delay"], uindex.bdc, uindex.calendar,
+    utradedate = shift(ustartdate, -uindex.spotlag, uindex.bdc, uindex.calendar,
         uindex.eom)
     if is90d
         uenddate = adjust(ustartdate + Day(90), uindex.bdc, uindex.calendar)
