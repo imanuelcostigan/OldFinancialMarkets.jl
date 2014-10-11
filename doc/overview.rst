@@ -1,5 +1,5 @@
 Overview
-=====
+===============================================================================
 
 FinMarkets.jl will help you describe and model financial market objects in
 Julia.
@@ -16,7 +16,7 @@ For example::
     price(depo)
 
 Features
------
+-------------------------------------------------------------------------------
 
 Objects such as:
 
@@ -39,20 +39,20 @@ Modelling such as:
 - Pricing instruments
 
 Installation
-----
+-------------------------------------------------------------------------------
 
 Install FinMarkets.jl by running::
 
     Pkg.clone("https://github.com/imanuelcostigan/FinMarkets.jl")
 
 Contribute
-----
+-------------------------------------------------------------------------------
 
 - `Issue tracker`_
 - `Source code`_
 
 License
-----
+-------------------------------------------------------------------------------
 
 The project is licensed under the GPL-2 license.
 
