@@ -1,13 +1,12 @@
-# FinMarkets
+# FinancialMarkets
 
-FinMarkets.jl will help you describe and model financial market objects in
-Julia.
+FinancialMarkets.jl will help you describe and model financial market objects in Julia.
 
 For example:
 
 ```julia
 # Load packages
-using Dates, FinMarkets
+using Dates, FinancialMarkets
 # Create US Dollar object
 USD = USD()
 # Create 3m USD LIBOR
@@ -39,14 +38,14 @@ Modelling such as:
 
 ## Installation
 
-Install FinMarkets.jl by running:
+Install FinancialMarkets.jl by running:
 
 ```julia
-Pkg.clone("https://github.com/imanuelcostigan/FinMarkets.jl")
+Pkg.clone("https://github.com/imanuelcostigan/FinancialMarkets.jl")
 ```
 
 ## Obligatory badges
 
-[![Build Status](https://travis-ci.org/imanuelcostigan/FinMarkets.jl.png)](https://travis-ci.org/imanuelcostigan/FinMarkets.jl)
-[![Coverage Status](https://coveralls.io/repos/imanuelcostigan/FinMarkets.jl/badge.png?branch=release%2F0.1)](https://coveralls.io/r/imanuelcostigan/FinMarkets.jl?branch=release%2F0.1)
-[![Documentation Status](https://readthedocs.org/projects/finmarketsjl/badge/?version=master)](https://readthedocs.org/projects/finmarketsjl/?badge=master)
+[![Build Status](https://travis-ci.org/imanuelcostigan/FinancialMarkets.jl.png)](https://travis-ci.org/imanuelcostigan/FinancialMarkets.jl)
+[![Coverage Status](https://coveralls.io/repos/imanuelcostigan/FinancialMarkets.jl/badge.png?branch=release%2F0.1)](https://coveralls.io/r/imanuelcostigan/FinancialMarkets.jl?branch=release%2F0.1)
+[![Documentation Status](https://readthedocs.org/projects/FinancialMarketsjl/badge/?version=master)](https://readthedocs.org/projects/FinancialMarketsjl/?badge=master)

@@ -1,13 +1,13 @@
 Overview
 ===============================================================================
 
-FinMarkets.jl will help you describe and model financial market objects in
+FinancialMarkets.jl will help you describe and model financial market objects in
 Julia.
 
 For example::
 
     # Load packages
-    using Dates, FinMarkets
+    using Dates, FinancialMarkets
     # Create US Dollar object
     USD = USD()
     # Create 3m USD LIBOR
@@ -41,9 +41,9 @@ Modelling such as:
 Installation
 -------------------------------------------------------------------------------
 
-Install FinMarkets.jl by running::
+Install FinancialMarkets.jl by running::
 
-    Pkg.clone("https://github.com/imanuelcostigan/FinMarkets.jl")
+    Pkg.clone("https://github.com/imanuelcostigan/FinancialMarkets.jl")
 
 Contribute
 -------------------------------------------------------------------------------
@@ -58,7 +58,7 @@ The project is licensed under the GPL-2 license.
 
 
 
-.. _Issue tracker: https://github.com/imanuelcostigan/FinMarkets.jl/issues
-.. _Source code: https://github.com/imanuelcostigan/FinMarkets.jl
+.. _Issue tracker: https://github.com/imanuelcostigan/FinancialMarkets.jl/issues
+.. _Source code: https://github.com/imanuelcostigan/FinancialMarkets.jl
 
 

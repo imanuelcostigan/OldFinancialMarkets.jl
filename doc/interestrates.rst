@@ -6,9 +6,9 @@ Introduction
 
 The value dynamics of almost all financial derivatives depends on interest rates and their corollary, discount factors. They signify the utility of consuming one unit of currency today over consuming one unit currency at some future time. The higher the interest rate, the lower the discount factor and the greater (in absolute terms) the present value applied to that future unit of currency.
 
-``FinMarkets.jl`` makes it easy to work with interest rates::
+``FinancialMarkets.jl`` makes it easy to work with interest rates::
 
-    using Dates, FinMarkets
+    using Dates, FinancialMarkets
     r = InterestRate(0.04, Simply, A365())
     df = DiscountFactor(0.95, Date(2014, 1, 1), Date(2015, 1, 1))
 

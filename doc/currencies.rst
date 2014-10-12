@@ -4,7 +4,7 @@ Currencies
 Introduction
 -------------------------------------------------------------------------------
 
-Currencies are another key building block to building a coherent financial mathematics library. As currencies are the basis for transactions, they bring together different conventions in a unique manner and are used in primarily to this end in ``FinMarkets.jl``.
+Currencies are another key building block to building a coherent financial mathematics library. As currencies are the basis for transactions, they bring together different conventions in a unique manner and are used in primarily to this end in ``FinancialMarkets.jl``.
 
 Details
 -------------------------------------------------------------------------------
@@ -24,7 +24,7 @@ Type         Currency                  Calendar
 
 It is impossible to create a currency with the incorrect calendar field type as the inner constructor enforces type invariance. For example::
 
-    using FinMarkets
+    using FinancialMarkets
     # No calendar, uses default calendar
     AUD()
     # Use correct calendar

@@ -9,8 +9,8 @@ before_install:
   - sudo apt-get update -qq -y
   - sudo apt-get install libpcre3-dev julia -y
 script:
-  - julia -e 'versioninfo(); Pkg.init(); run(`ln -s $(pwd()) $(Pkg.dir("FinMarkets"))`); Pkg.pin("FinMarkets"); Pkg.resolve()'
-  - julia -e 'using FinMarkets; @assert isdefined(:FinMarkets); @assert typeof(FinMarkets) === Module'
-  - julia -e 'Pkg.test("FinMarkets", coverage=true)'
+  - julia -e 'versioninfo(); Pkg.init(); run(`ln -s $(pwd()) $(Pkg.dir("FinancialMarkets"))`); Pkg.pin("FinancialMarkets"); Pkg.resolve()'
+  - julia -e 'using FinancialMarkets; @assert isdefined(:FinancialMarkets); @assert typeof(FinancialMarkets) === Module'
+  - julia -e 'Pkg.test("FinancialMarkets", coverage=true)'
 after_success:
-- julia -e 'cd(Pkg.dir("FinMarkets")); Pkg.add("Coverage"); using Coverage; Coveralls.submit(Coveralls.process_folder())'
+- julia -e 'cd(Pkg.dir("FinancialMarkets")); Pkg.add("Coverage"); using Coverage; Coveralls.submit(Coveralls.process_folder())'

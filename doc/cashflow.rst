@@ -9,9 +9,9 @@ Financial market contracts are essentially a set of (possibly state space contin
 Details
 -------------------------------------------------------------------------------
 
-``FinMarkets.jl`` provides a mutable composite ``CashFlow`` type that represents the dates, amounts and currencies of a set of cash flows::
+``FinancialMarkets.jl`` provides a mutable composite ``CashFlow`` type that represents the dates, amounts and currencies of a set of cash flows::
 
-    using Dates, FinMarkets
+    using Dates, FinancialMarkets
     CashFlow([AUD(), AUD()], [Date(2014, 1, 1), Date(2014, 4, 1)], [1000, 1000])
 
 A ``CashFlow`` can be elegantly coerced to a ``DataFrame`` as you may have inferred from executing the last expression. A CashFlow with mixed currencies is possible::

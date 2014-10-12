@@ -1,4 +1,4 @@
-FinMarkets Documentation
+FinancialMarkets Documentation
 ===============================================================================
 
 .. toctree::

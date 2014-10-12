@@ -6,7 +6,7 @@ Introduction
 
 Many financial derivatives' cash flows are referenced or fixed to well-defined, and occasionally infamous indices. For example, the London Inter-Bank Offer Rate (`LIBOR`_) and the WM/Reuters spot FX rates are used to determine (a.k.a. fix) cash flows on **trillions** of dollars worth of notional derivative exposures.
 
-FinMarkets.jl represents indices as a set of conventions which define how they are to be used. The abstract supertype ``Index`` is extended according to the type of index.
+FinancialMarkets.jl represents indices as a set of conventions which define how they are to be used. The abstract supertype ``Index`` is extended according to the type of index.
 
 Interest rate indices
 -------------------------------------------------------------------------------

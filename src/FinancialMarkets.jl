@@ -1,4 +1,4 @@
-module FinMarkets
+module FinancialMarkets
 
 if VERSION < v"0.4-"
     using Dates

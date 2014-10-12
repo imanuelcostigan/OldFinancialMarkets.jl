@@ -6,7 +6,7 @@ Introduction
 
 Shifting dates is a very common procedure in financial mathematics. For example, the termination date of a contract is usually calculating by shifting the contract's effective date by a certain period (e.g. 3 months in the case of a deposit or 30 years in the case of a swap).
 
-The ``Dates.jl`` includes a fairly comprehensive date/time arithmetic that encompasses shifting date/time instants by periods. The ``FinMarkets.jl`` package encapsulates and extends this to reflect some financial market conventions in the ``shift`` method.
+The ``Dates.jl`` includes a fairly comprehensive date/time arithmetic that encompasses shifting date/time instants by periods. The ``FinancialMarkets.jl`` package encapsulates and extends this to reflect some financial market conventions in the ``shift`` method.
 
 
 Details
@@ -19,7 +19,7 @@ The ``shift`` method encapsulates and extends ``Dates.jl`` date/time arithmetic 
 
 These can be illustrated as follows::
 
-    using Dates, FinMarkets
+    using Dates, FinancialMarkets
     # Financial calendar awareness
     shift(Date(2014, 9, 25), Month(3), ModifiedFollowing(), AUSYFCalendar(), false)
     # End of month convention aware

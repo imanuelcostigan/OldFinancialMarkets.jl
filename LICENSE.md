@@ -1,4 +1,4 @@
-FinMarkets.jl: describe and model financial market objects in Julia
+FinancialMarkets.jl: describe and model financial market objects in Julia
 Copyright (C) 2014  Imanuel Costigan
 
 This program is free software; you can redistribute it and/or modify

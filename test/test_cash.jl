@@ -1,8 +1,8 @@
 audcash = Cash(AUD(), 0.04, Date(2014, 9, 26), 1e6)
 cfs = CashFlow(audcash)
 
-@test FinMarkets.currency(audcash) == AUD()
-@test isa(FinMarkets.rate(audcash), InterestRate)
+@test FinancialMarkets.currency(audcash) == AUD()
+@test isa(FinancialMarkets.rate(audcash), InterestRate)
 @test price(audcash) == 1e6
 @test cfs.currency == [AUD(), AUD()]
 @test cfs.date == [Date(2014, 9, 26), Date(2014, 9, 29)]

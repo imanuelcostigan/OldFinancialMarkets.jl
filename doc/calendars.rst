@@ -21,11 +21,11 @@ Financial calendars
 
 *Good days* are those for which banks are open and able to settle transactions in a given financial centre. Generally speaking, all days are good excepting weekends, generally observed public holidays (e.g. Christmas day) or those applying specifically to banks (e.g. a bank holiday). As a consequence, good days are tied to a financial centre's location (New York, London, Sydney etc) which defines a *financial calendar*.
 
-FinMarkets.jl implements financial calendars as subtypes of the abstract ``SingleFCalendar`` abstract type which is itself a subtype of the abstract ``FinCalendar`` type.
+FinancialMarkets.jl implements financial calendars as subtypes of the abstract ``SingleFCalendar`` abstract type which is itself a subtype of the abstract ``FinCalendar`` type.
 
 Additionally, the concrete ``JointFCalendar`` subtype of ``FinCalendar`` represents a vector of ``SingleFCalendar`` instances (the ``calendars`` field) and flags whether the calendars are joined by on the intersection of good or bad days (the ``onbad`` boolean typed field).
 
-A number of commonly used locale-specific ``SingleFCalendar`` subtypes are defined by FinMarkets.jl.
+A number of commonly used locale-specific ``SingleFCalendar`` subtypes are defined by FinancialMarkets.jl.
 
 =====================   =====================  ==========  ======================
 Name                    Locale                 Concrete    Supertype
@@ -50,7 +50,7 @@ Name                    Locale                 Concrete    Supertype
 
 Good day methods have been implemented for these financial calendar types and for joint calendars::
 
-    using Dates, FinMarkets
+    using Dates, FinancialMarkets
     # NSW Labour Day
     d1 = Date(2014,10,6)
     # No calendars => all weekdays are good; weekends bad
@@ -68,7 +68,7 @@ Business day conventions
 
 Where a date falls on a bad day (i.e. one that is not a good day), it is adjusted to a good day using a business day convention. These are defined in glorious legalise in the 2006 ISDA definitions and interpreted well into plain English elswhere [ogconventions]_ and won't be detailed again here.
 
-FinMarkets.jl implements these business day conventions as immutable subtypes of the abstract ``BusinessDayConvention`` type. These conventions include: ``Unadjusted``, ``Preceding``, ``ModifiedPreceding``, ``Following``, ``ModifiedFollowing`` and ``Succeeding``.
+FinancialMarkets.jl implements these business day conventions as immutable subtypes of the abstract ``BusinessDayConvention`` type. These conventions include: ``Unadjusted``, ``Preceding``, ``ModifiedPreceding``, ``Following``, ``ModifiedFollowing`` and ``Succeeding``.
 
 Bad day can be adjusted using ``adjust`` methods using these business day conventions::
 
