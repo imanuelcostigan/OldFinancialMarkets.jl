@@ -5,6 +5,7 @@ if VERSION < v"0.4-"
 else
     using Base.Dates
 end
+using Polynomials: Poly, polyval
 import DataFrames.DataFrame
 
 export
