@@ -51,7 +51,10 @@ export
     price,
     # schedule.jl
     Stub, FrontStub, BackStub, ShortFrontStub, LongFrontStub, ShortBackStub,
-    LongBackStub, DateSchedule, SwapDateSchedule
+    LongBackStub, DateSchedule, SwapDateSchedule,
+    # interpolators.jl
+    Interpolator, Interpolator1D, SplineInterpolator, LinearSpline, CubicSpline,
+    Interpolation, Interpolation1D, SplineInterpolation, interpolate, calibrate
 
 include("constants.jl")
 include("calendars.jl")
@@ -64,4 +67,5 @@ include("currencies.jl")
 include("cashflow.jl")
 include("indices.jl")
 include("instruments.jl")
+include("interpolators.jl")
 end
