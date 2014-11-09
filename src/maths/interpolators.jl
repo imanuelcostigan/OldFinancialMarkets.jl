@@ -26,8 +26,7 @@ immutable SplineInterpolation{N<:Integer} <: Interpolation1D
 end
 
 function interpolate(x_new::Real, x::Real, y::Real, i::Interpolator)
-    interpolation = calibrate(x, y, i)
-    interpolate(x_new, interpolation)
+    interpolate(x_new, calibrate(x, y, i))
 end
 
 function interpolate(x_new::Real, i::SplineInterpolator)
@@ -36,7 +35,7 @@ function interpolate(x_new::Real, i::SplineInterpolator)
 end
 
 function calibrate(x::Vector{Real}, y::Vector{Real}, i::LinearSpline)
-    s = [(y[i + 1] - y[i]) / (x[i + 1] - x[i]) for i = 1:(length(x) - 1)]
-    SplineInterpolation(x, y, hcat(y[1:(end - 1)], s))
+    s = [(y[i+1] - y[i]) / (x[i+1] - x[i]) for i = 1:(length(x)-1)]
+    SplineInterpolation(x, y, hcat(y[1:(end-1)], s))
 end
 
