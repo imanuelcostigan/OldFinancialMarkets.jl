@@ -7,8 +7,8 @@ abstract Interpolator1D <: Interpolator
 immutable SplineInterpolator{N<:Integer} <: Interpolator1D
     degree::N
 end
-typealias LinearSpline SplineInterpolator{1}
-typealias CubicSpline SplineInterpolator{3}
+typealias LinearSpline SplineInterpolator{1}(1)
+typealias CubicSpline SplineInterpolator{3}(3)
 
 abstract Interpolation
 abstract Interpolation1D <: Interpolation

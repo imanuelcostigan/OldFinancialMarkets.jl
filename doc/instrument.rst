@@ -4,11 +4,11 @@ Instruments
 Introduction
 -------------------------------------------------------------------------------
 
-And it is here that we arrive at the core piece of the ``FinMarkets.jl`` puzzle. What are we interested in? We are describing and modelling financial market objects of which financial market instruments play a leading role.
+And it is here that we arrive at the core piece of the ``FinancialMarkets.jl`` puzzle. What are we interested in? We are describing and modelling financial market objects of which financial market instruments play a leading role.
 
 Financial instruments refers to a transaction whose financial instrumentation is set out in a legal document. For example, the financial instrumentation includes effective and termination dates, descriptions of how the payment dates are to be determined, any interest rates or indicies that are used to determine cash flows and if and when notional amounts are exchanged.
 
-Currently the following list of instruments are supported by ``FinMarkets.jl``:
+Currently the following list of instruments are supported by ``FinancialMarkets.jl``:
 
 1. ``Cash``: overnight deposits usually with central banks.
 2. ``Deposit``: term deposits usually with inter-bank counterparties.
@@ -23,7 +23,7 @@ Cash
 
 Here's how you can create and model a ``Cash`` instrument::
 
-    using Dates, FinMarkets
+    using Dates, FinancialMarkets
     audcash = Cash(AUD(), 0.04, Date(2014, 9, 26), 1e6)
     price(audcash)
     CashFlow(audcash)

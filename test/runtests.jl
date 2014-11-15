@@ -1,5 +1,5 @@
 using Dates
-using FinMarkets
+using FinancialMarkets
 using Base.Test
 
 include("test_times.jl")

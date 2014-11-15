@@ -40,7 +40,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'FinMarkets.jl'
+project = u'FinancialMarkets.jl'
 AUTHORS = u"Imanuel Costigan"
 copyright = u'2014, '+AUTHORS
 
@@ -194,7 +194,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'FinMarkets.jl.tex', u'FinMarkets.jl Documentation',
+  ('index', 'FinancialMarkets.jl.tex', u'FinancialMarkets.jl Documentation',
    AUTHORS, 'manual'),
 ]
 
@@ -224,7 +224,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'finmarketsjl', u'FinMarkets.jl Documentation',
+    ('index', 'FinancialMarketsjl', u'FinancialMarkets.jl Documentation',
      [AUTHORS], 1)
 ]
 
@@ -238,8 +238,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'FinMarkets.jl', u'FinMarkets.jl Documentation',
-   AUTHORS, 'finmarkets.jl',
+  ('index', 'FinancialMarkets.jl', u'FinancialMarkets.jl Documentation',
+   AUTHORS, 'FinancialMarkets.jl',
    'Describe and model financial markets objects using Julia', 'Miscellaneous'),
 ]
 
