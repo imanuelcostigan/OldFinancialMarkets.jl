@@ -67,5 +67,5 @@ include("currencies.jl")
 include("cashflow.jl")
 include("indices.jl")
 include("instruments.jl")
-# include("maths.jl")
+include("maths.jl")
 end
