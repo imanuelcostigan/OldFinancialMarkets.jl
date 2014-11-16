@@ -29,11 +29,12 @@ end
 
 function interpolate(x_new::Real, i::SplineInterpolation)
     index = searchsortedlast(i.x, x_new)
-    polyval(Poly(i.coefficients[index]), (x_new - i.x[index]))
+    index < 1 && (index = 1)
+    index > size(i.coefficients)[1] && (index = size(i.coefficients)[1])
+    polyval(Poly(vec(i.coefficients[index, :])), (x_new - i.x[index]))
 end
 
 function calibrate{T<:Real}(x::Vector{T}, y::Vector{T}, i::LinearSpline)
-    s = [(y[i+1] - y[i]) / (x[i+1] - x[i]) for i = 1:(length(x)-1)]
-    SplineInterpolation(x, y, hcat(y[1:(end-1)], s))
+    SplineInterpolation(x, y, hcat(y[1:(end-1)], diff(y) ./ diff(x)))
 end
 
