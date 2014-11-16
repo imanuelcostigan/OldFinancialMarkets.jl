@@ -23,6 +23,10 @@ immutable SplineInterpolation <: Interpolation1D
     end
 end
 
+###############################################################################
+# Methods
+###############################################################################
+
 function interpolate{T<:Real}(x_new::T, x::Vector{T}, y::Vector{T}, i::Interpolator)
     interpolate(x_new, calibrate(x, y, i))
 end
