@@ -4,6 +4,7 @@
 
 # Source:
 # Piecewise Polynomial Interpolation, Opengamma (v1, 2013)
+# http://www.opengamma.com/blog/piecewise-polynomial-interpolation
 abstract Interpolator
 abstract Interpolator1D <: Interpolator
 abstract SplineInterpolator <: Interpolator1D
