@@ -13,48 +13,45 @@ export
     Simply, Annually, SemiAnnually, TriAnnually, Quarterly, BiMonthly,
     Monthly, Fortnightly, Weekly, Daily, Continuously,
     # times.jl
-    DayCountFraction, A365, A360, ActActISDA, Thirty360, ThirtyE360,
-    ThirtyEP360, years,
+    A365, A360, ActActISDA, Thirty360, ThirtyE360, ThirtyEP360, years,
     # calendars.jl
-    FinCalendar, SingleFCalendar, JointFCalendar, NoFCalendar,
-    isweekend, isgood,
+    JointFCalendar, NoFCalendar, isweekend, isgood,
     # calendars_au.jl
-    AUFCalendar, AUSYFCalendar, AUMEFCalendar,
+    AUSYFCalendar, AUMEFCalendar,
     # calendars_us.jl
-    USFCalendar, USNYFCalendar, USLIBORFCalendar,
+    USNYFCalendar, USLIBORFCalendar,
     # calendars_gb.jl
-    GBFCalendar, GBLOFCalendar,
+    GBLOFCalendar,
     # calendars_eu.jl
-    EUFCalendar, EUTAFCalendar, EULIBORFCalendar,
+    EUTAFCalendar, EULIBORFCalendar,
     # calendars_jp.jl
-    JPFCalendar, JPTOFCalendar,
+    JPTOFCalendar,
     # calendars_nz.jl
-    NZFCalendar, NZAUFCalendar, NZWEFCalendar,
+    NZAUFCalendar, NZWEFCalendar,
     # business_day_conventions.jl
-    BusinessDayConvention, Unadjusted, Preceding, ModifiedPreceding,
-    Following, ModifiedFollowing, Succeeding, adjust,
+    Unadjusted, Preceding, ModifiedPreceding, Following, ModifiedFollowing,
+    Succeeding, adjust,
     # shifters.jl
     shift,
     # currencies.jl
-    Currency, AUD, EUR, GBP, JPY, NZD, USD,
+    AUD, EUR, GBP, JPY, NZD, USD,
     # cashflow.jl
     CashFlow,
     # interestrates.jl
     InterestRate, DiscountFactor,
     # indices.jl
-    Index, InterestRateIndex,
     ONIA, AONIA, EONIA, SONIA, TONAR, NZIONA, FedFund,
     IBOR, AUDBBSW, EURLIBOR, EURIBOR, GBPLIBOR, JPYLIBOR, JPYTIBOR, NZDBKBM,
     USDLIBOR,
     # instruments.jl
-    Instrument, Cash, Deposit, Future, STIRFuture,
+    Cash, Deposit, Future, STIRFuture,
     price,
     # schedule.jl
-    Stub, FrontStub, BackStub, ShortFrontStub, LongFrontStub, ShortBackStub,
-    LongBackStub, DateSchedule, SwapDateSchedule,
+    FrontStub, BackStub, ShortFrontStub, LongFrontStub, ShortBackStub,
+    LongBackStub,SwapDateSchedule,
     # interpolators.jl
-    Interpolator, Interpolator1D, SplineInterpolator, LinearSpline, CubicSpline,
-    Interpolation, Interpolation1D, SplineInterpolation, interpolate, calibrate
+    LinearSpline, ClampedCubicSpline, NaturalCubicSpline, NotAKnotCubicSpline,
+    SplineInterpolation, interpolate, calibrate
 
 include("constants.jl")
 include("calendars.jl")
