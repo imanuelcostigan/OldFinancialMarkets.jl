@@ -76,9 +76,9 @@ end
 function calibrate{T<:Real}(x::Vector{T}, y::Vector{T}, i::NaturalCubicSpline)
     h = diff(x)
     s = diff(y) ./ diff(x)
-    diag_left = h[1:(end-1)]
+    diag_left = [h[1:(end-1)], 0]
     diag = [1, [2(h[i] + h[i+1]) for i=1:(length(h)-1)], 1]
-    diag_right = h[2:end]
+    diag_right = [0, h[2:end]]
     A = spdiagm((diag_left, diag, diag_right), (-1, 0, 1))
     b = [0, diff(s), 0]
     m = A \ b
@@ -88,11 +88,11 @@ end
 function calibrate{T<:Real}(x::Vector{T}, y::Vector{T}, i::NotAKnotCubicSpline)
     h = diff(x)
     s = diff(y) ./ diff(x)
-    diag_l2 = [zeros(s[3:end]), -h[end]]
+    diag_l2 = [zeros(x[4:end]), -h[end]]
     diag_l1 = [h[1:(end-1)], h[end-1] + h[end]]
     diag = [-h[2], [2(h[i] + h[i+1]) for i=1:(length(h)-1)], -h[end-1]]
     diag_r1 = [h[1] + h[2], h[2:end]]
-    diag_r2 = [-h[1], zeros(s[3:end])]
+    diag_r2 = [-h[1], zeros(x[4:end])]
     A = spdiagm((diag_l2, diag_l1, diag, diag_r1, diag_r2), (-2, -1, 0, 1, 2))
     b = [0, diff(s), 0]
     m = A \ b
