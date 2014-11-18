@@ -83,9 +83,6 @@ function calibrate{T<:Real}(x::Vector{T}, y::Vector{T}, i::NaturalCubicSpline)
     A = spdiagm((diag_left, diag, diag_right), (-1, 0, 1))
     b = 6[0, diff(s), 0]
     m = A \ b
-    print("A: ", convert(Matrix, A), "\n",
-        "b: ", b, "\n",
-        "m: ", m, "\n")
     calibrate_cubic_spline(x, y, m)
 end
 
