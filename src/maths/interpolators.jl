@@ -56,16 +56,17 @@ function calibrate_cubic_spline{T<:Real}(x::Vector{T}, y::Vector{T}, m::Vector{T
     h = diff(x)
     s = diff(y) ./ diff(x)
     mdiff = diff(m)
+    mpop = m[1:(end-1)]
     a0 = y[1:(end-1)]
-    a1 = s - h.*m[1:(end-1)] / 2 - h.*mdiff / 6
-    a2 = m[1:(end-1)] / 2
+    a1 = s - h.*mpop / 2 - h.*mdiff / 6
+    a2 = mpop / 2
     a3 = mdiff ./ h / 6
     SplineInterpolation(x, y, hcat(a0, a1, a2, a3))
 end
 
 function calibrate{T<:Real}(x::Vector{T}, y::Vector{T}, i::ClampedCubicSpline)
     h = diff(x)
-    s = diff(y) ./ diff(x)
+    s = diff(y) ./ h
     diag = [2h[1], [2(h[i] + h[i+1]) for i=1:(length(h)-1)], 2h[end]]
     A = spdiagm((h, diag, h), (-1, 0, 1))
     b = [6(s[1] - i.α), diff(s), 6(i.β - s[end])]
@@ -75,7 +76,7 @@ end
 
 function calibrate{T<:Real}(x::Vector{T}, y::Vector{T}, i::NaturalCubicSpline)
     h = diff(x)
-    s = diff(y) ./ diff(x)
+    s = diff(y) ./ h
     diag_left = [h[1:(end-1)], 0]
     diag = [1, [2(h[i] + h[i+1]) for i=1:(length(h)-1)], 1]
     diag_right = [0, h[2:end]]
@@ -87,7 +88,7 @@ end
 
 function calibrate{T<:Real}(x::Vector{T}, y::Vector{T}, i::NotAKnotCubicSpline)
     h = diff(x)
-    s = diff(y) ./ diff(x)
+    s = diff(y) ./ h
     diag_l2 = [zeros(x[4:end]), -h[end]]
     diag_l1 = [h[1:(end-1)], h[end-1] + h[end]]
     diag = [-h[2], [2(h[i] + h[i+1]) for i=1:(length(h)-1)], -h[end-1]]
