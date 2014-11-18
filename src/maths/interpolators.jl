@@ -69,7 +69,7 @@ function calibrate{T<:Real}(x::Vector{T}, y::Vector{T}, i::ClampedCubicSpline)
     s = diff(y) ./ h
     diag = [2h[1], [2(h[i] + h[i+1]) for i=1:(length(h)-1)], 2h[end]]
     A = spdiagm((h, diag, h), (-1, 0, 1))
-    b = [6(s[1] - i.α), diff(s), 6(i.β - s[end])]
+    b = 6[s[1] - i.α, diff(s), i.β - s[end]]
     m = A \ b
     calibrate_cubic_spline(x, y, m)
 end
@@ -81,7 +81,7 @@ function calibrate{T<:Real}(x::Vector{T}, y::Vector{T}, i::NaturalCubicSpline)
     diag = [1, [2(h[i] + h[i+1]) for i=1:(length(h)-1)], 1]
     diag_right = [0, h[2:end]]
     A = spdiagm((diag_left, diag, diag_right), (-1, 0, 1))
-    b = [0, 6 * diff(s), 0]
+    b = 6[0, diff(s), 0]
     m = A \ b
     print("A: ", convert(Matrix, A), "\n",
         "b: ", b, "\n",
@@ -98,7 +98,7 @@ function calibrate{T<:Real}(x::Vector{T}, y::Vector{T}, i::NotAKnotCubicSpline)
     diag_r1 = [h[1] + h[2], h[2:end]]
     diag_r2 = [-h[1], zeros(x[4:end])]
     A = spdiagm((diag_l2, diag_l1, diag, diag_r1, diag_r2), (-2, -1, 0, 1, 2))
-    b = [0, diff(s), 0]
+    b = 6[0, diff(s), 0]
     m = A \ b
     calibrate_cubic_spline(x, y, m)
 end
