@@ -46,3 +46,14 @@ y1 = Float64[interpolate(xi, ncs) for xi in x0]
 ## Before first / after last node
 @test_throws ArgumentError interpolate(0, ncs)
 @test_throws ArgumentError interpolate(9, ncs)
+
+################################################################################
+# CLAMPED CUBIC SPLINE
+################################################################################
+# http://www.math.wsu.edu/faculty/genz/448/lessons/l304.pdf
+ccs = calibrate([1, 2, 3], [2, 3, 5], ClampedCubicSpline(1, 2))
+@test_approx_eq ccs.coefficients [2 1 -0.5 0.5; 3 1.5 1 -0.5]
+
+################################################################################
+# NOT-A-KNOT CUBIC SPLINE
+################################################################################
