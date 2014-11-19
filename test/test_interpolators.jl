@@ -22,7 +22,7 @@ true_coefficients = hcat(y[1:(end-1)], s)
 @test_approx_eq interpolate(8, lsc) 1.9
 ## Before first / after last node
 @test_throws ArgumentError interpolate(0, lsc)
-@test_throws ArgumentError interpolate(9, lsc) y_N1
+@test_throws ArgumentError interpolate(9, lsc)
 ## Between nodes
 y_12 = lsc.coefficients[1, 1] + lsc.coefficients[1, 2] * (1.2 - 1)
 @test_approx_eq interpolate(1.2, lsc) y_12
@@ -40,8 +40,8 @@ ncs = calibrate(x, y, NaturalCubicSpline())
 @test_approx_eq interpolate(1, ncs) 1.8
 @test_approx_eq interpolate(8, ncs) 1.9
 ## Before first / after last node
-@test_throws ArgumentError interpolate(0, ncs) y_0
-@test_throws ArgumentError interpolate(9, ncs) y_N1
+@test_throws ArgumentError interpolate(0, ncs)
+@test_throws ArgumentError interpolate(9, ncs)
 # ## Between nodes
 # y_12 = ncs.coefficients[1, 1] + ncs.coefficients[1, 2] * (1.2 - 1)
 # @test_approx_eq interpolate(1.2, ncs) y_12
