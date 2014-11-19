@@ -38,13 +38,15 @@ end
 ###############################################################################
 
 function interpolate(x_new::Real, x::Vector{Real}, y::Vector{Real}, i::Interpolator)
+    msg = "x_new is not in the interpolator's domain"
+    x[1] <= x_new <= x[end] || ArgumentError(msg)
     interpolate(x_new, calibrate(x, y, i))
 end
 
 function interpolate(x_new::Real, i::SplineInterpolation)
+    msg = "x_new is not in the interpolator's domain"
+    i.x[1] <= x_new <= i.x[end] || ArgumentError(msg)
     index = searchsortedlast(i.x, x_new)
-    index < 1 && (index = 1)
-    index > size(i.coefficients)[1] && (index = size(i.coefficients)[1])
     polyval(Poly(vec(i.coefficients[index, :])), (x_new - i.x[index]))
 end
 
