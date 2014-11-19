@@ -37,7 +37,8 @@ end
 # Methods
 ###############################################################################
 
-function interpolate{T<:Real}(x_new::T, x::Vector{T}, y::Vector{T}, i::Interpolator)
+function interpolate{T<:Real, S<:Real}(x_new::Real, x::Vector{T}, y::Vector{S},
+    i::Interpolator)
     msg = "x_new is not in the interpolator's domain"
     x[1] <= x_new <= x[end] || ArgumentError(msg)
     interpolate(x_new, calibrate(x, y, i))
@@ -50,11 +51,12 @@ function interpolate(x_new::Real, i::SplineInterpolation)
     polyval(Poly(vec(i.coefficients[index, :])), (x_new - i.x[index]))
 end
 
-function calibrate{T<:Real}(x::Vector{T}, y::Vector{T}, i::LinearSpline)
+function calibrate{T<:Real, S<:Real}(x::Vector{T}, y::Vector{S}, i::LinearSpline)
     SplineInterpolation(x, y, hcat(y[1:(end-1)], diff(y) ./ diff(x)))
 end
 
-function calibrate_cubic_spline{T<:Real}(x::Vector{T}, y::Vector{T}, m::Vector{T})
+function calibrate_cubic_spline{T<:Real, S<:Real, U<:Real}(x::Vector{T},
+    y::Vector{S}, m::Vector{U})
     h = diff(x)
     s = diff(y) ./ diff(x)
     mdiff = diff(m)
@@ -66,7 +68,8 @@ function calibrate_cubic_spline{T<:Real}(x::Vector{T}, y::Vector{T}, m::Vector{T
     SplineInterpolation(x, y, hcat(a0, a1, a2, a3))
 end
 
-function calibrate{T<:Real}(x::Vector{T}, y::Vector{T}, i::ClampedCubicSpline)
+function calibrate{T<:Real, S<:Real}(x::Vector{T}, y::Vector{S},
+    i::ClampedCubicSpline)
     h = diff(x)
     s = diff(y) ./ h
     diag = [2h[1], [2(h[i] + h[i+1]) for i=1:(length(h)-1)], 2h[end]]
@@ -76,7 +79,8 @@ function calibrate{T<:Real}(x::Vector{T}, y::Vector{T}, i::ClampedCubicSpline)
     calibrate_cubic_spline(x, y, m)
 end
 
-function calibrate{T<:Real}(x::Vector{T}, y::Vector{T}, i::NaturalCubicSpline)
+function calibrate{T<:Real, S<:Real}(x::Vector{T}, y::Vector{S},
+    i::NaturalCubicSpline)
     h = diff(x)
     s = diff(y) ./ h
     diag_left = [h[1:(end-1)], 0]
@@ -88,7 +92,8 @@ function calibrate{T<:Real}(x::Vector{T}, y::Vector{T}, i::NaturalCubicSpline)
     calibrate_cubic_spline(x, y, m)
 end
 
-function calibrate{T<:Real}(x::Vector{T}, y::Vector{T}, i::NotAKnotCubicSpline)
+function calibrate{T<:Real, S<:Real}(x::Vector{T}, y::Vector{S},
+    i::NotAKnotCubicSpline)
     h = diff(x)
     s = diff(y) ./ h
     diag_l2 = [zeros(x[4:end]), -h[end]]
