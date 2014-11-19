@@ -42,10 +42,10 @@ ncs = calibrate(x, y, NaturalCubicSpline())
 @test_approx_eq interpolate(1, ncs) 1.8
 @test_approx_eq interpolate(8, ncs) 1.9
 ## Before first / after last node
-# y_0 = ncs.coefficients[1, 1] + ncs.coefficients[1, 2] * (0 - 1)
-# y_N1 = ncs.coefficients[end, 1] + ncs.coefficients[end, 2] * (9 - 7)
-# @test_approx_eq interpolate(0, ncs) y_0
-# @test_approx_eq interpolate(9, ncs) y_N1
+y_0 = ncs.coefficients[1, 1] + ncs.coefficients[1, 2] * (0 - 1)
+y_N1 = ncs.coefficients[end, 1] + ncs.coefficients[end, 2] * (9 - 7)
+@test_approx_eq interpolate(0, ncs) y_0
+@test_approx_eq interpolate(9, ncs) y_N1
 # ## Between nodes
 # y_12 = ncs.coefficients[1, 1] + ncs.coefficients[1, 2] * (1.2 - 1)
 # @test_approx_eq interpolate(1.2, ncs) y_12
