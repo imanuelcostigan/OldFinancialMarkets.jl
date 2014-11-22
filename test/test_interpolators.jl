@@ -50,9 +50,14 @@ y1 = Float64[interpolate(xi, ncs) for xi in x0]
 ################################################################################
 # CLAMPED CUBIC SPLINE
 ################################################################################
-# http://www.math.wsu.edu/faculty/genz/448/lessons/l304.pdf
-ccs = calibrate([1, 2, 3], [2, 3, 5], ClampedCubicSpline(1, 2))
-@test_approx_eq ccs.coefficients [2 1 -0.5 0.5; 3 1.5 1 -0.5]
+
+# Manually calculated A, b in spreadsheet
+ccs = calibrate(x, y, ClampedCubicSpline(5, 2))
+A = spdiagm(([1,1,.1,2,.9,1,1], [2,4,2.2,4.2,5.8,3.8,4,2], [1,1,.1,2,.9,1,1]),
+    (-1,0,1))
+b = [-29.4,-1.8,-34.8,36,4,-5.8,4.8,9]
+ccs0 = FinancialMarkets.calibrate_cubic_spline(x, y, A, b)
+@test_approx_eq ccs.coefficients ccs0.coefficients
 
 ################################################################################
 # NOT-A-KNOT CUBIC SPLINE
