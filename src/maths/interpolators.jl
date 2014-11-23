@@ -40,7 +40,7 @@ end
 ###############################################################################
 
 function interpolate{T<:Real, S<:Real}(x_new::Real, x::Vector{T}, y::Vector{S},
-    i::Interpolator)
+    i::Interpolators)
     msg = "x_new is not in the interpolator's domain"
     x[1] <= x_new <= x[end] || throw(ArgumentError(msg))
     interpolate(x_new, calibrate(x, y, i))
@@ -106,4 +106,29 @@ function calibrate{T<:Real, S<:Real}(x::Vector{T}, y::Vector{S},
     A = spdiagm((diag_l2, diag_l1, diag, diag_r1, diag_r2), (-2, -1, 0, 1, 2))
     b = 6 * [0, diff(s), 0]
     calibrate_cubic_spline(x, y, A, b)
+end
+
+function calibrate{T<:Real, S<:Real}(x::Vector{T}, y::Vector{S}, i::AkimaSpline)
+    # Also using:
+    # http://www.iue.tuwien.ac.at/phd/rottinger/node60.html
+    N = length(x)
+    h = diff(x)
+    s = diff(y) ./ h
+    sd = abs(diff(s))
+    yd = zeros(x)
+    for i = 3:(N-2)
+        if sd[i] == 0 && sd[i-2] == 0
+            yd[i] = (s[i-1] + s[i]) / 2
+        else
+            yd[i] = (sd[i] * s[i-1] + sd[i-2] * s[i]) / (sd[i] + sd[i-2])
+        end
+    end
+    yd[2] = 2*yd[3] - yd[4]
+    yd[1] = 2*yd[2] - yd[3]
+    yd[end-1] = 2*yd[end-2] - yd[end-3]
+    a0 = y[1:end-1]
+    a1 = yd[1:end-1]
+    a2 = [(3s[i] - yd[i+1] - 2yd[i]) / h[i] for i=1:length(s)]
+    a3 = [-(2s[i] - yd[i+1] - yd[i]) / h[i]^2 for i=1:length(s)]
+    SplineInterpolation(x, y, hcat(a0, a1, a2, a3))
 end

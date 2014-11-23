@@ -71,3 +71,7 @@ b = [0,-1.8,-34.8,36,4,-5.8,4.8,0]
 nakcs0 = FinancialMarkets.calibrate_cubic_spline(x, y, A, b)
 @test_approx_eq nakcs.coefficients nakcs0.coefficients
 
+################################################################################
+# AKIMA SPLINE
+################################################################################
+aksp = calibrate(x, y, AkimaSpline())
