@@ -5,11 +5,11 @@
 # Source:
 # Piecewise Polynomial Interpolation, Opengamma (v1, 2013)
 # http://www.opengamma.com/blog/piecewise-polynomial-interpolation
-abstract Interpolator
-abstract Interpolator1D <: Interpolator
-abstract SplineInterpolator <: Interpolator1D
-immutable LinearSpline <: SplineInterpolator end
-abstract CubicSpline <: SplineInterpolator
+abstract Interpolators
+abstract Interpolators1D <: Interpolators
+abstract SplineInterpolators <: Interpolators1D
+immutable LinearSpline <: SplineInterpolators end
+abstract CubicSpline <: SplineInterpolators
 immutable ClampedCubicSpline <: CubicSpline
     α::Real
     β::Real
