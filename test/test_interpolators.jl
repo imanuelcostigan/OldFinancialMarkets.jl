@@ -62,3 +62,12 @@ ccs0 = FinancialMarkets.calibrate_cubic_spline(x, y, A, b)
 ################################################################################
 # NOT-A-KNOT CUBIC SPLINE
 ################################################################################
+
+# Manually calculated A, b in spreadsheet
+nakcs = calibrate(x, y, NotAKnotCubicSpline())
+A = spdiagm(([zeros(5),-1.0], [1,1,.1,2,.9,1,2], [-1,4,2.2,4.2,5.8,3.8,4,-1],
+    [2,1,.1,2,.9,1,1], [-1.0,zeros(5)]), (-2,-1,0,1,2))
+b = [0,-1.8,-34.8,36,4,-5.8,4.8,0]
+nakcs0 = FinancialMarkets.calibrate_cubic_spline(x, y, A, b)
+@test_approx_eq nakcs.coefficients nakcs0.coefficients
+
