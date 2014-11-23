@@ -17,6 +17,8 @@ end
 ClampedCubicSpline() = ClampedCubicSpline(0, 0)
 immutable NaturalCubicSpline <: CubicSpline end
 immutable NotAKnotCubicSpline <: CubicSpline end
+abstract HermiteSplines <: SplineInterpolators
+immutable AkimaSpline <: HermiteSplines end
 
 abstract Interpolation
 abstract Interpolation1D <: Interpolation
