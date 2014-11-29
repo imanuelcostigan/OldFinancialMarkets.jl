@@ -88,11 +88,7 @@ y1 = Float64[interpolate(xi, aksp) for xi in x0]
 ################################################################################
 # KRUGER SPLINE
 ################################################################################
-x = [1, 2, 3, 3.1, 5.1, 6, 7, 8]
-y = [1.8, 1.9, 1.7, 1.1, 1.1, 1.7, 1.4, 1.9]
-using Gadfly, FinancialMarkets
+# Manually calculated Kruger first derivative in spreadsheet and copied results
 krsp = calibrate(x, y, KrugerSpline())
-x0 = 1:.1:8
-y0 = [interpolate(xi, krsp) for xi in x0]
-using Gadfly
-plot(x=x0, y=y0)
+@test_approx_eq krsp.coefficients[:, 2] [.15, 0, -0.387096774193548000, 0, 0,
+    0, 0]
