@@ -19,6 +19,7 @@ immutable NaturalCubicSpline <: CubicSpline end
 immutable NotAKnotCubicSpline <: CubicSpline end
 abstract HermiteSplines <: SplineInterpolators
 immutable AkimaSpline <: HermiteSplines end
+immutable KrugerSpline <: HermiteSplines end
 
 abstract Interpolation
 abstract Interpolation1D <: Interpolation
@@ -128,6 +129,26 @@ function calibrate{T<:Real, S<:Real}(x::Vector{T}, y::Vector{S}, i::AkimaSpline)
             yd[i] = (sd[i+2] * sext[i+1] + sd[i] * sext[i+2]) / (sd[i+2] + sd[i])
         end
     end
+    a0 = y[1:end-1]
+    a1 = yd[1:end-1]
+    a2 = [(3s[i] - yd[i+1] - 2yd[i]) / h[i] for i=1:length(s)]
+    a3 = [-(2s[i] - yd[i+1] - yd[i]) / h[i]^2 for i=1:length(s)]
+    SplineInterpolation(x, y, hcat(a0, a1, a2, a3))
+end
+
+function calibrate{T<:Real, S<:Real}(x::Vector{T}, y::Vector{S}, i::KrugerSpline)
+    # The constrained cubic spline
+    N = length(x)
+    h = diff(x)
+    s = diff(y) ./ h
+    yd = zeros(x)
+    for i=2:N-1
+        sign_changed = s[i-1]s[i] > 0
+        sign_changed && (yd[i] = 2 / (1 / s[i-1] + 1/s[i]))
+        sign_changed || (yd[i] = 0)
+    end
+    yd[1] = 1.5s[1] - 0.5yd[2]
+    yd[end] = 1.5s[end] - 0.5yd[end-1]
     a0 = y[1:end-1]
     a1 = yd[1:end-1]
     a2 = [(3s[i] - yd[i+1] - 2yd[i]) / h[i] for i=1:length(s)]
