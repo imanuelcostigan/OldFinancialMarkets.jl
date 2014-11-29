@@ -114,18 +114,20 @@ function calibrate{T<:Real, S<:Real}(x::Vector{T}, y::Vector{S}, i::AkimaSpline)
     N = length(x)
     h = diff(x)
     s = diff(y) ./ h
-    sd = abs(diff(s))
+    s0 = 2s[1] - s[2]
+    sm1 = 2s0 - s[1]
+    sk = 2s[end] - s[end-1]
+    skp1 = 2sk - s[end]
+    sext = [sm1, s0, s, sk, skp1]
+    sd = abs(diff(sext))
     yd = zeros(x)
-    for i = 3:(N-2)
-        if sd[i] == 0 && sd[i-2] == 0
-            yd[i] = (s[i-1] + s[i]) / 2
+    for i = 1:N
+        if sd[i+2] == 0 && sd[i] == 0
+            yd[i] = (sext[i+1] + sext[i+2]) / 2
         else
-            yd[i] = (sd[i] * s[i-1] + sd[i-2] * s[i]) / (sd[i] + sd[i-2])
+            yd[i] = (sd[i+2] * sext[i+1] + sd[i] * sext[i+2]) / (sd[i+2] + sd[i])
         end
     end
-    yd[2] = 2*yd[3] - yd[4]
-    yd[1] = 2*yd[2] - yd[3]
-    yd[end-1] = 2*yd[end-2] - yd[end-3]
     a0 = y[1:end-1]
     a1 = yd[1:end-1]
     a2 = [(3s[i] - yd[i+1] - 2yd[i]) / h[i] for i=1:length(s)]
