@@ -143,7 +143,7 @@ function calibrate{T<:Real, S<:Real}(x::Vector{T}, y::Vector{S}, i::KrugerSpline
     s = diff(y) ./ h
     yd = zeros(x)
     for i=2:N-1
-        sign_changed = s[i-1]s[i] > 0
+        sign_changed = s[i-1]s[i] <= 0
         sign_changed && (yd[i] = 2 / (1 / s[i-1] + 1/s[i]))
         sign_changed || (yd[i] = 0)
     end
