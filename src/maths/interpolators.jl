@@ -20,6 +20,7 @@ immutable NotAKnotCubicSpline <: CubicSpline end
 abstract HermiteSplines <: SplineInterpolators
 immutable AkimaSpline <: HermiteSplines end
 immutable KrugerSpline <: HermiteSplines end
+immutable FritschButlandSpline <: HermiteSplines end
 
 abstract Interpolation
 abstract Interpolation1D <: Interpolation
@@ -149,6 +150,45 @@ function calibrate{T<:Real, S<:Real}(x::Vector{T}, y::Vector{S}, i::KrugerSpline
     end
     yd[1] = 1.5s[1] - 0.5yd[2]
     yd[end] = 1.5s[end] - 0.5yd[end-1]
+    a0 = y[1:end-1]
+    a1 = yd[1:end-1]
+    a2 = [(3s[i] - yd[i+1] - 2yd[i]) / h[i] for i=1:length(s)]
+    a3 = [-(2s[i] - yd[i+1] - yd[i]) / h[i]^2 for i=1:length(s)]
+    SplineInterpolation(x, y, hcat(a0, a1, a2, a3))
+end
+
+function calibrate{T<:Real, S<:Real}(x::Vector{T}, y::Vector{S},
+    i::FritschButlandSpline)
+    # Monotonicity preserving interpolator
+    N = length(x)
+    h = diff(x)
+    s = diff(y) ./ h
+    yd = zeros(x)
+    for i=2:N-1
+        if s[i-1]s[i] <= 0
+            yd[i] = 0
+        else
+            invyd1 = (h[i-1] + 2h[i]) / (3(h[i] + h[i-1])) / s[i-1]
+            invyd2 = (2h[i-1] + h[i]) / (3(h[i] + h[i-1])) / s[i]
+            yd[i] = 1 / (invyd1 + invyd2)
+        end
+    end
+    g0 = ((2h[1] + h[2])s[1] - h[1]s[2]) / (h[1] + h[2])
+    gN = ((2h[end] + h[end-1])s[end] - h[end]s[end-1]) / (h[end] + h[end-1])
+    if g0 * s[1] <= 0
+        yd[1] = 0
+    elseif s[1]s[2] <= 0 && abs(g0) > 3 * abs(s[end])
+        yd[1] = 3s[1]
+    else
+        yd[1] = g0
+    end
+    if gN * s[end] <= 0
+        yd[end] = 0
+    elseif s[end]s[end-1] <= 0 && abs(gN) > 3 * abs(s[end])
+        yd[end] = 3s[end]
+    else
+        yd[end] = gN
+    end
     a0 = y[1:end-1]
     a1 = yd[1:end-1]
     a2 = [(3s[i] - yd[i+1] - 2yd[i]) / h[i] for i=1:length(s)]

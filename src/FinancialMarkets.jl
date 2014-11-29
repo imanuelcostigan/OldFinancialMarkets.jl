@@ -51,7 +51,8 @@ export
     LongBackStub,SwapDateSchedule,
     # interpolators.jl
     LinearSpline, ClampedCubicSpline, NaturalCubicSpline, NotAKnotCubicSpline,
-    AkimaSpline, KrugerSpline, SplineInterpolation, interpolate, calibrate
+    AkimaSpline, KrugerSpline, FritschButlandSpline, SplineInterpolation,
+    interpolate, calibrate
 
 include("constants.jl")
 include("calendars.jl")

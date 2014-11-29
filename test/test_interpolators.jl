@@ -92,3 +92,10 @@ y1 = Float64[interpolate(xi, aksp) for xi in x0]
 krsp = calibrate(x, y, KrugerSpline())
 @test_approx_eq krsp.coefficients[:, 2] [.15, 0, -0.387096774193548000, 0, 0,
     0, 0]
+
+
+################################################################################
+# FRITSCH-BUTLAND SPLINE
+################################################################################
+fbsp = calibrate(x, y, FritschButlandSpline())
+@test_approx_eq fbsp.coefficients[:, 2] [.25, 0, -0.5196850393700780, 0, 0, 0, 0]
