@@ -21,6 +21,7 @@ abstract HermiteSplines <: SplineInterpolators
 immutable AkimaSpline <: HermiteSplines end
 immutable KrugerSpline <: HermiteSplines end
 immutable FritschButlandSpline <: HermiteSplines end
+immutable MonotoneConvexSpline <: SplineInterpolators end
 
 abstract HymanFilters
 immutable NonNegativeHymanFilter <: HymanFilters end
@@ -198,6 +199,17 @@ function calibrate{T<:Real, S<:Real}(x::Vector{T}, y::Vector{S},
     a2 = [(3s[i] - yd[i+1] - 2yd[i]) / h[i] for i=1:length(s)]
     a3 = [-(2s[i] - yd[i+1] - yd[i]) / h[i]^2 for i=1:length(s)]
     SplineInterpolation(x, y, hcat(a0, a1, a2, a3))
+end
+
+function calibrate{T<:Real, S<:Real}(x::Vector{T}, y::Vector{S},
+    i::MonotoneConvexSpline)
+    N = length(x)
+    xd = diff(x)
+    xyd = diff(x .* y)
+    Fd = xyd ./ xd
+    F = [(xd[i]Fd[i+1] + xd[i+1]Fd[i]) / (x[i+1] - x[i-1]) for i=1:N-1]
+    F = [Fd[1] - 0.5(F[1] - Fd[1]), F, Fd[end] - 0.5(F[end] - Fd[end])]
+
 end
 
 function non_negative_hyman_filter!(si::SplineInterpolation)
