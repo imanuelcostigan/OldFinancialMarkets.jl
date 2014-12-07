@@ -201,44 +201,44 @@ function calibrate{T<:Real, S<:Real}(x::Vector{T}, y::Vector{S},
     SplineInterpolation(x, y, hcat(a0, a1, a2, a3))
 end
 
-function calibrate{T<:Real, S<:Real}(x::Vector{T}, y::Vector{S},
-    i::MonotoneConvexSpline)
-    N = length(x)
-    xd = diff(x)
-    xyd = diff(x .* y)
-    Fd = xyd ./ xd
-    F = [(xd[i]Fd[i+1] + xd[i+1]Fd[i]) / (x[i+1] - x[i-1]) for i=1:N-1]
-    F = [Fd[1] - 0.5(F[1] - Fd[1]), F, Fd[end] - 0.5(F[end] - Fd[end])]
+# function calibrate{T<:Real, S<:Real}(x::Vector{T}, y::Vector{S},
+#     i::MonotoneConvexSpline)
+#     N = length(x)
+#     xd = diff(x)
+#     xyd = diff(x .* y)
+#     Fd = xyd ./ xd
+#     F = [(xd[i]Fd[i+1] + xd[i+1]Fd[i]) / (x[i+1] - x[i-1]) for i=1:N-1]
+#     F = [Fd[1] - 0.5(F[1] - Fd[1]), F, Fd[end] - 0.5(F[end] - Fd[end])]
 
-end
+# end
 
-function non_negative_hyman_filter!(si::SplineInterpolation)
-    msg = "Hyman filter only implemented for cubic interpolators"
-    size(si.coefficients)[2] == 4 || throw(ArgumentError(msg))
-    h = diff(si.x)
-    σ = sign(si.coefficients[2:end, 1])
-    lo = -3σ .* si.coefficients[2:end, 1] ./ h[2:end]
-    hi =  3σ .* si.coefficients[2:end, 1] ./ h[1:end-1]
-    fd = σ .* si.coefficients[2:end, 2]
-    si.coefficients[2:end, 2] = (σ .*
-        [clamp(fd[i], lo[i], hi[i]) for i=1:length(fd)])
-end
+# function non_negative_hyman_filter!(si::SplineInterpolation)
+#     msg = "Hyman filter only implemented for cubic interpolators"
+#     size(si.coefficients)[2] == 4 || throw(ArgumentError(msg))
+#     h = diff(si.x)
+#     σ = sign(si.coefficients[2:end, 1])
+#     lo = -3σ .* si.coefficients[2:end, 1] ./ h[2:end]
+#     hi =  3σ .* si.coefficients[2:end, 1] ./ h[1:end-1]
+#     fd = σ .* si.coefficients[2:end, 2]
+#     si.coefficients[2:end, 2] = (σ .*
+#         [clamp(fd[i], lo[i], hi[i]) for i=1:length(fd)])
+# end
 
-function monotonicity_hyman_filter!(si::SplineInterpolation)
-    # Using the Hyman published method, not the OpenGamma refinement.
-    msg = "Hyman filter only implemented for cubic interpolators"
-    N = size(si.coefficients)[2]
-    N == 4 || throw(ArgumentError(msg))
-    s = diff(si.y) ./ diff(si.x)
-    fd = si.coefficients
-    for i=1:N-1
-        σ = (s[i+1]s[i] > 0) ? sign(s[i+1]) : 0
-        if σ > 0
-            fd[i+1, 2] = min(max(0, fd[i+1, 2]),  3 * min(abs(s[i+1]), abs(s[i])))
-        elseif σ < 0
-            fd[i+1, 2] = max(min(0, fd[i+1, 2]), -3 * min(abs(s[i+1]), abs(s[i])))
-        else
-            fd[i+1, 2] = 0
-        end
-    end
-end
+# function monotonicity_hyman_filter!(si::SplineInterpolation)
+#     # Using the Hyman published method, not the OpenGamma refinement.
+#     msg = "Hyman filter only implemented for cubic interpolators"
+#     N = size(si.coefficients)[2]
+#     N == 4 || throw(ArgumentError(msg))
+#     s = diff(si.y) ./ diff(si.x)
+#     fd = si.coefficients
+#     for i=1:N-1
+#         σ = (s[i+1]s[i] > 0) ? sign(s[i+1]) : 0
+#         if σ > 0
+#             fd[i+1, 2] = min(max(0, fd[i+1, 2]),  3 * min(abs(s[i+1]), abs(s[i])))
+#         elseif σ < 0
+#             fd[i+1, 2] = max(min(0, fd[i+1, 2]), -3 * min(abs(s[i+1]), abs(s[i])))
+#         else
+#             fd[i+1, 2] = 0
+#         end
+#     end
+# end
