@@ -11,7 +11,7 @@ end
 type ZeroCurve <: PricingStructure
     currency::Currency
     referencedate::TimeType
-    interpolator::Interpolator
+    interpolator::Interpolators
     zerorates::Vector{InterestRate}
 end
 
