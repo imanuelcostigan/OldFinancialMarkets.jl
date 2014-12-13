@@ -23,6 +23,10 @@ immutable KrugerSpline <: HermiteSplines end
 immutable FritschButlandSpline <: HermiteSplines end
 immutable MonotoneConvexSpline <: SplineInterpolators end
 
+abstract Extrapolators
+immutable ConstantExtrapolator <: Extrapolators end
+immutable  LinearExtrapolator <: Extrapolators end
+
 abstract HymanFilters
 immutable NonNegativeHymanFilter <: HymanFilters end
 immutable MonotoneHymanFilter <: HymanFilters end
