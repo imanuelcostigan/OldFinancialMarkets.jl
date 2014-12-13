@@ -242,3 +242,5 @@ end
 #         end
 #     end
 # end
+
+is_extrapolated(i::SplineInterpolation) = (length(i.x)==size(i.coefficients, 1))
