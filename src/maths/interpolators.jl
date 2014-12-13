@@ -251,10 +251,19 @@ is_extrapolated(i::SplineInterpolation) = (length(i.x)==size(i.coefficients, 1))
 function extrapolate(i::SplineInterpolation, e::ConstantExtrapolator)
     msg = "The SplineInterpolation is already extrapolated"
     is_extrapolated(i) && throw(ArgumentError(msg))
-    pre = zeros(i.coefficients[1, :])
+    zs = zeros(i.coefficients[1, :])
+    pre, post = (zs, zs)
     pre[1] = i.y[1]
-    post = zeros(i.coefficients[1, :])
     post[1] = i.y[end]
     SplineInterpolation(i.x, i.y, vcat(pre, i.coefficients, post))
 end
 
+function extrapolate(i::SplineInterpolation, e::LinearExtrapolator)
+    msg = "The SplineInterpolation is already extrapolated"
+    is_extrapolated(i) && throw(ArgumentError(msg))
+    zs = zeros(i.coefficients[1, :])
+    pre, post = (zs, zs)
+    pre[1:2] = [i.y[1], i.coefficients[1, 2]]
+    post[1:2] = [i.y[end], i.coefficients[end, 2]]
+    SplineInterpolation(i.x, i.y, vcat(pre, i.coefficients, post))
+end
