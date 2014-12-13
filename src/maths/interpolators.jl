@@ -248,3 +248,13 @@ end
 # end
 
 is_extrapolated(i::SplineInterpolation) = (length(i.x)==size(i.coefficients, 1))
+function extrapolate!(i::SplineInterpolation, e::ConstantExtrapolator)
+    msg = "The SplineInterpolation is already extrapolated"
+    is_extrapolated(i) && throw(ArgumentError(msg))
+    pre = zeros(i.coefficients[1, :])
+    pre[1] = i.y[1]
+    post = zeros(i.coefficients[1, :])
+    post[1] = i.y[end]
+    i.coefficients = hcat(pre, i.coefficients, post)
+end
+
