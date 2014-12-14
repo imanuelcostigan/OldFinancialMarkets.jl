@@ -248,6 +248,7 @@ end
 # end
 
 is_extrapolated(i::SplineInterpolation) = (length(i.x)==size(i.coefficients, 1))
+
 function extrapolate(i::SplineInterpolation, e::ConstantExtrapolator)
     msg = "The SplineInterpolation is already extrapolated"
     is_extrapolated(i) && throw(ArgumentError(msg))

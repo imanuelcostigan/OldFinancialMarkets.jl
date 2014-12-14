@@ -52,7 +52,8 @@ export
     # interpolators.jl
     LinearSpline, ClampedCubicSpline, NaturalCubicSpline, NotAKnotCubicSpline,
     AkimaSpline, KrugerSpline, FritschButlandSpline, SplineInterpolation,
-    interpolate, calibrate
+    interpolate, calibrate,
+    ConstantExtrapolator, LinearExtrapolator, extrapolate
 
 include("constants.jl")
 include("calendars.jl")
