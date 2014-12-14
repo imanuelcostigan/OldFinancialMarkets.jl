@@ -52,17 +52,26 @@ end
 
 function interpolate{T<:Real, S<:Real}(x_new::Real, x::Vector{T}, y::Vector{S},
     i::Interpolators)
-    msg = "x_new is not in the interpolator's domain"
-    x[1] <= x_new <= x[end] || throw(ArgumentError(msg))
     interpolate(x_new, calibrate(x, y, i))
 end
 
 function interpolate(x_new::Real, i::SplineInterpolation)
-    msg = "x_new is not in the interpolator's domain"
-    i.x[1] <= x_new <= i.x[end] || throw(ArgumentError(msg))
+    msg = string("x_new is not in the interpolator's domain. ",
+        "You may wish to extrapolate.")
+    is_e = is_extrapolated(i)
+    !is_e && !(i.x[1] <= x_new <= i.x[end]) && throw(ArgumentError(msg))
     index = searchsortedlast(i.x, x_new)
-    index == length(i.x) && (index = size(i.coefficients)[1])
-    polyval(Poly(vec(i.coefficients[index, :])), (x_new - i.x[index]))
+    println("index: ", index, ". length: ", length(i.x))
+    if index == 0
+        # x_new occurs before smallest x
+        polyval(Poly(vec(i.coefficients[1, :])), (x_new - i.x[1]))
+    elseif index == length(i.x)
+        # x_new occurs on or after largest x
+        polyval(Poly(vec(i.coefficients[end, :])), (x_new - i.x[end-1]))
+    else
+        # Need to shift coefficients index if i is extrpolated
+        polyval(Poly(vec(i.coefficients[index+is_e, :])), (x_new - i.x[index]))
+    end
 end
 
 function calibrate{T<:Real, S<:Real}(x::Vector{T}, y::Vector{S}, i::LinearSpline)
