@@ -59,14 +59,16 @@ function interpolate(x_new::Real, i::SplineInterpolation)
     msg = string("x_new is not in the interpolator's domain. ",
         "You may wish to extrapolate.")
     is_e = is_extrapolated(i)
+    # Fail if x_new is not in range of given x and no extrapolation is provided
     !is_e && !(i.x[1] <= x_new <= i.x[end]) && throw(ArgumentError(msg))
+    # Find the largest x <= x_new
     index = searchsortedlast(i.x, x_new)
     if index == 0
-        # x_new occurs before smallest x
+        # x_new occurs before smallest x.
         polyval(Poly(vec(i.coefficients[1, :])), (x_new - i.x[1]))
     elseif index == length(i.x)
-        # x_new occurs on or after largest x
-        polyval(Poly(vec(i.coefficients[end, :])), (x_new - i.x[end-1]))
+        # x_new occurs on or after largest x.
+        polyval(Poly(vec(i.coefficients[end, :])), (x_new - i.x[end-1+is_e]))
     else
         # Need to shift coefficients index if i is extrpolated
         polyval(Poly(vec(i.coefficients[index+is_e, :])), (x_new - i.x[index]))
