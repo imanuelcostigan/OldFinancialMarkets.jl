@@ -61,7 +61,6 @@ function interpolate(x_new::Real, i::SplineInterpolation)
     is_e = is_extrapolated(i)
     !is_e && !(i.x[1] <= x_new <= i.x[end]) && throw(ArgumentError(msg))
     index = searchsortedlast(i.x, x_new)
-    println("index: ", index, ". length: ", length(i.x))
     if index == 0
         # x_new occurs before smallest x
         polyval(Poly(vec(i.coefficients[1, :])), (x_new - i.x[1]))
@@ -256,13 +255,14 @@ end
 #     end
 # end
 
-is_extrapolated(i::SplineInterpolation) = (length(i.x)==size(i.coefficients, 1))
+is_extrapolated(i::SplineInterpolation) = (length(i.x)+1 ==
+    size(i.coefficients, 1))
 
 function extrapolate(i::SplineInterpolation, e::ConstantExtrapolator)
     msg = "The SplineInterpolation is already extrapolated"
     is_extrapolated(i) && throw(ArgumentError(msg))
-    zs = zeros(i.coefficients[1, :])
-    pre, post = (zs, zs)
+    pre = zeros(i.coefficients[1, :])
+    post = zeros(i.coefficients[1, :])
     pre[1] = i.y[1]
     post[1] = i.y[end]
     SplineInterpolation(i.x, i.y, vcat(pre, i.coefficients, post))
@@ -271,8 +271,8 @@ end
 function extrapolate(i::SplineInterpolation, e::LinearExtrapolator)
     msg = "The SplineInterpolation is already extrapolated"
     is_extrapolated(i) && throw(ArgumentError(msg))
-    zs = zeros(i.coefficients[1, :])
-    pre, post = (zs, zs)
+    pre = zeros(i.coefficients[1, :])
+    post = zeros(i.coefficients[1, :])
     pre[1:2] = [i.y[1], i.coefficients[1, 2]]
     post[1:2] = [i.y[end], i.coefficients[end, 2]]
     SplineInterpolation(i.x, i.y, vcat(pre, i.coefficients, post))

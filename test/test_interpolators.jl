@@ -25,6 +25,10 @@ y_12 = lsc.coefficients[1, 1] + lsc.coefficients[1, 2] * (1.2 - 1)
 @test_approx_eq interpolate(1.2, lsc) y_12
 ## Test method without calibration
 @test_approx_eq interpolate(1.2, x, y, LinearSpline()) y_12
+## Test extrapolation
+lsce = extrapolate(lsc, ConstantExtrapolator())
+@test_approx_eq interpolate(0, lsce) 1.8
+@test_approx_eq interpolate(9, lsce) 1.9
 
 ################################################################################
 # NAUTRAL CUBIC SPLINE
