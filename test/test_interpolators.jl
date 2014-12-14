@@ -97,5 +97,6 @@ krsp = calibrate(x, y, KrugerSpline())
 ################################################################################
 # FRITSCH-BUTLAND SPLINE
 ################################################################################
+# Manually calculated Kruger first derivative in spreadsheet and copied results
 fbsp = calibrate(x, y, FritschButlandSpline())
 @test_approx_eq fbsp.coefficients[:, 2] [.25, 0, -0.5196850393700780, 0, 0, 0, 0]
