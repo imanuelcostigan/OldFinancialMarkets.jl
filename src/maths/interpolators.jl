@@ -50,11 +50,6 @@ end
 # Methods
 ###############################################################################
 
-function interpolate{T<:Real, S<:Real}(x_new::Real, x::Vector{T}, y::Vector{S},
-    i::Interpolators)
-    interpolate(x_new, calibrate(x, y, i))
-end
-
 function interpolate(x_new::Real, i::SplineInterpolation)
     msg = string("x_new is not in the interpolator's domain. ",
         "You may wish to extrapolate.")
