@@ -45,6 +45,7 @@ immutable SplineInterpolation{T,S} <: Interpolation1D
         new(x, y, coefficients)
     end
 end
+typealias RealSplineInterpolation SplineInterpolation{Real, Real}
 
 ###############################################################################
 # Methods
