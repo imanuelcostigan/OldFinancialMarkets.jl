@@ -257,7 +257,7 @@ end
 #     end
 # end
 
-is_extrapolated(i::SplineInterpolation) = (length(i.x)+1 ==
+is_extrapolated(i::SplineInterpolation) = (length(i.x) + 1 ==
     size(i.coefficients, 1))
 
 function extrapolate(i::SplineInterpolation, e::ConstantExtrapolator)
