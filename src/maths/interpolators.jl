@@ -33,9 +33,9 @@ immutable MonotoneHymanFilter <: HymanFilters end
 
 abstract Interpolation
 abstract Interpolation1D <: Interpolation
-immutable SplineInterpolation <: Interpolation1D
-    x::Vector{Real}
-    y::Vector{Real}
+immutable SplineInterpolation{T,S} <: Interpolation1D
+    x::Vector{T}
+    y::Vector{S}
     coefficients::Matrix{Real}
     function SplineInterpolation(x, y, coefficients)
         msg = "x and y must be the same length"
