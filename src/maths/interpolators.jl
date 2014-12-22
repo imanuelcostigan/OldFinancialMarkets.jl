@@ -50,7 +50,7 @@ end
 # Methods
 ###############################################################################
 
-function interpolate(x_new::Real, i::SplineInterpolation)
+function interpolate(x_new::Real, i::SplineInterpolation{Real, Real})
     msg = string("x_new is not in the interpolator's domain. ",
         "You may wish to extrapolate.")
     is_e = is_extrapolated(i)
