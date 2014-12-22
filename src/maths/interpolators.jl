@@ -70,6 +70,11 @@ function interpolate(x_new::Real, i::SplineInterpolation{Real, Real})
     end
 end
 
+function calibrate{T<:TimeType, S<:Real}(x::Vector{T}, y::Vector{S},
+    i::SplineInterpolators)
+    calibrate(convert(Real, x), y, i)
+end
+
 function calibrate{T<:Real, S<:Real}(x::Vector{T}, y::Vector{S}, i::LinearSpline)
     SplineInterpolation(x, y, hcat(y[1:(end-1)], diff(y) ./ diff(x)))
 end
