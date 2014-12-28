@@ -22,51 +22,54 @@ immutable ThirtyEP360 <: DayCountFraction end
 Base.string(dc::DayCountFraction) = string(typeof(dc))
 Base.show(io::IO, dc::DayCountFraction) = print(io, string(dc))
 
-function years(date1::TimeType, date2::TimeType, dc::A365)
-    date1 == date2 && return 0.0
-    (Date(date2) - Date(date1)).value / 365
+function years(date1::Date, date2::Date, dc::A365)
+    date1 == date2 && return 0.
+    (date2 - date1).value / 365.
 end
 
-function years(date1::TimeType, date2::TimeType, dc::A360)
-    date1 == date2 && return 0.0
-    (Date(date2) - Date(date1)).value / 360
+function years(date1::Date, date2::Date, dc::A360)
+    date1 == date2 && return 0.
+    (date2 - date1).value / 360.
 end
 
-function years(date1::TimeType, date2::TimeType, dc::ActActISDA)
-    date1 == date2 && return 0.0
-    y1 = year(date1); y2 = year(date2)
-    diy1 = daysinyear(year(date1)); diy2 = daysinyear(year(date2))
+function years(date1::Date, date2::Date, dc::ActActISDA)
+    date1 == date2 && return 0.
+    y1, y2 = (year(date1), year(date2))
+    diy1, diy2 = (daysinyear(year(date1)), daysinyear(year(date2)))
     bony1 = Date(y1 + 1, 1, 1)
     boy2 = Date(y2, 1, 1)
-    return ((bony1 - Date(date1)).value / diy1 + y2 - y1 - 1 +
-        (Date(date2) - boy2).value / diy2)
+    (bony1 - date1).value / diy1 + y2 - y1 - 1 + (date2 - boy2).value / diy2
 end
 
-function years(date1::TimeType, date2::TimeType, dc::Thirty360)
-    date1 == date2 && return 0.0
+function years(date1::Date, date2::Date, dc::Thirty360)
+    date1 == date2 && return 0.
     y1, m1, d1 = yearmonthday(date1)
     y2, m2, d2 = yearmonthday(date2)
-    d1 == 31 && (d1 = 30)
-    d2 == 31 && d1 > 29 && (d2 = 30)
-    (360 * (y2 - y1) + 30 * (m2 - m1) + (d2 - d1)) / 360
+    d1 == 31 && (d1 = 30.)
+    d2 == 31 && d1 > 29 && (d2 = 30.)
+    (360.(y2 - y1) + 30.(m2 - m1) + (d2 - d1)) / 360.
 end
 
-function years(date1::TimeType, date2::TimeType, dc::ThirtyE360)
-    date1 == date2 && return 0.0
+function years(date1::Date, date2::Date, dc::ThirtyE360)
+    date1 == date2 && return 0.
     y1, m1, d1 = yearmonthday(date1)
     y2, m2, d2 = yearmonthday(date2)
-    d1 == 31 && (d1 = 30)
-    d2 == 31 && (d2 = 30)
-    (360 * (y2 - y1) + 30 * (m2 - m1) + (d2 - d1)) / 360
+    d1 == 31 && (d1 = 30.)
+    d2 == 31 && (d2 = 30.)
+    (360.(y2 - y1) + 30.(m2 - m1) + (d2 - d1)) / 360.
 end
 
-function years(date1::TimeType, date2::TimeType, dc::ThirtyEP360)
-    date1 == date2 && return 0.0
+function years(date1::Date, date2::Date, dc::ThirtyEP360)
+    date1 == date2 && return 0.
     y1, m1, d1 = yearmonthday(date1)
     y2, m2, d2 = yearmonthday(date2)
-    d1 == 31 && (d1 = 30)
-    d2 == 31 && (m2 += 1)
-    d2 == 31 && (d2 = 1)
-    (360 * (y2 - y1) + 30 * (m2 - m1) + (d2 - d1)) / 360
+    d1 == 31 && (d1 = 30.)
+    d2 == 31 && (m2 += 1.)
+    d2 == 31 && (d2 = 1.)
+    (360.(y2 - y1) + 30.(m2 - m1) + (d2 - d1)) / 360.
+end
+
+function years(d1::DateTime, d2::DateTime, dc::DayCountFraction)
+    years(Date(d1), Date(d2), dc)
 end
 
