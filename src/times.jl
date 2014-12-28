@@ -23,17 +23,17 @@ Base.string(dc::DayCountFraction) = string(typeof(dc))
 Base.show(io::IO, dc::DayCountFraction) = print(io, string(dc))
 
 function years(date1::TimeType, date2::TimeType, dc::A365)
-    date1 == date2 && return 0
+    date1 == date2 && return 0.0
     (Date(date2) - Date(date1)).value / 365
 end
 
 function years(date1::TimeType, date2::TimeType, dc::A360)
-    date1 == date2 && return 0
+    date1 == date2 && return 0.0
     (Date(date2) - Date(date1)).value / 360
 end
 
 function years(date1::TimeType, date2::TimeType, dc::ActActISDA)
-    date1 == date2 && return 0
+    date1 == date2 && return 0.0
     y1 = year(date1); y2 = year(date2)
     diy1 = daysinyear(year(date1)); diy2 = daysinyear(year(date2))
     bony1 = Date(y1 + 1, 1, 1)
@@ -43,7 +43,7 @@ function years(date1::TimeType, date2::TimeType, dc::ActActISDA)
 end
 
 function years(date1::TimeType, date2::TimeType, dc::Thirty360)
-    date1 == date2 && return 0
+    date1 == date2 && return 0.0
     y1, m1, d1 = yearmonthday(date1)
     y2, m2, d2 = yearmonthday(date2)
     d1 == 31 && (d1 = 30)
@@ -52,7 +52,7 @@ function years(date1::TimeType, date2::TimeType, dc::Thirty360)
 end
 
 function years(date1::TimeType, date2::TimeType, dc::ThirtyE360)
-    date1 == date2 && return 0
+    date1 == date2 && return 0.0
     y1, m1, d1 = yearmonthday(date1)
     y2, m2, d2 = yearmonthday(date2)
     d1 == 31 && (d1 = 30)
@@ -61,7 +61,7 @@ function years(date1::TimeType, date2::TimeType, dc::ThirtyE360)
 end
 
 function years(date1::TimeType, date2::TimeType, dc::ThirtyEP360)
-    date1 == date2 && return 0
+    date1 == date2 && return 0.0
     y1, m1, d1 = yearmonthday(date1)
     y2, m2, d2 = yearmonthday(date2)
     d1 == 31 && (d1 = 30)
