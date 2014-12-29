@@ -14,9 +14,6 @@ import DataFrames.DataFrame
 import Base.zeros
 
 export
-    # constants.jl
-    Simply, Annually, SemiAnnually, TriAnnually, Quarterly, BiMonthly,
-    Monthly, Fortnightly, Weekly, Daily, Continuously,
     # times.jl
     A365, A360, ActActISDA, Thirty360, ThirtyE360, ThirtyEP360, years,
     # calendars.jl
@@ -43,6 +40,8 @@ export
     # cashflow.jl
     CashFlow,
     # interestrates.jl
+    Simply, Annually, SemiAnnually, TriAnnually, Quarterly, BiMonthly,
+    Monthly, Fortnightly, Weekly, Daily, Continuously,
     InterestRate, DiscountFactor,
     # indices.jl
     ONIA, AONIA, EONIA, SONIA, TONAR, NZIONA, FedFund,
