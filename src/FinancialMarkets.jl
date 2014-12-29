@@ -55,7 +55,7 @@ export
     LongBackStub,SwapDateSchedule,
     # interpolators.jl
     LinearSpline, ClampedCubicSpline, NaturalCubicSpline, NotAKnotCubicSpline,
-    AkimaSpline, KrugerSpline, FritschButlandSpline, SplineInterpolation,
+    AkimaSpline, KrugerSpline, FritschButlandSpline, FloatSplineInterpolation,
     interpolate, calibrate,
     ConstantExtrapolator, LinearExtrapolator, extrapolate
 

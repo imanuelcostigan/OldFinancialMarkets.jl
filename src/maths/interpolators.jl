@@ -45,13 +45,13 @@ immutable SplineInterpolation{T,S} <: Interpolation1D
         new(x, y, coefficients)
     end
 end
-typealias RealSplineInterpolation SplineInterpolation{Real, Real}
+typealias FloatSplineInterpolation SplineInterpolation{Float64, Float64}
 
 ###############################################################################
 # Methods
 ###############################################################################
 
-function interpolate(x_new::Real, i::RealSplineInterpolation)
+function interpolate(x_new::Real, i::FloatSplineInterpolation)
     msg = string("x_new is not in the interpolator's domain. ",
         "You may wish to extrapolate.")
     is_e = is_extrapolated(i)
@@ -71,17 +71,17 @@ function interpolate(x_new::Real, i::RealSplineInterpolation)
     end
 end
 
-function interpolate(x_new::TimeType, i::RealSplineInterpolation)
-    interpolate(convert(Real, x_new), i)
+function interpolate(x_new::TimeType, i::FloatSplineInterpolation)
+    interpolate(convert(Float64, x_new), i)
 end
 
 function calibrate{T<:TimeType, S<:Real}(x::Vector{T}, y::Vector{S},
     i::SplineInterpolators)
-    calibrate(Real[convert(Real, xi) for xi in x], y, i)
+    calibrate([convert(Float64, xi) for xi in x], y, i)
 end
 
 function calibrate{T<:Real, S<:Real}(x::Vector{T}, y::Vector{S}, i::LinearSpline)
-    RealSplineInterpolation(x, y, hcat(y[1:(end-1)], diff(y) ./ diff(x)))
+    FloatSplineInterpolation(x, y, hcat(y[1:(end-1)], diff(y) ./ diff(x)))
 end
 
 function calibrate_cubic_spline{T<:Real, S<:Real, U<:Real}(
@@ -95,7 +95,7 @@ function calibrate_cubic_spline{T<:Real, S<:Real, U<:Real}(
     a1 = s - h.*mpop / 2 - h.*mdiff / 6
     a2 = mpop / 2
     a3 = mdiff ./ h / 6
-    RealSplineInterpolation(x, y, hcat(a0, a1, a2, a3))
+    FloatSplineInterpolation(x, y, hcat(a0, a1, a2, a3))
 end
 
 function calibrate{T<:Real, S<:Real}(x::Vector{T}, y::Vector{S},
@@ -158,7 +158,7 @@ function calibrate{T<:Real, S<:Real}(x::Vector{T}, y::Vector{S}, i::AkimaSpline)
     a1 = yd[1:end-1]
     a2 = [(3s[i] - yd[i+1] - 2yd[i]) / h[i] for i=1:length(s)]
     a3 = [-(2s[i] - yd[i+1] - yd[i]) / h[i]^2 for i=1:length(s)]
-    RealSplineInterpolation(x, y, hcat(a0, a1, a2, a3))
+    FloatSplineInterpolation(x, y, hcat(a0, a1, a2, a3))
 end
 
 function calibrate{T<:Real, S<:Real}(x::Vector{T}, y::Vector{S}, i::KrugerSpline)
@@ -178,7 +178,7 @@ function calibrate{T<:Real, S<:Real}(x::Vector{T}, y::Vector{S}, i::KrugerSpline
     a1 = yd[1:end-1]
     a2 = [(3s[i] - yd[i+1] - 2yd[i]) / h[i] for i=1:length(s)]
     a3 = [-(2s[i] - yd[i+1] - yd[i]) / h[i]^2 for i=1:length(s)]
-    RealSplineInterpolation(x, y, hcat(a0, a1, a2, a3))
+    FloatSplineInterpolation(x, y, hcat(a0, a1, a2, a3))
 end
 
 function calibrate{T<:Real, S<:Real}(x::Vector{T}, y::Vector{S},
@@ -217,7 +217,7 @@ function calibrate{T<:Real, S<:Real}(x::Vector{T}, y::Vector{S},
     a1 = yd[1:end-1]
     a2 = [(3s[i] - yd[i+1] - 2yd[i]) / h[i] for i=1:length(s)]
     a3 = [-(2s[i] - yd[i+1] - yd[i]) / h[i]^2 for i=1:length(s)]
-    RealSplineInterpolation(x, y, hcat(a0, a1, a2, a3))
+    FloatSplineInterpolation(x, y, hcat(a0, a1, a2, a3))
 end
 
 # function calibrate{T<:Real, S<:Real}(x::Vector{T}, y::Vector{S},
@@ -231,7 +231,7 @@ end
 
 # end
 
-# function non_negative_hyman_filter!(si::RealSplineInterpolation)
+# function non_negative_hyman_filter!(si::FloatSplineInterpolation)
 #     msg = "Hyman filter only implemented for cubic interpolators"
 #     size(si.coefficients)[2] == 4 || throw(ArgumentError(msg))
 #     h = diff(si.x)
@@ -243,7 +243,7 @@ end
 #         [clamp(fd[i], lo[i], hi[i]) for i=1:length(fd)])
 # end
 
-# function monotonicity_hyman_filter!(si::RealSplineInterpolation)
+# function monotonicity_hyman_filter!(si::FloatSplineInterpolation)
 #     # Using the Hyman published method, not the OpenGamma refinement.
 #     msg = "Hyman filter only implemented for cubic interpolators"
 #     N = size(si.coefficients)[2]
@@ -262,25 +262,25 @@ end
 #     end
 # end
 
-is_extrapolated(i::RealSplineInterpolation) = (length(i.x) + 1 ==
+is_extrapolated(i::FloatSplineInterpolation) = (length(i.x) + 1 ==
     size(i.coefficients, 1))
 
-function extrapolate(i::RealSplineInterpolation, e::ConstantExtrapolator)
-    msg = "The RealSplineInterpolation is already extrapolated"
+function extrapolate(i::FloatSplineInterpolation, e::ConstantExtrapolator)
+    msg = "The FloatSplineInterpolation is already extrapolated"
     is_extrapolated(i) && throw(ArgumentError(msg))
     pre = zeros(i.coefficients[1, :])
     post = zeros(i.coefficients[1, :])
     pre[1] = i.y[1]
     post[1] = i.y[end]
-    RealSplineInterpolation(i.x, i.y, vcat(pre, i.coefficients, post))
+    FloatSplineInterpolation(i.x, i.y, vcat(pre, i.coefficients, post))
 end
 
-function extrapolate(i::RealSplineInterpolation, e::LinearExtrapolator)
-    msg = "The RealSplineInterpolation is already extrapolated"
+function extrapolate(i::FloatSplineInterpolation, e::LinearExtrapolator)
+    msg = "The FloatSplineInterpolation is already extrapolated"
     is_extrapolated(i) && throw(ArgumentError(msg))
     pre = zeros(i.coefficients[1, :])
     post = zeros(i.coefficients[1, :])
     pre[1:2] = [i.y[1], i.coefficients[1, 2]]
     post[1:2] = [i.y[end], i.coefficients[end, 2]]
-    RealSplineInterpolation(i.x, i.y, vcat(pre, i.coefficients, post))
+    FloatSplineInterpolation(i.x, i.y, vcat(pre, i.coefficients, post))
 end

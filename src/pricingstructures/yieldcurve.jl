@@ -18,7 +18,7 @@ CubicRateCurveInterpolator() = CubicRateCurveInterpolator(NaturalCubicSpline())
 
 type ZeroCurve <: PricingStructure
     reference_date::TimeType
-    interpolation::RealSplineInterpolation
+    interpolation::FloatSplineInterpolation
     transformer::Function
     compounding::Compounding
     day_count::DayCountFraction
