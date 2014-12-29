@@ -2,9 +2,25 @@
 # Types
 ####
 
+immutable Compounding
+    frequency::Int  # per annum
+end
+
+Simply = Compounding(0)
+Annually = Compounding(1)
+SemiAnnually = Compounding(2)
+TriAnnually = Compounding(3)
+Quarterly = Compounding(4)
+BiMonthly = Compounding(6)
+Monthly = Compounding(12)
+Fortnightly = Compounding(24)
+Weekly = Compounding(52)
+Daily = Compounding(365)
+Continuously = Compounding(1000)
+
 type InterestRate
     rate::Float64
-    compounding::Int
+    compounding::Compounding
     daycount::DayCountFraction
     function InterestRate(r, cmp, dc)
         msg = "Invalid compounding."
@@ -37,7 +53,7 @@ value(df::DiscountFactor) = df.discountfactor
 # IO
 function Base.string(r::InterestRate)
     (@sprintf("%05f", 100 * value(r)) * "%," *
-        uppercase(COMPOUNDINGS[r.compounding]) * "," *
+        uppercase(COMPOUNDINGS[r.compounding.frequency]) * "," *
         uppercase(string(r.daycount)))
 end
 Base.show(io::IO, r::InterestRate) = print(io, string(r))
@@ -57,7 +73,8 @@ function Base.convert(::Type{DiscountFactor}, x::InterestRate,
     elseif x.compounding == Simply
         df = 1 / (1 + t * value(x))
     else
-        df = 1 / ((1 + value(x) / x.compounding) ^ (x.compounding * t))
+        freq = x.compounding.frequency
+        df = 1 / ((1 + value(x) / freq) ^ (freq * t))
     end
     return DiscountFactor(df, startdate, enddate)
 end
@@ -66,30 +83,33 @@ function DiscountFactor(r::InterestRate, dt1::TimeType, dt2::TimeType)
     convert(DiscountFactor, r, dt1, dt2)
 end
 
-function Base.convert(::Type{InterestRate}, x::DiscountFactor, compounding::Int,
-    daycount::DayCountFraction)
+function Base.convert(::Type{InterestRate}, x::DiscountFactor,
+    compounding::Compounding, daycount::DayCountFraction)
     t = years(x.startdate, x.enddate, daycount)
     if compounding == Continuously
         rate = -log(value(x)) / t
     elseif compounding == Simply
         rate = (1 / value(x) - 1) / t
     else
-        rate = (compounding *
-            ((1 / value(x)) ^ (1 / (compounding * t)) - 1))
+        freq = compounding.frequency
+        rate = (freq * ((1 / value(x)) ^ (1 / (freq * t)) - 1))
     end
     return InterestRate(rate, compounding, daycount)
 end
 
-InterestRate(df::DiscountFactor, cmp::Int, dc::DayCountFraction) =  convert(
-    InterestRate, df, cmp, dc)
+function InterestRate(df::DiscountFactor, cmp::Compounding,
+    dc::DayCountFraction)
+    convert(InterestRate, df, cmp, dc)
+end
 
-function Base.convert(::Type{InterestRate}, x::InterestRate, compounding::Int)
-    startdate, enddate = Date(2013, 1, 1), Date(2014, 1, 1)
+function Base.convert(::Type{InterestRate}, x::InterestRate,
+    compounding::Compounding)
+    startdate, enddate = (Date(2013, 1, 1), Date(2014, 1, 1))
     df = convert(DiscountFactor, x, startdate, enddate)
     convert(InterestRate, df, compounding, x.daycount)
 end
 
-InterestRate(r::InterestRate, cmp::Int) = convert(InterestRate, r, cmp)
+InterestRate(r::InterestRate, cmp::Compounding) = convert(InterestRate, r, cmp)
 
 function Base.convert(::Type{InterestRate}, x::InterestRate, daycount::DayCountFraction)
     startdate, enddate = (Date(2013, 1, 1), Date(2014, 1, 1))
@@ -99,15 +119,16 @@ end
 
 InterestRate(r::InterestRate, dc::DayCountFraction) = convert(InterestRate, r, dc)
 
-function Base.convert(::Type{InterestRate}, x::InterestRate, compounding::Int,
-    daycount::DayCountFraction)
+function Base.convert(::Type{InterestRate}, x::InterestRate,
+    compounding::Compounding, daycount::DayCountFraction)
     startdate, enddate = (Date(2013, 1, 1), Date(2014, 1, 1))
     df = convert(DiscountFactor, x, startdate, enddate)
     convert(InterestRate, df, compounding, daycount)
 end
 
-InterestRate(r::InterestRate, cmp::Int, dc::DayCountFraction) = convert(
-    InterestRate, r, cmp, dc)
+function InterestRate(r::InterestRate, cmp::Compounding, dc::DayCountFraction)
+    convert(InterestRate, r, cmp, dc)
+end
 
 function equivalent(to::InterestRate, x::InterestRate)
     flag = !(x.compounding == to.compounding && x.daycount == to.daycount)
