@@ -22,11 +22,6 @@ type InterestRate
     rate::Float64
     compounding::Compounding
     daycount::DayCountFraction
-    function InterestRate(r, cmp, dc)
-        msg = "Invalid compounding."
-        haskey(COMPOUNDINGS, cmp) || throw(ArgumentError(msg))
-        new(r, cmp, dc)
-    end
 end
 
 
