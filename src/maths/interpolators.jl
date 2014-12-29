@@ -113,17 +113,9 @@ function calibrate{T<:Real, S<:Real}(x::Vector{T}, y::Vector{S},
     h = diff(x)
     s = diff(y) ./ h
     diag_left = [h[1:(end-1)], 0.]
-    println("Type of diag_left: ", typeof(diag_left))
-    println("diag_left: ", diag_left)
     diag = [1., [2.(h[i] + h[i+1]) for i=1:(length(h)-1)], 1.]
-    println("Type of diag: ", typeof(diag))
-    println("diag: ", diag)
     diag_right = [0., h[2:end]]
-    println("Type of diag_right: ", typeof(diag_right))
-    println("diag_right: ", diag_right)
     A = spdiagm((diag_left, diag, diag_right), (-1., 0., 1.))
-    println("Type of A: ", typeof(A))
-    println("A: ", A)
     b = 6. * [0., diff(s), 0.]
     calibrate_cubic_spline(x, y, A, b)
 end
