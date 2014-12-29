@@ -72,4 +72,5 @@ include("cashflow.jl")
 include("indices.jl")
 include("instruments.jl")
 include("maths.jl")
+include("pricingstructures.jl")
 end

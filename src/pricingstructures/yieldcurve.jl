@@ -2,43 +2,81 @@
 # Types
 ###############################################################################
 
-abstract ZCInterpolators
-immutable ZCLinearInterpolator <: ZCInterpolators end
-immutable ZCLogLinearInterpolator <: ZCInterpolators end
-immutable ZCCubicInterpolator <: ZCInterpolators end
+abstract CurveInterpolators
+immutable LinearRateCurveInterpolator <: CurveInterpolators
+    interpolator::LinearSpline
+end
+LinearRateCurveInterpolator() = LinearRateCurveInterpolator(LinearSpline())
+immutable LinearLogDFCurveInterpolator <: CurveInterpolators
+    interpolator::LinearSpline
+end
+LinearLogDFCurveInterpolator() = LinearLogDFCurveInterpolator(LinearSpline())
+immutable CubicRateCurveInterpolator <: CurveInterpolators
+    interpolator::CubicSpline
+end
+CubicRateCurveInterpolator() = CubicRateCurveInterpolator(NaturalCubicSpline())
 
 type ZeroCurve <: PricingStructure
     reference_date::TimeType
+    interpolation::RealSplineInterpolation
+    transformer::Function
     compounding::Int
     day_count::DayCountFraction
-    discount_factors::Vector{DiscountFactor}
-    interpolation::SplineInterpolation
-    zc_interpolation::ZCInterpolators
-    function ZeroCurve(rd, pd, zr, df, i, zci)
-        # Enforce:
-        # 0. DF start dates the same
-        # 1. DF end dates in strictly ascending order
-        # 2. homogenous zero rate compounding/day basis
-        # 3. interpolation xs are same as year(rd, get_pillar_dates, get_day_count)
-    end
+end
+
+function ZeroCurve(dt0::TimeType, dfs::Vector{DiscountFactor},
+    i::CurveInterpolators, cmp::Int, dcf::DayCountFraction)
+    dts = [df.enddate for df in dfs]
+    dfs = [value(df) for df in dfs]
+    ZeroCurve(dt0, dts, dfs, i, cmp, dcf)
+end
+
+function ZeroCurve{T<:TimeType, S<:Real}(dt0::TimeType, dts::Vector{T},
+    dfs::Vector{S}, i::LinearRateCurveInterpolator, cmp::Int,
+    dcf::DayCountFraction)
+    xs = [years(dt0, dt, dcf) for dt in dts]
+    ys = [value(InterestRate(DiscountFactor(dfs[i], dt0, dts[i]), cmp, dcf))
+        for i=1:length(dts)]
+    ZeroCurve(dt0, calibrate(xs, ys, i.interpolator), x->x, cmp, dcf)
+end
+
+function ZeroCurve{T<:TimeType, S<:Real}(dt0::TimeType, dts::Vector{T},
+    dfs::Vector{S}, i::LinearLogDFCurveInterpolator, cmp::Int,
+    dcf::DayCountFraction)
+    xs = [years(dt0, dt, dcf) for dt in dts]
+    ys = [value(InterestRate(DiscountFactor(dfs[i], dt0, dts[i]), cmp, dcf))
+        for i=1:length(dts)]
+    ZeroCurve(dt0, calibrate(xs, -xs .* ys, i.interpolator),
+        (x,xy)->-xy/x, cmp, dcf)
+end
+
+function ZeroCurve{T<:TimeType, S<:Real}(dt0::TimeType, dts::Vector{T},
+    dfs::Vector{S}, i::CubicRateCurveInterpolator, cmp::Int,
+    dcf::DayCountFraction)
+    xs = [years(dt0, dt, dcf) for dt in dts]
+    ys = [value(InterestRate(DiscountFactor(dfs[i], dt0, dts[i]), cmp, dcf))
+        for i=1:length(dts)]
+    ZeroCurve(dt0, calibrate(xs, ys, i.interpolator), x->x, cmp, dcf)
 end
 
 # interpolation calibrated from zeros
 # provide only one or other of zeros or dfs to improve consistency between them
-ZeroCurve(reference_date, pillar_dates, zero_rates, zc_interpolation)
-ZeroCurve(reference_date, pillar_dates, discount_factors, zc_interpolation)
+# ZeroCurve(refdate, pillar_dates, zero_rates, zc_interpolation)
+# ZeroCurve(refdate, pillar_dates, discount_factors, zc_interpolation)
 
 ###############################################################################
 # Methods
 ###############################################################################
 
-get_day_count(zc::ZeroCurve) = zc.zero_rates[1].daycount
-get_pillar_dates(zc::ZeroCurve) = [df.enddate for df in zc.discount_factors]
-get_zero_rates(zc::ZeroCurve) = [InterestRate(df, zc.compounding, zc.day_count)
+## Extraction methods
+pillars(zc::ZeroCurve) = [df.enddate for df in zc.discount_factors]
+zeros(zc::ZeroCurve) = [InterestRate(df, zcw.compounding, zc.day_count)
     for df in zc.discount_factors]
 
-## Should always return discount factor
+## Other methods
 function interpolate{T<:TimeType}(dt::T, zc::ZeroCurve)
-    t = years(dt, get_pillar_dates(zc), get_day_count(zc))
-    DiscountFactor(interpolate(t, zc.i),
+    # Should always return a DiscountFactor
+    t = years(zc.refdate, dt, zc.day_count)
+    DiscountFactor(zc.transformer(t, interpolate(t, zc.i)),
+        zc.refdate, dt)
 end
