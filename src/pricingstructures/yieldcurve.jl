@@ -20,19 +20,19 @@ type ZeroCurve <: PricingStructure
     reference_date::TimeType
     interpolation::RealSplineInterpolation
     transformer::Function
-    compounding::Int
+    compounding::Compounding
     day_count::DayCountFraction
 end
 
 function ZeroCurve(dt0::TimeType, dfs::Vector{DiscountFactor},
-    i::CurveInterpolators, cmp::Int, dcf::DayCountFraction)
+    i::CurveInterpolators, cmp::Compounding, dcf::DayCountFraction)
     dts = [df.enddate for df in dfs]
     dfs = [value(df) for df in dfs]
     ZeroCurve(dt0, dts, dfs, i, cmp, dcf)
 end
 
 function ZeroCurve{T<:TimeType, S<:Real}(dt0::TimeType, dts::Vector{T},
-    dfs::Vector{S}, i::LinearRateCurveInterpolator, cmp::Int,
+    dfs::Vector{S}, i::LinearRateCurveInterpolator, cmp::Compounding,
     dcf::DayCountFraction)
     xs = [years(dt0, dt, dcf) for dt in dts]
     ys = [value(InterestRate(DiscountFactor(dfs[i], dt0, dts[i]), cmp, dcf))
@@ -41,7 +41,7 @@ function ZeroCurve{T<:TimeType, S<:Real}(dt0::TimeType, dts::Vector{T},
 end
 
 function ZeroCurve{T<:TimeType, S<:Real}(dt0::TimeType, dts::Vector{T},
-    dfs::Vector{S}, i::LinearLogDFCurveInterpolator, cmp::Int,
+    dfs::Vector{S}, i::LinearLogDFCurveInterpolator, cmp::Compounding,
     dcf::DayCountFraction)
     xs = [years(dt0, dt, dcf) for dt in dts]
     ys = [value(InterestRate(DiscountFactor(dfs[i], dt0, dts[i]), cmp, dcf))
@@ -51,7 +51,7 @@ function ZeroCurve{T<:TimeType, S<:Real}(dt0::TimeType, dts::Vector{T},
 end
 
 function ZeroCurve{T<:TimeType, S<:Real}(dt0::TimeType, dts::Vector{T},
-    dfs::Vector{S}, i::CubicRateCurveInterpolator, cmp::Int,
+    dfs::Vector{S}, i::CubicRateCurveInterpolator, cmp::Compounding,
     dcf::DayCountFraction)
     xs = [years(dt0, dt, dcf) for dt in dts]
     ys = [value(InterestRate(DiscountFactor(dfs[i], dt0, dts[i]), cmp, dcf))

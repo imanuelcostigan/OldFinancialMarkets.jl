@@ -84,7 +84,7 @@ The basic comparison (``==``, ``!=``, ``<``, ``<=``, ``>``, ``>=``) operations a
 Interface
 -------------------------------------------------------------------------------
 
-.. function:: InterestRate(r::Real, cmp::Int, dc::DayCountFraction) -> InterestRate
+.. function:: InterestRate(r::Real, cmp::Compounding, dc::DayCountFraction) -> InterestRate
 
     The inner constructor for the ``InterestRate`` type. See the description above.
 
@@ -96,11 +96,11 @@ Interface
 
     Convert an interest rate ``r`` to a ``DiscountFactor`` type spanning the time period starting at ``dt1`` and ending at ``dt2``.
 
-.. function:: InterestRate(df::DiscountFactor, cmp::Int, dc::DayCountFraction) -> InterestRate
+.. function:: InterestRate(df::DiscountFactor, cmp::Compounding, dc::DayCountFraction) -> InterestRate
 
     Convert a discount factor ``df`` to an ``InterestRate`` with compounding frequency ``cmp`` and day count convention ``dc``.
 
-.. function:: InterestRate(r::InterestRate, cmp::Int) -> InterestRate
+.. function:: InterestRate(r::InterestRate, cmp::Compounding) -> InterestRate
 
     Convert an interest rate with one compounding frequency ``r.compounding`` to another compounding frequency ``cmp``.
 
@@ -108,7 +108,7 @@ Interface
 
     Convert an interest rate with one day count convention ``r.daycount`` to another day count convention ``dc``.
 
-.. function:: InterestRate(r::InterestRate, cmp::Int, dc::DayCountFraction) -> InterestRate
+.. function:: InterestRate(r::InterestRate, cmp::Compounding, dc::DayCountFraction) -> InterestRate
 
     Convert an interest rate with one compounding frequency ``r.compounding`` and day count convention ``r.daycount`` to another compounding frequency ``cmp`` and day count convention ``dc``.
 

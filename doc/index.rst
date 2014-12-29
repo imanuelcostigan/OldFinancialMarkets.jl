@@ -5,7 +5,6 @@ FinancialMarkets Documentation
     :maxdepth: 1
 
     overview
-    constants
     times
     calendars
     shift
