@@ -84,8 +84,8 @@ function calibrate{T<:Real, S<:Real}(x::Vector{T}, y::Vector{S}, i::LinearSpline
     RealSplineInterpolation(x, y, hcat(y[1:(end-1)], diff(y) ./ diff(x)))
 end
 
-function calibrate_cubic_spline{T<:Real, S<:Real, U<:Real, V<:Real}(
-    x::Vector{T}, y::Vector{S}, A::SparseMatrixCSC{U}, b::Vector{V})
+function calibrate_cubic_spline{T<:Real, S<:Real, U<:Real}(
+    x::Vector{T}, y::Vector{S}, A::SparseMatrixCSC, b::Vector{U})
     m = A \ b
     h = diff(x)
     s = diff(y) ./ diff(x)
