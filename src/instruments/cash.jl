@@ -3,8 +3,8 @@
 ####
 
 type Cash <: Instrument
-    amount::Real
-    rate::Real
+    amount::Float64
+    rate::Float64
     tradedate::TimeType
     startdate::TimeType
     enddate::TimeType

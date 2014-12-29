@@ -4,8 +4,8 @@
 
 abstract Future <: Instrument
 type STIRFuture <: Future
-    amount::Real
-    price::Real
+    amount::Float64
+    price::Float64
     tradedate::TimeType
     underlying::Deposit
 end

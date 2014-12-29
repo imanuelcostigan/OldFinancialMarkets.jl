@@ -3,7 +3,7 @@
 ####
 
 type InterestRate
-    rate::Real
+    rate::Float64
     compounding::Int
     daycount::DayCountFraction
     function InterestRate(r, cmp, dc)
@@ -15,7 +15,7 @@ end
 
 
 type DiscountFactor
-    discountfactor::Real
+    discountfactor::Float64
     startdate::TimeType
     enddate::TimeType
     function DiscountFactor(df, dt1, dt2)
