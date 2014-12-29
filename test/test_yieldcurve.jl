@@ -7,7 +7,11 @@ dfs = [DiscountFactor(0.9999999, dt0, dt0 + Day(1)),
 
 zc = FinancialMarkets.ZeroCurve(dt0, dfs,
     FinancialMarkets.LinearRateCurveInterpolator(), Continuously, A365())
+interpolate(dt0 + Month(1), zc)
+
+
 zc = FinancialMarkets.ZeroCurve(dt0, dfs,
     FinancialMarkets.LinearLogDFCurveInterpolator(), Continuously, A365())
 zc = FinancialMarkets.ZeroCurve(dt0, dfs,
     FinancialMarkets.CubicRateCurveInterpolator(), Continuously, A365())
+

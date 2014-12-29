@@ -59,24 +59,18 @@ function ZeroCurve{T<:TimeType, S<:Real}(dt0::TimeType, dts::Vector{T},
     ZeroCurve(dt0, calibrate(xs, ys, i.interpolator), x->x, cmp, dcf)
 end
 
-# interpolation calibrated from zeros
-# provide only one or other of zeros or dfs to improve consistency between them
-# ZeroCurve(refdate, pillar_dates, zero_rates, zc_interpolation)
-# ZeroCurve(refdate, pillar_dates, discount_factors, zc_interpolation)
-
 ###############################################################################
 # Methods
 ###############################################################################
 
 ## Extraction methods
-pillars(zc::ZeroCurve) = [df.enddate for df in zc.discount_factors]
-zeros(zc::ZeroCurve) = [InterestRate(df, zcw.compounding, zc.day_count)
-    for df in zc.discount_factors]
+get_zero{R<:Real}(t::R, zc::ZeroCurve) = zc.transformer(
+    interpolate(t, zc.interpolation))
 
 ## Other methods
 function interpolate{T<:TimeType}(dt::T, zc::ZeroCurve)
     # Should always return a DiscountFactor
-    t = years(zc.refdate, dt, zc.day_count)
-    DiscountFactor(zc.transformer(t, interpolate(t, zc.i)),
-        zc.refdate, dt)
+    t = years(zc.reference_date, dt, zc.day_count)
+    zr = InterestRate(get_zero(t, zc), zc.compounding, zc.day_count)
+    DiscountFactor(zr, zc.reference_date, dt)
 end
