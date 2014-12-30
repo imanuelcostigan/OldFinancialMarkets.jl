@@ -24,6 +24,24 @@ type ZeroCurve <: PricingStructure
     day_count::DayCountFraction
 end
 
+# zctransforms returns tuple of two functions that:
+# 1. Map time and zero rate values to values on which spline is calibrated
+# 2. Map interpolated (calibrated) value back to zero rate
+zctransforms(i::LinearRateCurveInterpolator) = ((t,r)->r, (t,y)->y)
+zctransforms(i::LinearLogDFCurveInterpolator) =  ((t,r)->-t.*r, (t,y)->-y/t)
+zctransforms(i::CubicRateCurveInterpolator) = ((t,r)->r, (t,y)->y)
+
+function ZeroCurve{T<:TimeType, S<:Real}(dt0::TimeType, dts::Vector{T},
+    dfs::Vector{S}, i::CurveInterpolators, cmp::Compounding,
+    dcf::DayCountFraction)
+    xs = [years(dt0, dt, dcf) for dt in dts]
+    ys = [value(InterestRate(DiscountFactor(dfs[i], dt0, dts[i]), cmp, dcf))
+        for i=1:length(dts)]
+    to_cal, from_cal = zctransforms(i)
+    ZeroCurve(dt0, calibrate(xs, to_cal(xs, ys), i.interpolator), from_cal,
+        cmp, dcf)
+end
+
 function ZeroCurve(dt0::TimeType, dfs::Vector{DiscountFactor},
     i::CurveInterpolators, cmp::Compounding, dcf::DayCountFraction)
     dts = [df.enddate for df in dfs]
@@ -31,40 +49,12 @@ function ZeroCurve(dt0::TimeType, dfs::Vector{DiscountFactor},
     ZeroCurve(dt0, dts, dfs, i, cmp, dcf)
 end
 
-function ZeroCurve{T<:TimeType, S<:Real}(dt0::TimeType, dts::Vector{T},
-    dfs::Vector{S}, i::LinearRateCurveInterpolator, cmp::Compounding,
-    dcf::DayCountFraction)
-    xs = [years(dt0, dt, dcf) for dt in dts]
-    ys = [value(InterestRate(DiscountFactor(dfs[i], dt0, dts[i]), cmp, dcf))
-        for i=1:length(dts)]
-    ZeroCurve(dt0, calibrate(xs, ys, i.interpolator), x->x, cmp, dcf)
-end
-
-function ZeroCurve{T<:TimeType, S<:Real}(dt0::TimeType, dts::Vector{T},
-    dfs::Vector{S}, i::LinearLogDFCurveInterpolator, cmp::Compounding,
-    dcf::DayCountFraction)
-    xs = [years(dt0, dt, dcf) for dt in dts]
-    ys = [value(InterestRate(DiscountFactor(dfs[i], dt0, dts[i]), cmp, dcf))
-        for i=1:length(dts)]
-    ZeroCurve(dt0, calibrate(xs, -xs .* ys, i.interpolator),
-        (x,xy)->-xy/x, cmp, dcf)
-end
-
-function ZeroCurve{T<:TimeType, S<:Real}(dt0::TimeType, dts::Vector{T},
-    dfs::Vector{S}, i::CubicRateCurveInterpolator, cmp::Compounding,
-    dcf::DayCountFraction)
-    xs = [years(dt0, dt, dcf) for dt in dts]
-    ys = [value(InterestRate(DiscountFactor(dfs[i], dt0, dts[i]), cmp, dcf))
-        for i=1:length(dts)]
-    ZeroCurve(dt0, calibrate(xs, ys, i.interpolator), x->x, cmp, dcf)
-end
-
 ###############################################################################
 # Methods
 ###############################################################################
 
 ## Extraction methods
-get_zero{R<:Real}(t::R, zc::ZeroCurve) = zc.transformer(
+get_zero{R<:Real}(t::R, zc::ZeroCurve) = zc.transformer(t,
     interpolate(t, zc.interpolation))
 
 ## Other methods
