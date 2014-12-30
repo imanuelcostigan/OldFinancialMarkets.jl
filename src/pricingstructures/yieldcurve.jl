@@ -53,14 +53,12 @@ end
 # Methods
 ###############################################################################
 
-## Extraction methods
-get_zero{R<:Real}(t::R, zc::ZeroCurve) = zc.transformer(t,
+interpolate_helper{R<:Real}(t::R, zc::ZeroCurve) = zc.transformer(t,
     interpolate(t, zc.interpolation))
 
-## Other methods
 function interpolate{T<:TimeType}(dt::T, zc::ZeroCurve)
     # Should always return a DiscountFactor
     t = years(zc.reference_date, dt, zc.day_count)
-    zr = InterestRate(get_zero(t, zc), zc.compounding, zc.day_count)
-    DiscountFactor(zr, zc.reference_date, dt)
+    r = InterestRate(interpolate_helper(t, zc), zc.compounding, zc.day_count)
+    DiscountFactor(r, zc.reference_date, dt)
 end
