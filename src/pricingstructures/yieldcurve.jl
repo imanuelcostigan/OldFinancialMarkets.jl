@@ -57,8 +57,18 @@ interpolate_helper{R<:Real}(t::R, zc::ZeroCurve) = zc.transformer(t,
     interpolate(t, zc.interpolation))
 
 function interpolate{T<:TimeType}(dt::T, zc::ZeroCurve)
+    # Should throw error if dt is < reference date
+    msg = "The date is before the curve's reference date."
+    dt < zc.reference_date && throw(ArgumentError(msg))
     # Should always return a DiscountFactor
     t = years(zc.reference_date, dt, zc.day_count)
-    r = InterestRate(interpolate_helper(t, zc), zc.compounding, zc.day_count)
-    DiscountFactor(r, zc.reference_date, dt)
+    # DF at time 0 should always be 1.0
+    if t == 0
+        return DiscountFactor(1.0, zc.reference_date, dt)
+    else
+        # Note given error capture about, else means > 0
+        r = InterestRate(interpolate_helper(t, zc),
+            zc.compounding, zc.day_count)
+        return DiscountFactor(r, zc.reference_date, dt)
+    end
 end
