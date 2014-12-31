@@ -57,7 +57,10 @@ export
     LinearSpline, ClampedCubicSpline, NaturalCubicSpline, NotAKnotCubicSpline,
     AkimaSpline, KrugerSpline, FritschButlandSpline, FloatSplineInterpolation,
     interpolate, calibrate,
-    ConstantExtrapolator, LinearExtrapolator, extrapolate
+    ConstantExtrapolator, LinearExtrapolator, extrapolate,
+    # yieldcurve.jl
+    LinearRateCurveInterpolator, LinearLogDFCurveInterpolator,
+    CubicRateCurveInterpolator, ZeroCurve
 
 include("constants.jl")
 include("calendars.jl")
