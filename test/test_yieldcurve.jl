@@ -1,4 +1,3 @@
-using Base.Test, Dates, FinancialMarkets
 dt0 = Date(2015, 3, 27)
 dfs = [DiscountFactor(0.9999999, dt0, dt0 + Day(1)),
         DiscountFactor(0.997, dt0, dt0 + Month(1)),
@@ -8,8 +7,6 @@ dtx = dt0 + Month(1) + Day(15)
 t1 = years(dt0, dt0 + Month(1), A365())
 t2 = years(dt0, dt0 + Month(2), A365())
 tx = years(dt0, dtx, A365())
-
-# Test constructors
 
 # Test linear interpolation
 zcli = ZeroCurve(dt0, dfs, LinearZeroRateInterpolator(), Continuously, A365())

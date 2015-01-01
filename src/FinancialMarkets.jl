@@ -47,12 +47,6 @@ export
     ONIA, AONIA, EONIA, SONIA, TONAR, NZIONA, FedFund,
     IBOR, AUDBBSW, EURLIBOR, EURIBOR, GBPLIBOR, JPYLIBOR, JPYTIBOR, NZDBKBM,
     USDLIBOR,
-    # instruments.jl
-    Cash, Deposit, Future, STIRFuture,
-    price,
-    # schedule.jl
-    FrontStub, BackStub, ShortFrontStub, LongFrontStub, ShortBackStub,
-    LongBackStub,SwapDateSchedule,
     # interpolators.jl
     LinearSpline, ClampedCubicSpline, NaturalCubicSpline, NotAKnotCubicSpline,
     AkimaSpline, KrugerSpline, FritschButlandSpline, FloatSplineInterpolation,
@@ -60,7 +54,13 @@ export
     ConstantExtrapolator, LinearExtrapolator, extrapolate,
     # yieldcurve.jl
     LinearZeroRateInterpolator, LinearLogDFInterpolator,
-    CubicZeroRateInterpolator, ZeroCurve
+    CubicZeroRateInterpolator, ZeroCurve,
+    # schedule.jl
+    FrontStub, BackStub, ShortFrontStub, LongFrontStub, ShortBackStub,
+    LongBackStub,SwapDateSchedule,
+    # instruments.jl
+    Cash, Deposit, Future, STIRFuture,
+    price
 
 include("constants.jl")
 include("calendars.jl")
