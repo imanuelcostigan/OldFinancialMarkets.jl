@@ -7,11 +7,6 @@ else
 end
 using Polynomials: Poly, polyval
 import DataFrames.DataFrame
-# This needs to be imported so that tests pass using
-# This shouldn't be necessary as Base is imported automatically.
-# Julia Version 0.3.3
-# Commit b24213b* (2014-11-23 20:19 UTC)
-import Base.zeros
 
 export
     # times.jl
