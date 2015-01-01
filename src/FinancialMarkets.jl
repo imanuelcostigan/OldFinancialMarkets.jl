@@ -59,8 +59,8 @@ export
     interpolate, calibrate,
     ConstantExtrapolator, LinearExtrapolator, extrapolate,
     # yieldcurve.jl
-    LinearRateCurveInterpolator, LinearLogDFCurveInterpolator,
-    CubicRateCurveInterpolator, ZeroCurve
+    LinearZeroRateInterpolator, LinearLogDFInterpolator,
+    CubicZeroRateInterpolator, ZeroCurve
 
 include("constants.jl")
 include("calendars.jl")

@@ -12,7 +12,7 @@ tx = years(dt0, dtx, A365())
 # Test constructors
 
 # Test linear interpolation
-zcli = ZeroCurve(dt0, dfs, LinearRateCurveInterpolator(), Continuously, A365())
+zcli = ZeroCurve(dt0, dfs, LinearZeroRateInterpolator(), Continuously, A365())
 @test isa(interpolate(dt0 + Month(1), zcli), DiscountFactor)
 @test interpolate(dt0, zcli) == DiscountFactor(1.0, dt0, dt0)
 @test interpolate(dt0 + Month(1), zcli) == DiscountFactor(0.997, dt0, dt0 + Month(1))
@@ -23,7 +23,7 @@ dfx = DiscountFactor(exp(-rx * tx), dt0, dtx)
 @test interpolate(dtx, zcli) == dfx
 
 # Test log-linear interpolation
-zclli = ZeroCurve(dt0, dfs, LinearLogDFCurveInterpolator(), Continuously, A365())
+zclli = ZeroCurve(dt0, dfs, LinearLogDFInterpolator(), Continuously, A365())
 @test isa(interpolate(dt0 + Month(1), zclli), DiscountFactor)
 @test interpolate(dt0, zclli) == DiscountFactor(1.0, dt0, dt0)
 @test interpolate(dt0 + Month(1), zclli) == DiscountFactor(0.997, dt0, dt0 + Month(1))
@@ -34,7 +34,7 @@ dfx = DiscountFactor(exp(ldfx), dt0, dtx)
 @test interpolate(dtx, zclli) == dfx
 
 # Test cubic spline interpolation
-zccsi = ZeroCurve(dt0, dfs, CubicRateCurveInterpolator(), Continuously, A365())
+zccsi = ZeroCurve(dt0, dfs, CubicZeroRateInterpolator(), Continuously, A365())
 @test isa(interpolate(dt0 + Month(1), zccsi), DiscountFactor)
 @test interpolate(dt0, zccsi) == DiscountFactor(1.0, dt0, dt0)
 @test interpolate(dt0 + Month(1), zccsi) == DiscountFactor(0.997, dt0, dt0 + Month(1))

@@ -1,68 +1,80 @@
 ###############################################################################
-# Types
+# Curve interpolant types
 ###############################################################################
 
-abstract CurveInterpolators
-immutable LinearRateCurveInterpolator <: CurveInterpolators
-    interpolator::LinearSpline
+abstract ZeroCurveInterpolants
+immutable ZeroRateInterpolant <: ZeroCurveInterpolants
     # Map time and zero rate values to values on which spline is calibrated
     f::Function
     # Map interpolated (calibrated) value back to zero rate
     invf::Function
-    function LinearRateCurveInterpolator(i::LinearSpline = LinearSpline(),
-        f::Function = (t,r)->r, invf::Function = (t,y)->y)
+    function ZeroRateInterpolant(f = (t,r)->r, invf = (t,y)->y)
         f == (t,r)->r || throw(ArgumentError("f must be (t,r)->r"))
         invf == (t,y)->y || throw(ArgumentError("invf must be (t,y)->y"))
-        new(i, f, invf)
+        new(f, invf)
     end
 end
-immutable LinearLogDFCurveInterpolator <: CurveInterpolators
-    interpolator::LinearSpline
-    # Map time and zero rate values to values on which spline is calibrated
+immutable LogDFInterpolant <: ZeroCurveInterpolants
     f::Function
-    # Map interpolated (calibrated) value back to zero rate
     invf::Function
-    function LinearLogDFCurveInterpolator(i::LinearSpline = LinearSpline(),
-        f::Function = (t,r)->-t.*r, invf::Function = (t,y)->-y/t)
+    function LogDFInterpolant(f = (t,r)->-t.*r, invf = (t,y)->-y/t)
         f == (t,r)->-t.*r || throw(ArgumentError("f must be (t,r)->-t.*r"))
         invf == (t,y)->-y/t || throw(ArgumentError("invf must be (t,y)->-y/t"))
-        new(i, f, invf)
+        new(f, invf)
     end
 end
-immutable CubicRateCurveInterpolator <: CurveInterpolators
-    interpolator::CubicSpline
-    # Map time and zero rate values to values on which spline is calibrated
-    f::Function
-    # Map interpolated (calibrated) value back to zero rate
-    invf::Function
-    function CubicRateCurveInterpolator(i::CubicSpline = NaturalCubicSpline(),
-        f::Function = (t,r)->r, invf::Function = (t,y)->y)
-        f == (t,r)->r || throw(ArgumentError("f must be (t,r)->r"))
-        invf == (t,y)->y || throw(ArgumentError("invf must be (t,y)->y"))
-        new(i, f, invf)
-    end
+
+###############################################################################
+# Curve interpolator types
+###############################################################################
+
+immutable ZeroCurveInterpolator{S<:SplineInterpolators, C<:ZeroCurveInterpolants}
+    interpolator::S
+    interpolant::C
 end
+
+typealias LinearZeroRateInterpolator ZeroCurveInterpolator{LinearSpline,
+    ZeroRateInterpolant}
+typealias LinearLogDFInterpolator ZeroCurveInterpolator{LinearSpline,
+    LogDFInterpolant}
+typealias CubicZeroRateInterpolator ZeroCurveInterpolator{CubicSpline,
+    ZeroRateInterpolant}
+
+LinearZeroRateInterpolator() = LinearZeroRateInterpolator(LinearSpline(),
+    ZeroRateInterpolant())
+LinearLogDFInterpolator() = LinearLogDFInterpolator(LinearSpline(),
+    LogDFInterpolant())
+CubicZeroRateInterpolator() = CubicZeroRateInterpolator(NaturalCubicSpline(),
+    ZeroRateInterpolant())
+
+mapper(i::ZeroCurveInterpolator) = i.interpolant.f
+unmapper(i::ZeroCurveInterpolator) = i.interpolant.invf
+interpolator(i::ZeroCurveInterpolator) = i.interpolator
 
 type ZeroCurve <: PricingStructure
     reference_date::TimeType
-    interpolation::FloatSplineInterpolation
-    transformer::Function
+    interpolator::ZeroCurveInterpolator
     compounding::Compounding
     day_count::DayCountFraction
+    interpolation::FloatSplineInterpolation
 end
 
+mapper(zc::ZeroCurve) = mapper(zc.interpolator)
+unmapper(zc::ZeroCurve) = unmapper(zc.interpolator)
+interpolator(zc::ZeroCurve) = interpolator(zc.interpolator)
+
 function ZeroCurve{T<:TimeType, S<:Real}(dt0::TimeType, dts::Vector{T},
-    dfs::Vector{S}, i::CurveInterpolators, cmp::Compounding,
+    dfs::Vector{S}, i::ZeroCurveInterpolator, cmp::Compounding,
     dcf::DayCountFraction)
     xs = [years(dt0, dt, dcf) for dt in dts]
     ys = [value(InterestRate(DiscountFactor(dfs[i], dt0, dts[i]), cmp, dcf))
         for i=1:length(dts)]
-    interpolation = calibrate(xs, i.f(xs, ys), i.interpolator)
-    ZeroCurve(dt0, interpolation, i.invf, cmp, dcf)
+    interpolation = calibrate(xs, mapper(i)(xs, ys), interpolator(i))
+    ZeroCurve(dt0, i, cmp, dcf, interpolation)
 end
 
 function ZeroCurve(dt0::TimeType, dfs::Vector{DiscountFactor},
-    i::CurveInterpolators, cmp::Compounding, dcf::DayCountFraction)
+    i::ZeroCurveInterpolator, cmp::Compounding, dcf::DayCountFraction)
     dts = [df.enddate for df in dfs]
     dfs = [value(df) for df in dfs]
     ZeroCurve(dt0, dts, dfs, i, cmp, dcf)
@@ -72,8 +84,9 @@ end
 # Methods
 ###############################################################################
 
-interpolate_helper{R<:Real}(t::R, zc::ZeroCurve) = zc.transformer(t,
-    interpolate(t, zc.interpolation))
+function interpolate_helper{R<:Real}(t::R, zc::ZeroCurve)
+    unmapper(zc)(t, interpolate(t, zc.interpolation))
+end
 
 function interpolate{T<:TimeType}(dt::T, zc::ZeroCurve)
     # Should throw error if dt is < reference date
