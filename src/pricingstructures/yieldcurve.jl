@@ -51,6 +51,10 @@ mapper(i::ZeroCurveInterpolator) = i.interpolant.f
 unmapper(i::ZeroCurveInterpolator) = i.interpolant.invf
 interpolator(i::ZeroCurveInterpolator) = i.interpolator
 
+###############################################################################
+# Zero Curve type
+###############################################################################
+
 type ZeroCurve <: PricingStructure
     reference_date::TimeType
     interpolator::ZeroCurveInterpolator
