@@ -5,16 +5,43 @@
 abstract CurveInterpolators
 immutable LinearRateCurveInterpolator <: CurveInterpolators
     interpolator::LinearSpline
+    # Map time and zero rate values to values on which spline is calibrated
+    f::Function
+    # Map interpolated (calibrated) value back to zero rate
+    invf::Function
+    function LinearRateCurveInterpolator(i::LinearSpline = LinearSpline(),
+        f::Function = (t,r)->r, invf::Function = (t,y)->y)
+        f == (t,r)->r || throw(ArgumentError("f must be (t,r)->r"))
+        invf == (t,y)->y || throw(ArgumentError("invf must be (t,y)->y"))
+        new(i, f, invf)
+    end
 end
-LinearRateCurveInterpolator() = LinearRateCurveInterpolator(LinearSpline())
 immutable LinearLogDFCurveInterpolator <: CurveInterpolators
     interpolator::LinearSpline
+    # Map time and zero rate values to values on which spline is calibrated
+    f::Function
+    # Map interpolated (calibrated) value back to zero rate
+    invf::Function
+    function LinearLogDFCurveInterpolator(i::LinearSpline = LinearSpline(),
+        f::Function = (t,r)->-t.*r, invf::Function = (t,y)->-y/t)
+        f == (t,r)->-t.*r || throw(ArgumentError("f must be (t,r)->-t.*r"))
+        invf == (t,y)->-y/t || throw(ArgumentError("invf must be (t,y)->-y/t"))
+        new(i, f, invf)
+    end
 end
-LinearLogDFCurveInterpolator() = LinearLogDFCurveInterpolator(LinearSpline())
 immutable CubicRateCurveInterpolator <: CurveInterpolators
     interpolator::CubicSpline
+    # Map time and zero rate values to values on which spline is calibrated
+    f::Function
+    # Map interpolated (calibrated) value back to zero rate
+    invf::Function
+    function CubicRateCurveInterpolator(i::CubicSpline = NaturalCubicSpline(),
+        f::Function = (t,r)->r, invf::Function = (t,y)->y)
+        f == (t,r)->r || throw(ArgumentError("f must be (t,r)->r"))
+        invf == (t,y)->y || throw(ArgumentError("invf must be (t,y)->y"))
+        new(i, f, invf)
+    end
 end
-CubicRateCurveInterpolator() = CubicRateCurveInterpolator(NaturalCubicSpline())
 
 type ZeroCurve <: PricingStructure
     reference_date::TimeType
@@ -24,22 +51,14 @@ type ZeroCurve <: PricingStructure
     day_count::DayCountFraction
 end
 
-# zctransforms returns tuple of two functions that:
-# 1. Map time and zero rate values to values on which spline is calibrated
-# 2. Map interpolated (calibrated) value back to zero rate
-zctransforms(i::LinearRateCurveInterpolator) = ((t,r)->r, (t,y)->y)
-zctransforms(i::LinearLogDFCurveInterpolator) =  ((t,r)->-t.*r, (t,y)->-y/t)
-zctransforms(i::CubicRateCurveInterpolator) = ((t,r)->r, (t,y)->y)
-
 function ZeroCurve{T<:TimeType, S<:Real}(dt0::TimeType, dts::Vector{T},
     dfs::Vector{S}, i::CurveInterpolators, cmp::Compounding,
     dcf::DayCountFraction)
     xs = [years(dt0, dt, dcf) for dt in dts]
     ys = [value(InterestRate(DiscountFactor(dfs[i], dt0, dts[i]), cmp, dcf))
         for i=1:length(dts)]
-    to_cal, from_cal = zctransforms(i)
-    ZeroCurve(dt0, calibrate(xs, to_cal(xs, ys), i.interpolator), from_cal,
-        cmp, dcf)
+    interpolation = calibrate(xs, i.f(xs, ys), i.interpolator)
+    ZeroCurve(dt0, interpolation, i.invf, cmp, dcf)
 end
 
 function ZeroCurve(dt0::TimeType, dfs::Vector{DiscountFactor},
