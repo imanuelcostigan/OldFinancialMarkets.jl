@@ -17,8 +17,10 @@ abstract DateSchedule
 # 1. Opengamma: Interest rate instruments and market conventions guide
 # 2. Quantlib.org
 
-immutable SwapDateSchedule <: DateSchedule
-    dates::Array{TimeType, 1}
+immutable SwapDateSchedule{T<:Date} <: DateSchedule
+    # Swap dates are timestamp invariant. Default constructor will coerce
+    # DateTime vectors to Date vectors.
+    dates::Vector{T}
     tenor::Period
     calendar::FinCalendar
     bdc::BusinessDayConvention
@@ -84,3 +86,7 @@ function SwapDateSchedule(effectivedate::TimeType, terminationdate::TimeType,
     # Return
     return SwapDateSchedule(dates, tenor, stub, calendar, bdc, eom)
 end
+
+get_period_ends(sds::SwapDateSchedule) = sds.dates[2:end]
+get_period_starts(sds::SwapDateSchedule) = sds.dates[1:(end-1)]
+get_payment_dates(sds::SwapDateSchedule) = get_period_ends(sds)
