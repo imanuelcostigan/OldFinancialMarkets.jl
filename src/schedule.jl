@@ -87,6 +87,6 @@ function SwapDateSchedule(effectivedate::TimeType, terminationdate::TimeType,
     return SwapDateSchedule(dates, tenor, stub, calendar, bdc, eom)
 end
 
-get_period_ends(sds::SwapDateSchedule) = sds.dates[2:end]
 get_period_starts(sds::SwapDateSchedule) = sds.dates[1:(end-1)]
+get_period_ends(sds::SwapDateSchedule) = sds.dates[2:end]
 get_payment_dates(sds::SwapDateSchedule) = get_period_ends(sds)
