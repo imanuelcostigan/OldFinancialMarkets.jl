@@ -18,8 +18,10 @@ immutable NoFCalendar <: SingleFCalendar end
 JointFCalendar(c::SingleFCalendar...) = JointFCalendar([ ci for ci in c ], true)
 +(c1::SingleFCalendar, c2::SingleFCalendar) = JointFCalendar([c1, c2], true)
 *(c1::SingleFCalendar, c2::SingleFCalendar) = JointFCalendar([c1, c2], false)
-+(jc::JointFCalendar, c::SingleFCalendar) = JointFCalendar([jc.calendars, c],
-    jc.onbad)
++(jc::JointFCalendar, c::SingleFCalendar) = JointFCalendar(
+    [jc.calendars, c], jc.onbad)
++(jc::JointFCalendar, c::JointFCalendar) = JointFCalendar(
+    [jc.calendars, jc.calendars], jc.onbad)
 Base.convert(::Type{JointFCalendar}, c::SingleFCalendar) = JointFCalendar(c)
 
 #####
