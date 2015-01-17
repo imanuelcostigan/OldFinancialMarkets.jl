@@ -21,29 +21,29 @@ Financial calendars
 
 *Good days* are those for which banks are open and able to settle transactions in a given financial centre. Generally speaking, all days are good excepting weekends, generally observed public holidays (e.g. Christmas day) or those applying specifically to banks (e.g. a bank holiday). As a consequence, good days are tied to a financial centre's location (New York, London, Sydney etc) which defines a *financial calendar*.
 
-FinancialMarkets.jl implements financial calendars as subtypes of the abstract ``SingleFCalendar`` abstract type which is itself a subtype of the abstract ``Calendar`` type.
+FinancialMarkets.jl implements financial calendars as subtypes of the abstract ``SingleCalendar`` abstract type which is itself a subtype of the abstract ``Calendar`` type.
 
-Additionally, the concrete ``JointFCalendar`` subtype of ``Calendar`` represents a vector of ``SingleFCalendar`` instances (the ``calendars`` field) and flags whether the calendars are joined by on the intersection of good or bad days (the ``onbad`` boolean typed field).
+Additionally, the concrete ``JointFCalendar`` subtype of ``Calendar`` represents a vector of ``SingleCalendar`` instances (the ``calendars`` field) and flags whether the calendars are joined by on the intersection of good or bad days (the ``onbad`` boolean typed field).
 
-A number of commonly used locale-specific ``SingleFCalendar`` subtypes are defined by FinancialMarkets.jl.
+A number of commonly used locale-specific ``SingleCalendar`` subtypes are defined by FinancialMarkets.jl.
 
 =====================   =====================  ==========  ======================
 Name                    Locale                 Concrete    Supertype
 =====================   =====================  ==========  ======================
-``AUFCalendar``         Australia              ``false``   ``SingleFCalendar``
+``AUFCalendar``         Australia              ``false``   ``SingleCalendar``
 ``AUSYFCalendar``       Sydney/Australia       ``true``    ``AUFCalendar``
 ``AUMEFCalendar``       Melbourne/Australia    ``true``    ``AUFCalendar``
-``EUFCalendar``         Europe                 ``false``   ``SingleFCalendar``
+``EUFCalendar``         Europe                 ``false``   ``SingleCalendar``
 ``EUTAFCalendar``       TARGET                 ``true``    ``EUFCalendar``
 ``EULIBORFCalendar``    EUR LIBOR              ``true``    ``EUFCalendar``
-``GBFCalendar``         Great Britain          ``false``   ``SingleFCalendar``
+``GBFCalendar``         Great Britain          ``false``   ``SingleCalendar``
 ``GBLOFCalendar``       London/GB              ``true``    ``GBFCalendar``
-``JPFCalendar``         Japan                  ``false``   ``SingleFCalendar``
+``JPFCalendar``         Japan                  ``false``   ``SingleCalendar``
 ``JPTOFCalendar``       Tokyo/Japan            ``true``    ``JPFCalendar``
-``NZFCalendar``         New Zealand            ``false``   ``SingleFCalendar``
+``NZFCalendar``         New Zealand            ``false``   ``SingleCalendar``
 ``NZAUFCalendar``       Auckland/NZ            ``true``    ``NZFCalendar``
 ``NZWEFCalendar``       Wellington/NZ          ``true``    ``NZFCalendar``
-``USFCalendar``         United States          ``false``   ``SingleFCalendar``
+``USFCalendar``         United States          ``false``   ``SingleCalendar``
 ``USNYFCalendar``       New York/US            ``true``    ``USFCalendar``
 ``USLIBORFCalendar``    US LIBOR               ``true``    ``USFCalendar``
 =====================   =====================  ==========  ======================
@@ -82,7 +82,7 @@ Interface
 
 .. function:: NoFCalendar() -> NoFCalendar
 
-    Constructs a ``NoFCalendar`` type, a sub-type of ``SingleFCalendar``.
+    Constructs a ``NoFCalendar`` type, a sub-type of ``SingleCalendar``.
 
 .. function:: AUMEFCalendar() -> AUMEFCalendar
 
@@ -90,62 +90,62 @@ Interface
 
 .. function:: AUSYFCalendar() -> AUSYFCalendar
 
-    Constructs a ``AUSYFCalendar`` type, a sub-type of ``AUFCalendar`` which is a subtype of ``SingleFCalendar``.
+    Constructs a ``AUSYFCalendar`` type, a sub-type of ``AUFCalendar`` which is a subtype of ``SingleCalendar``.
 
 .. function:: AUSYFCalendar() -> AUSYFCalendar
 
-    Constructs a ``AUSYFCalendar`` type, a sub-type of ``AUFCalendar`` which is a subtype of ``SingleFCalendar``.
+    Constructs a ``AUSYFCalendar`` type, a sub-type of ``AUFCalendar`` which is a subtype of ``SingleCalendar``.
 
 .. function:: EUTAFCalendar() -> EUTAFCalendar
 
-    Constructs a ``EUTAFCalendar`` type, a sub-type of ``EUFCalendar`` which is a subtype of ``SingleFCalendar``.
+    Constructs a ``EUTAFCalendar`` type, a sub-type of ``EUFCalendar`` which is a subtype of ``SingleCalendar``.
 
 .. function:: EULIBORFCalendar() -> EULIBORFCalendar
 
-    Constructs a ``EULIBORFCalendar`` type, a sub-type of ``EUFCalendar`` which is a subtype of ``SingleFCalendar``.
+    Constructs a ``EULIBORFCalendar`` type, a sub-type of ``EUFCalendar`` which is a subtype of ``SingleCalendar``.
 
 .. function:: GBLOFCalendar() -> GBLOFCalendar
 
-    Constructs a ``GBLOFCalendar`` type, a sub-type of ``GBFCalendar`` which is a subtype of ``SingleFCalendar``.
+    Constructs a ``GBLOFCalendar`` type, a sub-type of ``GBFCalendar`` which is a subtype of ``SingleCalendar``.
 
 .. function:: JPTOFCalendar() -> JPFCalendar
 
-    Constructs a ``JPTOFCalendar`` type, a sub-type of ``JPFCalendar`` which is a subtype of ``SingleFCalendar``.
+    Constructs a ``JPTOFCalendar`` type, a sub-type of ``JPFCalendar`` which is a subtype of ``SingleCalendar``.
 
 .. function:: NZAUFCalendar() -> NZAUFCalendar
 
-    Constructs a ``NZAUFCalendar`` type, a sub-type of ``NZFCalendar`` which is a subtype of ``SingleFCalendar``.
+    Constructs a ``NZAUFCalendar`` type, a sub-type of ``NZFCalendar`` which is a subtype of ``SingleCalendar``.
 
 .. function:: NZWEFCalendar() -> NZWEFCalendar
 
-    Constructs a ``NZWEFCalendar`` type, a sub-type of ``NZFCalendar`` which is a subtype of ``SingleFCalendar``.
+    Constructs a ``NZWEFCalendar`` type, a sub-type of ``NZFCalendar`` which is a subtype of ``SingleCalendar``.
 
 .. function:: USNYFCalendar() -> USNYFCalendar
 
-    Constructs a ``USNYFCalendar`` type, a sub-type of ``USFCalendar`` which is a subtype of ``SingleFCalendar``.
+    Constructs a ``USNYFCalendar`` type, a sub-type of ``USFCalendar`` which is a subtype of ``SingleCalendar``.
 
 .. function:: USLIBORFCalendar() -> USLIBORFCalendar
 
-    Constructs a ``USLIBORFCalendar`` type, a sub-type of ``USFCalendar`` which is a subtype of ``SingleFCalendar``.
+    Constructs a ``USLIBORFCalendar`` type, a sub-type of ``USFCalendar`` which is a subtype of ``SingleCalendar``.
 
-.. function:: JointFCalendar(calendars::Vector{SingleFCalendar}, onbad::Bool) -> JointFCalendar
+.. function:: JointFCalendar(calendars::Vector{SingleCalendar}, onbad::Bool) -> JointFCalendar
 
     Construct a ``JointFCalendar`` type. If ``onbad`` is ``true`` then the joint calendar's bad days are the union of the bad days of its constituent calendars. Otherwise, a calendar's bad days are the intersection of the bad days of its constituent calendars. ``JointFCalendar`` is a subtype of ``FCalendar``
 
-.. function:: +(c1::SingleFCalendar, c2::SingleFCalendar) -> JointFCalendar
+.. function:: +(c1::SingleCalendar, c2::SingleCalendar) -> JointFCalendar
 
     Equivalent to calling ``JointFCalendar([c1, c2], true)``
 
-.. function:: *(c1::SingleFCalendar, c2::SingleFCalendar) -> JointFCalendar
+.. function:: *(c1::SingleCalendar, c2::SingleCalendar) -> JointFCalendar
 
     Equivalent to calling ``JointFCalendar([c1, c2], false)``
 
-.. function:: +(jc::JointFCalendar, c::SingleFCalendar) -> JointFCalendar
+.. function:: +(jc::JointFCalendar, c::SingleCalendar) -> JointFCalendar
 
     Equivalent to calling ``JointFCalendar([jc.calendars, c],
     jc.onbad)``
 
-.. function:: convert(::Type{JointFCalendar}, c::SingleFCalendar) -> JointFCalendar
+.. function:: convert(::Type{JointFCalendar}, c::SingleCalendar) -> JointFCalendar
 
     Equivalent to ``JointFCalendar(c)``
 

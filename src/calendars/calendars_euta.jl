@@ -2,7 +2,7 @@
 # Type declarations
 #####
 
-abstract EUFCalendar <: SingleFCalendar
+abstract EUFCalendar <: SingleCalendar
 immutable EUTAFCalendar <: EUFCalendar end
 immutable EULIBORFCalendar <: EUFCalendar end
 

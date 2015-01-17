@@ -3,7 +3,7 @@
 #####
 
 
-abstract JPFCalendar <: SingleFCalendar
+abstract JPFCalendar <: SingleCalendar
 immutable JPTOFCalendar <: JPFCalendar end
 
 #####

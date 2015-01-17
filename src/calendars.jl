@@ -3,9 +3,9 @@
 #####
 
 abstract Calendar
-abstract SingleFCalendar <: Calendar
+abstract SingleCalendar <: Calendar
 immutable JointFCalendar <: Calendar
-    calendars::Vector{SingleFCalendar}
+    calendars::Vector{SingleCalendar}
     is_good_on_rule::Function
     function JointFCalendar(c, r = all)
         msg = "is_good_on_rule must be either `any` or `all`"
@@ -13,26 +13,26 @@ immutable JointFCalendar <: Calendar
         new(unique(c), r)
     end
 end
-immutable NoFCalendar <: SingleFCalendar end
+immutable NoFCalendar <: SingleCalendar end
 
 
 #####
 # Methods
 #####
 
-join(c1::SingleFCalendar, c2::SingleFCalendar, r::Function = all) =
+join(c1::SingleCalendar, c2::SingleCalendar, r::Function = all) =
     JointFCalendar([c1, c2], r)
-join(c1::JointFCalendar, c2::SingleFCalendar) =
+join(c1::JointFCalendar, c2::SingleCalendar) =
     JointFCalendar([c1.calendars, c2], c1.is_good_on_rule)
-join(c1::SingleFCalendar, c2::JointFCalendar) =
+join(c1::SingleCalendar, c2::JointFCalendar) =
     join(c2, c1)
 join(c1::JointFCalendar, c2::JointFCalendar) =
     JointFCalendar([c1.calendars, c2.calendars], c1.is_good_on_rule)
-join{T<:SingleFCalendar}(c::Vector{T}, r::Function = all) =
+join{T<:SingleCalendar}(c::Vector{T}, r::Function = all) =
     JointFCalendar([ ci for ci in c ], r)
 join{T<:JointFCalendar}(jcs::Vector{T}) =
     JointFCalendar([ jc.calendars for jc in jcs ], jcs[1].is_good_on_rule)
-Base.convert(::Type{JointFCalendar}, c::SingleFCalendar) = JointFCalendar(c)
+Base.convert(::Type{JointFCalendar}, c::SingleCalendar) = JointFCalendar(c)
 
 #####
 # isgood methods

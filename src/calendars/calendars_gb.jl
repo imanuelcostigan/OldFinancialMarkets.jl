@@ -2,7 +2,7 @@
 # Type declarations
 #####
 
-abstract GBFCalendar <: SingleFCalendar
+abstract GBFCalendar <: SingleCalendar
 immutable GBLOFCalendar <: GBFCalendar end
 
 #####
