@@ -19,13 +19,13 @@ immutable NoCalendar <: SingleCalendar end
 # Methods
 #####
 
-join(c1::SingleCalendar, c2::SingleCalendar, r::GoodDayReducer = AllDaysGood()) =
+Base.join(c1::SingleCalendar, c2::SingleCalendar, r::GoodDayReducer = AllDaysGood()) =
     JointCalendar([c1, c2], r)
-join(c1::JointCalendar, c2::SingleCalendar) =
+Base.join(c1::JointCalendar, c2::SingleCalendar) =
     JointCalendar([c1.calendars, c2], c1.rule)
-join(c1::SingleCalendar, c2::JointCalendar) =
+Base.join(c1::SingleCalendar, c2::JointCalendar) =
     join(c2, c1)
-join(c1::JointCalendar, c2::JointCalendar) =
+Base.join(c1::JointCalendar, c2::JointCalendar) =
     JointCalendar([c1.calendars, c2.calendars], c1.rule)
 Base.convert(::Type{JointCalendar}, c::SingleCalendar) = JointCalendar(c)
 
