@@ -6,7 +6,12 @@ abstract FinCalendar
 abstract SingleFCalendar <: FinCalendar
 immutable JointFCalendar <: FinCalendar
     calendars::Vector{SingleFCalendar}
-    onbad::Bool
+    reducer::Function
+    function JointFCalendar(c::Vector{SingleFCalendar}, r::Function = all)
+        msg = "reducer must be `any` or `all`"
+        r in [any, all] || throw(ArgumentError(msg))
+        new(c, r)
+    end
 end
 immutable NoFCalendar <: SingleFCalendar end
 
@@ -15,13 +20,18 @@ immutable NoFCalendar <: SingleFCalendar end
 # Methods
 #####
 
-JointFCalendar(c::SingleFCalendar...) = JointFCalendar([ ci for ci in c ], true)
-+(c1::SingleFCalendar, c2::SingleFCalendar) = JointFCalendar([c1, c2], true)
-*(c1::SingleFCalendar, c2::SingleFCalendar) = JointFCalendar([c1, c2], false)
-+(jc::JointFCalendar, c::SingleFCalendar) = JointFCalendar(
-    [jc.calendars, c], jc.onbad)
-+(jc::JointFCalendar, c::JointFCalendar) = JointFCalendar(
-    [jc.calendars, jc.calendars], jc.onbad)
+join(c1::SingleFCalendar, c2::SingleFCalendar, r::Function = all) =
+    JointFCalendar([c1, c2], r)
+join(c1::JointFCalendar, c2::SingleFCalendar) =
+    JointFCalendar([c1.calendars, c2], c1.reducer)
+join(c1::SingleFCalendar, c2::JointFCalendar) =
+    join(c2, c1)
+join(c1::JointFCalendar, c2::JointFCalendar) =
+    JointFCalendar([c1.calendars, c2.calendars], c1.reducer)
+join(c::SingleFCalendar...) =
+    JointFCalendar([ ci for ci in c ], all)
+join(c::JointFCalendar...) =
+    JointFCalendar([ jc for jc in c ], all)
 Base.convert(::Type{JointFCalendar}, c::SingleFCalendar) = JointFCalendar(c)
 
 #####
