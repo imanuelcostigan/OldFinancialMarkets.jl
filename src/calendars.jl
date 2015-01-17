@@ -27,7 +27,7 @@ Base.join(c1::SingleCalendar, c2::JointCalendar) =
     join(c2, c1)
 Base.join(c1::JointCalendar, c2::JointCalendar) =
     JointCalendar([c1.calendars, c2.calendars], c1.rule)
-Base.convert(::Type{JointCalendar}, c::SingleCalendar) = JointCalendar(c)
+Base.convert(::Type{JointCalendar}, c::SingleCalendar) = JointCalendar([c])
 
 #####
 # isgood methods
@@ -37,7 +37,8 @@ isweekend(dt::TimeType) = dayofweek(dt) in [Sat, Sun]
 isgood(dt::TimeType, ::NoCalendar) = !isweekend(dt)
 isgood(dt::TimeType) = isgood(dt, NoCalendar())
 function isgood(dt::TimeType, c::JointCalendar)
-    c.rule([ isgood(dt, ci) for ci in c.calendars ])
+    reducer = isa(c.rule, AllDaysGood) ? all : any
+    reducer([ isgood(dt, ci) for ci in c.calendars ])
 end
 
 #####

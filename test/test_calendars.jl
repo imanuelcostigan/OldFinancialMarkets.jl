@@ -33,4 +33,4 @@
 @test isgood(Date(2014, 7, 21))
 @test !isgood(Date(2015, 11, 3), join(AUSYCalendar(), AUMECalendar()))
 @test isgood(Date(2015, 11, 3),
-    JointCalendar([AUSYCalendar(), AUMECalendar()], false))
+    JointCalendar([AUSYCalendar(), AUMECalendar()], AnyDaysGood()))
