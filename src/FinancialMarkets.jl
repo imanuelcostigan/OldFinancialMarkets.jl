@@ -12,7 +12,7 @@ export
     # times.jl
     A365, A360, ActActISDA, Thirty360, ThirtyE360, ThirtyEP360, years,
     # calendars.jl
-    JointCalendar, NoCalendar, isweekend, isgood,
+    AllDaysGood, AnyDaysGood, JointCalendar, NoCalendar, isweekend, isgood,
     # calendars_au.jl
     AUSYCalendar, AUMECalendar,
     # calendars_us.jl
