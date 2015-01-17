@@ -7,7 +7,7 @@ abstract SingleFCalendar <: FinCalendar
 immutable JointFCalendar <: FinCalendar
     calendars::Vector{SingleFCalendar}
     is_good_on_rule::Function
-    function JointFCalendar(c::Vector{SingleFCalendar}, r::Function = all)
+    function JointFCalendar(c, r = all)
         msg = "is_good_on_rule must be either `any` or `all`"
         r in [any, all] || throw(ArgumentError(msg))
         new(unique(c), r)
