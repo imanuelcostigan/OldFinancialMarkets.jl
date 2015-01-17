@@ -20,30 +20,30 @@ immutable Succeeding <: BusinessDayConvention end
 # Methods
 #####
 
-adjust(dt::TimeType, bdc::Unadjusted, c::FinCalendar = NoFCalendar()) = dt
-function adjust(dt::TimeType, bdc::Preceding, c::FinCalendar = NoFCalendar())
+adjust(dt::TimeType, bdc::Unadjusted, c::Calendar = NoFCalendar()) = dt
+function adjust(dt::TimeType, bdc::Preceding, c::Calendar = NoFCalendar())
     while !isgood(dt, c)
         dt -= Day(1)
     end
     return dt
 end
-function adjust(dt::TimeType, bdc::Following, c::FinCalendar = NoFCalendar())
+function adjust(dt::TimeType, bdc::Following, c::Calendar = NoFCalendar())
     while !isgood(dt, c)
         dt += Day(1)
     end
     return dt
 end
 function adjust(dt::TimeType, bdc::ModifiedPreceding,
-    c::FinCalendar = NoFCalendar())
+    c::Calendar = NoFCalendar())
     pre_dt = adjust(dt, Preceding(), c)
     month(dt) != month(pre_dt) ? adjust(dt, Following(), c) : pre_dt
 end
 function adjust(dt::TimeType, bdc::ModifiedFollowing,
-    c::FinCalendar = NoFCalendar())
+    c::Calendar = NoFCalendar())
     follow_dt = adjust(dt, Following(), c)
     month(dt) != month(follow_dt) ? adjust(dt, Preceding(), c) : follow_dt
 end
-function adjust(dt::TimeType, bdc::Succeeding, c::FinCalendar = NoFCalendar())
+function adjust(dt::TimeType, bdc::Succeeding, c::Calendar = NoFCalendar())
     follow_dt = adjust(dt, Following(), c)
     is_barrier_crossed = (month(follow_dt) != month(dt) ||
         day(dt) ≤ 15 && day(follow_dt) > 15)

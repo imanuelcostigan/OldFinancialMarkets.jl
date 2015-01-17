@@ -2,9 +2,9 @@
 # Type declarations
 #####
 
-abstract FinCalendar
-abstract SingleFCalendar <: FinCalendar
-immutable JointFCalendar <: FinCalendar
+abstract Calendar
+abstract SingleFCalendar <: Calendar
+immutable JointFCalendar <: Calendar
     calendars::Vector{SingleFCalendar}
     is_good_on_rule::Function
     function JointFCalendar(c, r = all)

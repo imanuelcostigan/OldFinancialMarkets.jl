@@ -22,7 +22,7 @@ immutable SwapDateSchedule <: DateSchedule
     # DateTime vectors to Date vectors.
     dates::Vector{Date}
     tenor::Period
-    calendar::FinCalendar
+    calendar::Calendar
     bdc::BusinessDayConvention
     stub::Stub
     eom::Bool
