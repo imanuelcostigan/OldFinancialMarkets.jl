@@ -6,9 +6,9 @@ abstract FinCalendar
 abstract SingleFCalendar <: FinCalendar
 immutable JointFCalendar <: FinCalendar
     calendars::Vector{SingleFCalendar}
-    reducer::Function
+    is_good_on_rule::Function
     function JointFCalendar(c::Vector{SingleFCalendar}, r::Function = all)
-        msg = "reducer must be `any` or `all`"
+        msg = "is_good_on_rule must be either `any` or `all`"
         r in [any, all] || throw(ArgumentError(msg))
         new(unique(c), r)
     end
