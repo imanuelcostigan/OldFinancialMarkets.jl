@@ -17,12 +17,12 @@ immutable ONIA{CCY<:Currency} <: InterestRateIndex
 end
 
 # OpenGamma: Interest rate instruments & market conventions guide
-ONIA(::AUD) = ONIA{AUD}(AUD(), *(AUSYCalendar(), AUMECalendar()),
-    Following(), A365())
+ONIA(::AUD) = ONIA{AUD}(AUD(),
+    join(AUSYCalendar(), AUMECalendar(), AnyDaysGood()), Following(), A365())
 ONIA(::EUR) = ONIA{EUR}(EUR(), EUTACalendar(), Following(), A360())
 ONIA(::GBP) = ONIA{GBP}(GBP(), GBLOCalendar(), Following(), A365())
 ONIA(::JPY) = ONIA{JPY}(JPY(), JPTOCalendar(), Following(), A365())
-ONIA(::NZD) = ONIA{NZD}(NZD(), +(NZAUCalendar(), NZWECalendar()),
+ONIA(::NZD) = ONIA{NZD}(NZD(), join(NZAUCalendar(), NZWECalendar()),
     Following(), A365())
 ONIA(::USD) = ONIA{USD}(USD(), USNYCalendar(), Following(), A360())
 
@@ -76,7 +76,7 @@ function IBOR(::EUR, tenor::Period, libor = false)
             bdc = ModifiedFollowing()
         end
         return IBOR{EUR}(EUR(), spotlag, tenor,
-            +(GBLOCalendar(), EULIBORCalendar()), bdc, true, A360())
+            join(GBLOCalendar(), EULIBORCalendar()), bdc, true, A360())
     else
         # http://www.emmi-benchmarks.eu/assets/files/Euribor_tech_features.pdf
         # OpenGamma: Interest rate instruments & market conventions guide
@@ -125,7 +125,7 @@ function IBOR(::NZD, tenor::Period)
     # OpenGamma: Interest rate instruments & market conventions guide
     msg = "The tenor must be no less than 1 month."
     tenor < Month(1) && throw(ArgumentError(msg))
-    IBOR{NZD}(NZD(), Day(0), tenor, +(NZAUCalendar(), NZWECalendar()), bdc,
+    IBOR{NZD}(NZD(), Day(0), tenor, join(NZAUCalendar(), NZWECalendar()), bdc,
         false, A365())
 end
 function IBOR(::USD, tenor::Period)
@@ -136,7 +136,7 @@ function IBOR(::USD, tenor::Period)
         spotlag = Day(0)
         bdc = Following()
         (tenor == Day(1) ?
-            calendar = +(GBLOCalendar(), USLIBORCalendar()) :
+            calendar = join(GBLOCalendar(), USLIBORCalendar()) :
             calendar = GBLOCalendar())
     else
         spotlag = Day(2)

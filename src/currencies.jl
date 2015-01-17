@@ -41,7 +41,7 @@ immutable NZD <: Currency
         valid_cals ? new(calendar) : throw(ArgumentError(msg))
     end
 end
-NZD() = NZD(+(NZAUCalendar(), NZWECalendar()))
+NZD() = NZD(join(NZAUCalendar(), NZWECalendar()))
 
 immutable USD <: Currency
     calendar::JointCalendar

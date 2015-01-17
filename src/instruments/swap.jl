@@ -55,7 +55,7 @@ function FixedFloatingSwap{TC<:Currency}(currency::Vector{TC}, term::Period,
     # LON calendar (IBOR fixing calendar). Joining on ibor currency's calendar
     # just in case leg payments in one currency but based on ibor of another
     # currency (~ quanto style)
-    calendar = +(currency[1].calendar, currency[2].calendar,
+    calendar = join(currency[1].calendar, currency[2].calendar,
         ibor.currency.calendar, ibor.calendar)
     # All standard swaps trade Mod Following
     bdc = ModifiedFollowing()
