@@ -11,13 +11,13 @@ Date(2016, 12, 27), Date(2016, 12, 26)]
 dt = Date(2014)
 while year(dt) == 2014
     @test !((dt in ausyholidays || isweekend(dt)) $
-        !isgood(dt, AUSYFCalendar()))
+        !isgood(dt, AUSYCalendar()))
     dt += Day(1)
 end
 dt = Date(2016)
 while year(dt) == 2016
     @test !((dt in ausyholidays || isweekend(dt)) $
-        !isgood(dt, AUSYFCalendar()))
+        !isgood(dt, AUSYCalendar()))
     dt += Day(1)
 end
 

@@ -21,16 +21,16 @@ These can be illustrated as follows::
 
     using Dates, FinancialMarkets
     # Financial calendar awareness
-    shift(Date(2014, 9, 25), Month(3), ModifiedFollowing(), AUSYFCalendar(), false)
+    shift(Date(2014, 9, 25), Month(3), ModifiedFollowing(), AUSYCalendar(), false)
     # End of month convention aware
-    shift(Date(2014, 9, 30), Month(3), ModifiedFollowing(), AUSYFCalendar(), true)
+    shift(Date(2014, 9, 30), Month(3), ModifiedFollowing(), AUSYCalendar(), true)
 
 
 
 Interface
 -------------------------------------------------------------------------------
 
-.. function:: shift(dt::TimeType, p::Period, bdc = Unadjusted(), c = NoFCalendar(), eom = true) -> TimeType
+.. function:: shift(dt::TimeType, p::Period, bdc = Unadjusted(), c = NoCalendar(), eom = true) -> TimeType
 
     Shifts ``dt`` by ``p`` observing the end-of-month conventions where appropriate when ``eom = true``. The resulting date is adjusted in accordance with ``bdc`` using the calendar ``c``.
 

@@ -11,6 +11,6 @@ gbholidays = [Date(2012, 1, 1), Date(2012, 1, 2), Date(2012, 4, 6),
   dt = Date(2012)
   while year(dt) <= 2013
     @test !((dt in gbholidays || isweekend(dt)) $
-        !isgood(dt, GBLOFCalendar()))
+        !isgood(dt, GBLOCalendar()))
     dt += Day(1)
 end

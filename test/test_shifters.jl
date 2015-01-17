@@ -1,8 +1,8 @@
 u = Unadjusted()
 f = Following()
 mf = ModifiedFollowing()
-nocal = NoFCalendar()
-sydcal = AUSYFCalendar()
+nocal = NoCalendar()
+sydcal = AUSYCalendar()
 
 # Test day shifters
 sdt = shift(Date(2012, 2, 29), Day(1), u, nocal, false)

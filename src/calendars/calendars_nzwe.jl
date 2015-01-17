@@ -2,17 +2,17 @@
 # Type declarations
 #####
 
-immutable NZWEFCalendar <: NZFCalendar end
+immutable NZWECalendar <: NZCalendar end
 
 #####
 # Methods
 #####
 
-function isanniversarydayholiday(dt::TimeType, c::NZWEFCalendar)
+function isanniversarydayholiday(dt::TimeType, c::NZWECalendar)
     dayofweek(dt) == Mon && 19 <= day(dt) <= 25 && month(dt) == Jan
 end
 
-function isgood(dt::TimeType, c::NZWEFCalendar)
+function isgood(dt::TimeType, c::NZWECalendar)
     # http://en.wikipedia.org/wiki/Public_holidays_in_New_Zealand
     # http://www.dol.govt.nz/er/holidaysandleave/publicholidays/publicholidaydates/future-dates.asp
     # Same as Auckland except for different provincial anniversary holiday

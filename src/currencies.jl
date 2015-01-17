@@ -9,45 +9,45 @@ abstract Currency
 # 2. Opengamma: Interest rate instruments and market conventions guide
 
 immutable AUD <: Currency
-    calendar::JointFCalendar
-    AUD(calendar::AUSYFCalendar) = new(calendar)
+    calendar::JointCalendar
+    AUD(calendar::AUSYCalendar) = new(calendar)
 end
-AUD() = AUD(AUSYFCalendar())
+AUD() = AUD(AUSYCalendar())
 
 immutable EUR <: Currency
-    calendar::JointFCalendar
-    EUR(calendar::EUTAFCalendar) = new(calendar)
+    calendar::JointCalendar
+    EUR(calendar::EUTACalendar) = new(calendar)
 end
-EUR() = EUR(EUTAFCalendar())
+EUR() = EUR(EUTACalendar())
 
 immutable GBP <: Currency
-    calendar::JointFCalendar
-    GBP(calendar::GBLOFCalendar) = new(calendar)
+    calendar::JointCalendar
+    GBP(calendar::GBLOCalendar) = new(calendar)
 end
-GBP() = GBP(GBLOFCalendar())
+GBP() = GBP(GBLOCalendar())
 
 immutable JPY <: Currency
-    calendar::JointFCalendar
-    JPY(calendar::JPTOFCalendar) = new(calendar)
+    calendar::JointCalendar
+    JPY(calendar::JPTOCalendar) = new(calendar)
 end
-JPY() = JPY(JPTOFCalendar())
+JPY() = JPY(JPTOCalendar())
 
 immutable NZD <: Currency
-    calendar::JointFCalendar
-    function NZD(calendar::JointFCalendar)
-        cals = [NZAUFCalendar(), NZWEFCalendar()]
+    calendar::JointCalendar
+    function NZD(calendar::JointCalendar)
+        cals = [NZAUCalendar(), NZWECalendar()]
         valid_cals = all([ c in cals for c in calendar.calendars ])
         msg = "Must use NZAU & NZWE calendars."
         valid_cals ? new(calendar) : throw(ArgumentError(msg))
     end
 end
-NZD() = NZD(+(NZAUFCalendar(), NZWEFCalendar()))
+NZD() = NZD(+(NZAUCalendar(), NZWECalendar()))
 
 immutable USD <: Currency
-    calendar::JointFCalendar
-    USD(calendar::USNYFCalendar) = new(calendar)
+    calendar::JointCalendar
+    USD(calendar::USNYCalendar) = new(calendar)
 end
-USD() = USD(USNYFCalendar())
+USD() = USD(USNYCalendar())
 
 # Source:
 # 2. Opengamma: Interest rate instruments and market conventions guide

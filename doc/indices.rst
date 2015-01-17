@@ -51,7 +51,7 @@ You can find more infomation on the conventions associated with any of these ind
 Interface
 -------------------------------------------------------------------------------
 
-.. function:: ONIA{CCY<:Currency}(currency::CCY, calendar::JointFCalendar, bdc::BusinessDayConvention, daycount::DayCountFraction) -> ONIA
+.. function:: ONIA{CCY<:Currency}(currency::CCY, calendar::JointCalendar, bdc::BusinessDayConvention, daycount::DayCountFraction) -> ONIA
               ONIA(::AUD) -> ONIA{AUD} (AONIA)
               ONIA(::EUR) -> ONIA{EUR} (EONIA)
               ONIA(::GBP) -> ONIA{GBP} (SONIA)
@@ -67,19 +67,19 @@ Interface
 
     Various ONIA type construction methods. The key conventions used for specific constructors are outlined above.
 
-.. function:: IBOR{CCY<:Currency}(currency::CCY, spotlag::Period, tenor::Period, calendar::JointFCalendar, bdc::BusinessDayConvention, eom::Bool, daycount::DayCountFraction) -> IBOR
+.. function:: IBOR{CCY<:Currency}(currency::CCY, spotlag::Period, tenor::Period, calendar::JointCalendar, bdc::BusinessDayConvention, eom::Bool, daycount::DayCountFraction) -> IBOR
 
     The default parameterised constructor of ``IBOR`` types.
 
 .. function:: IBOR(::AUD, tenor::Period) -> IBOR{AUD}
 
-    A convenient constructor of AUD BBSW. The spot lag is assumed to be 1 good day (GD) in ``AUSYFCalendar`` and is adjusted according to the ``Succeeding`` convention while the end-of-month convention is not observed. The ``A365`` day count convention holds.
+    A convenient constructor of AUD BBSW. The spot lag is assumed to be 1 good day (GD) in ``AUSYCalendar`` and is adjusted according to the ``Succeeding`` convention while the end-of-month convention is not observed. The ``A365`` day count convention holds.
 
 .. function:: IBOR(::EUR, tenor::Period, libor = false) -> IBOR{EUR}
 
     A convenient constructor of EURIBOR (``libor = false``) and EUR LIBOR (``libor = true``).
 
-    EURIBOR has a spot lag of 2 GDs in ``EUTAFCalendar`` and is adjusted according to the ``ModifiedFollowing`` convention. EUR LIBOR has a spot lag of 2 GDs in ``GBLOFCalendar`` (or 0 GDs when the ``tenor`` is less than one month) and is adjusted using the ``ModifiedFollowing`` convention (or ``Following`` when the ``tenor`` is less than one month). The end-of-month convention is observed and the ``A360`` day count convention holds.
+    EURIBOR has a spot lag of 2 GDs in ``EUTACalendar`` and is adjusted according to the ``ModifiedFollowing`` convention. EUR LIBOR has a spot lag of 2 GDs in ``GBLOCalendar`` (or 0 GDs when the ``tenor`` is less than one month) and is adjusted using the ``ModifiedFollowing`` convention (or ``Following`` when the ``tenor`` is less than one month). The end-of-month convention is observed and the ``A360`` day count convention holds.
 
     Ideally EURIBOR and EUR LIBOR would be different types. One way to effect this is to parameterise ``IBOR`` by something like ``Agent`` where ``Agent`` is a type representing the calculation agent / fixing panel. However, this would add extra complexity at this point. Perhaps something to come back to later on.
 
@@ -87,13 +87,13 @@ Interface
 
     A convenient constructor of GBP LIBOR.
 
-    The spot lag is 2 GDs in ``GBLOFCalendar`` and is adjusted using the ``ModifiedFollowing`` convention when the ``tenor`` is no less than one month. Conversely, the spot lag is 0 GDs and is adjusted using the ``Following`` convention when the ``tenor is less than one month. The end-of-month convention is observed and the ``A365`` day count convention applies.
+    The spot lag is 2 GDs in ``GBLOCalendar`` and is adjusted using the ``ModifiedFollowing`` convention when the ``tenor`` is no less than one month. Conversely, the spot lag is 0 GDs and is adjusted using the ``Following`` convention when the ``tenor is less than one month. The end-of-month convention is observed and the ``A365`` day count convention applies.
 
 .. function:: IBOR(::JPY, tenor::Period, libor = true) -> IBOR{JPY}
 
     A convenient constructor of JPY LIBOR (``libor = true``) and TIBOR (``libor = false``).
 
-    In either case, if the ``tenor`` is less than one month, the spot lag is 0 GDs and subject to adjustment using the ``Following`` convention, otherwise, the spot lag is 2 GDs and subject to the ``ModifiedFollowing`` convention. Both assume an ``A360`` day count convention. However, JPY LIBOR is fixed on ``GBLOFCalendar`` good days and the end-of-month convention holds, while TIBOR is fixed on ``JPTOFCalendar`` good days and the end-of-month convention does not hold.
+    In either case, if the ``tenor`` is less than one month, the spot lag is 0 GDs and subject to adjustment using the ``Following`` convention, otherwise, the spot lag is 2 GDs and subject to the ``ModifiedFollowing`` convention. Both assume an ``A360`` day count convention. However, JPY LIBOR is fixed on ``GBLOCalendar`` good days and the end-of-month convention holds, while TIBOR is fixed on ``JPTOCalendar`` good days and the end-of-month convention does not hold.
 
     Ideally JPY LIBOR and TIBOR would be different types. See the EURIBOR/EUR LIBOR discussion above.
 
@@ -101,13 +101,13 @@ Interface
 
     A convenient constructor of NZD BKBM. The ``tenor`` must be no less than one month.
 
-    The spot lag is 0 GDs in ``NZAUFCalendar`` & ``NZWEFCalendar`` and is adjusted according to the ``ModifiedFollowing`` convention while the end-of-month convention does not apply. The ``A365`` day convention holds.
+    The spot lag is 0 GDs in ``NZAUCalendar`` & ``NZWECalendar`` and is adjusted according to the ``ModifiedFollowing`` convention while the end-of-month convention does not apply. The ``A365`` day convention holds.
 
 .. function:: IBOR(::USD, tenor::Period) -> IBOR{USD}
 
     A convenient constructor of USD LIBOR.
 
-    The spot lag is 2 GDs in ``GBLOFCalendar`` and is adjusted using the ``ModifiedFollowing`` convention when the ``tenor`` is no less than one month. Conversely, the spot lag is 0 GDs and is adjusted using the ``Following`` convention when the ``tenor`` is less than one month. When the ``tenor`` is one day, good days are those in ``GBLOFCalendar`` and ``USNYFCalendar``. The end-of-month convention is observed and the ``A360`` day count convention applies.
+    The spot lag is 2 GDs in ``GBLOCalendar`` and is adjusted using the ``ModifiedFollowing`` convention when the ``tenor`` is no less than one month. Conversely, the spot lag is 0 GDs and is adjusted using the ``Following`` convention when the ``tenor`` is less than one month. When the ``tenor`` is one day, good days are those in ``GBLOCalendar`` and ``USNYCalendar``. The end-of-month convention is observed and the ``A360`` day count convention applies.
 
 .. function:: AUDBBSW(tenor) -> AUDBBSW (IBOR{AUD})
               EURIBOR(tenor) -> EURIBOR (IBOR{EUR})

@@ -2,21 +2,21 @@
 # Type declarations
 #####
 
-abstract GBFCalendar <: SingleCalendar
-immutable GBLOFCalendar <: GBFCalendar end
+abstract GBCalendar <: SingleCalendar
+immutable GBLOCalendar <: GBCalendar end
 
 #####
 # Methods
 #####
 
-function isnewyearsholiday(dt::TimeType, c::GBFCalendar)
+function isnewyearsholiday(dt::TimeType, c::GBCalendar)
     (dayofyear(dt) == 1 || # Sat, Sun are Mondayised
         (dayofweek(dt) == Mon && (dayofyear(dt) in [2, 3])))
 end
-function iseasterholiday(dt::TimeType, c::GBFCalendar)
+function iseasterholiday(dt::TimeType, c::GBCalendar)
     iseaster(dt, Fri) || iseaster(dt, Mon)
 end
-function isbankholiday(dt::TimeType, c::GBFCalendar)
+function isbankholiday(dt::TimeType, c::GBCalendar)
     # May Day
     ismayday = (dayofweek(dt) == Mon && dayofweekofmonth(dt) == 1 &&
         month(dt) == May && year(dt) >= 1978)
@@ -30,21 +30,21 @@ function isbankholiday(dt::TimeType, c::GBFCalendar)
     isalt = day(dt) == 4 && month(dt) == Jun && year(dt) in [2002, 2012]
     return ismayday || isspring || issummer || isalt
 end
-function isqueensjubileeholiday(dt::TimeType, c::GBFCalendar)
+function isqueensjubileeholiday(dt::TimeType, c::GBCalendar)
     day(dt) == 5 && month(dt) == Jun && year(dt) == 2012
 end
-function ischristmasdayholiday(dt::TimeType, c::GBFCalendar)
+function ischristmasdayholiday(dt::TimeType, c::GBCalendar)
     month(dt) == Dec && day(dt) == 25
 end
-function isboxingdayholiday(dt::TimeType, c::GBFCalendar)
+function isboxingdayholiday(dt::TimeType, c::GBCalendar)
     (month(dt) == Dec && (day(dt) == 26 ||
         # Mondayised accounting for Christmas day possibly being Mondayised
         (day(dt) == 27 && dayofweek(dt) in [Mon, Tue])))
 end
-function isroyalweddingholiday(dt::TimeType, c::GBFCalendar)
+function isroyalweddingholiday(dt::TimeType, c::GBCalendar)
     day(dt) == 29 && month(dt) == 4 && year(dt) == 2011
 end
-function isgood(dt::TimeType, c::GBFCalendar)
+function isgood(dt::TimeType, c::GBCalendar)
     # http://en.wikipedia.org/wiki/Public_holidays_in_the_United_Kingdom
     # http://en.wikipedia.org/wiki/Bank_holiday [2002, 2012 spring bank hol moved
     # to 4 Jun for Queen's jubilee]

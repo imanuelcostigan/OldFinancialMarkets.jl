@@ -11,20 +11,20 @@ abstract InterestRateIndex <: Index
 
 immutable ONIA{CCY<:Currency} <: InterestRateIndex
     currency::CCY
-    calendar::JointFCalendar
+    calendar::JointCalendar
     bdc::BusinessDayConvention
     daycount::DayCountFraction
 end
 
 # OpenGamma: Interest rate instruments & market conventions guide
-ONIA(::AUD) = ONIA{AUD}(AUD(), *(AUSYFCalendar(), AUMEFCalendar()),
+ONIA(::AUD) = ONIA{AUD}(AUD(), *(AUSYCalendar(), AUMECalendar()),
     Following(), A365())
-ONIA(::EUR) = ONIA{EUR}(EUR(), EUTAFCalendar(), Following(), A360())
-ONIA(::GBP) = ONIA{GBP}(GBP(), GBLOFCalendar(), Following(), A365())
-ONIA(::JPY) = ONIA{JPY}(JPY(), JPTOFCalendar(), Following(), A365())
-ONIA(::NZD) = ONIA{NZD}(NZD(), +(NZAUFCalendar(), NZWEFCalendar()),
+ONIA(::EUR) = ONIA{EUR}(EUR(), EUTACalendar(), Following(), A360())
+ONIA(::GBP) = ONIA{GBP}(GBP(), GBLOCalendar(), Following(), A365())
+ONIA(::JPY) = ONIA{JPY}(JPY(), JPTOCalendar(), Following(), A365())
+ONIA(::NZD) = ONIA{NZD}(NZD(), +(NZAUCalendar(), NZWECalendar()),
     Following(), A365())
-ONIA(::USD) = ONIA{USD}(USD(), USNYFCalendar(), Following(), A360())
+ONIA(::USD) = ONIA{USD}(USD(), USNYCalendar(), Following(), A360())
 
 typealias AONIA ONIA{AUD}
 typealias EONIA ONIA{EUR}
@@ -49,7 +49,7 @@ immutable IBOR{CCY<:Currency} <: InterestRateIndex
     spotlag::Period
     tenor::Period
     # Use currency's calendar to determine value date
-    calendar::JointFCalendar
+    calendar::JointCalendar
     bdc::BusinessDayConvention
     eom::Bool
     daycount::DayCountFraction
@@ -60,7 +60,7 @@ function IBOR(::AUD, tenor::Period)
     # OpenGamma: Interest rate instruments & market conventions guide
     # NB: Spot lag is 1 day because assuming end-of-day instance of IBOR
     #     Spot lag of 0 day applies only to transactions prior to 10am
-    IBOR{AUD}(AUD(), Day(1), tenor, AUSYFCalendar(), Succeeding(), false,
+    IBOR{AUD}(AUD(), Day(1), tenor, AUSYCalendar(), Succeeding(), false,
         A365())
 end
 function IBOR(::EUR, tenor::Period, libor = false)
@@ -76,11 +76,11 @@ function IBOR(::EUR, tenor::Period, libor = false)
             bdc = ModifiedFollowing()
         end
         return IBOR{EUR}(EUR(), spotlag, tenor,
-            +(GBLOFCalendar(), EULIBORFCalendar()), bdc, true, A360())
+            +(GBLOCalendar(), EULIBORCalendar()), bdc, true, A360())
     else
         # http://www.emmi-benchmarks.eu/assets/files/Euribor_tech_features.pdf
         # OpenGamma: Interest rate instruments & market conventions guide
-        return IBOR{EUR}(EUR(), Day(2), tenor, EUTAFCalendar(),
+        return IBOR{EUR}(EUR(), Day(2), tenor, EUTACalendar(),
             ModifiedFollowing(), true, A360())
     end
 end
@@ -95,7 +95,7 @@ function IBOR(::GBP, tenor::Period)
         spotlag = Day(2)
         bdc = ModifiedFollowing()
     end
-    IBOR{GBP}(GBP(), spotlag, tenor, GBLOFCalendar(), bdc, true, A365())
+    IBOR{GBP}(GBP(), spotlag, tenor, GBLOCalendar(), bdc, true, A365())
 end
 function IBOR(::JPY, tenor::Period, libor = true)
     if tenor < Month(1)
@@ -109,13 +109,13 @@ function IBOR(::JPY, tenor::Period, libor = true)
         # https://www.theice.com/iba/libor
         # http://www.bbalibor.com/technical-aspects/fixing-value-and-maturity
         # OpenGamma: Interest rate instruments & market conventions guide
-        cal = GBLOFCalendar()
+        cal = GBLOCalendar()
         eom = true
     else
         # TIBOR
         # http://www.jbatibor.or.jp/english/public/pdf/JBA%20TIBOR%20Operational%20RulesE.pdf
         # OpenGamma: Interest rate instruments & market conventions guide
-        cal = JPTOFCalendar()
+        cal = JPTOCalendar()
         eom = false
     end
     IBOR{JPY}(JPY(), spotlag, tenor, cal, bdc, eom, A360())
@@ -125,7 +125,7 @@ function IBOR(::NZD, tenor::Period)
     # OpenGamma: Interest rate instruments & market conventions guide
     msg = "The tenor must be no less than 1 month."
     tenor < Month(1) && throw(ArgumentError(msg))
-    IBOR{NZD}(NZD(), Day(0), tenor, +(NZAUFCalendar(), NZWEFCalendar()), bdc,
+    IBOR{NZD}(NZD(), Day(0), tenor, +(NZAUCalendar(), NZWECalendar()), bdc,
         false, A365())
 end
 function IBOR(::USD, tenor::Period)
@@ -136,12 +136,12 @@ function IBOR(::USD, tenor::Period)
         spotlag = Day(0)
         bdc = Following()
         (tenor == Day(1) ?
-            calendar = +(GBLOFCalendar(), USLIBORFCalendar()) :
-            calendar = GBLOFCalendar())
+            calendar = +(GBLOCalendar(), USLIBORCalendar()) :
+            calendar = GBLOCalendar())
     else
         spotlag = Day(2)
         bdc = ModifiedFollowing()
-        calendar = GBLOFCalendar()
+        calendar = GBLOCalendar()
     end
     IBOR{USD}(USD(), spotlag, tenor, calendar, bdc, true, A360())
 end

@@ -12,19 +12,19 @@ export
     # times.jl
     A365, A360, ActActISDA, Thirty360, ThirtyE360, ThirtyEP360, years,
     # calendars.jl
-    JointFCalendar, NoFCalendar, isweekend, isgood,
+    JointCalendar, NoCalendar, isweekend, isgood,
     # calendars_au.jl
-    AUSYFCalendar, AUMEFCalendar,
+    AUSYCalendar, AUMECalendar,
     # calendars_us.jl
-    USNYFCalendar, USLIBORFCalendar,
+    USNYCalendar, USLIBORCalendar,
     # calendars_gb.jl
-    GBLOFCalendar,
+    GBLOCalendar,
     # calendars_eu.jl
-    EUTAFCalendar, EULIBORFCalendar,
+    EUTACalendar, EULIBORCalendar,
     # calendars_jp.jl
-    JPTOFCalendar,
+    JPTOCalendar,
     # calendars_nz.jl
-    NZAUFCalendar, NZWEFCalendar,
+    NZAUCalendar, NZWECalendar,
     # business_day_conventions.jl
     Unadjusted, Preceding, ModifiedPreceding, Following, ModifiedFollowing,
     Succeeding, adjust,

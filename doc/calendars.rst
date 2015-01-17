@@ -23,29 +23,29 @@ Financial calendars
 
 FinancialMarkets.jl implements financial calendars as subtypes of the abstract ``SingleCalendar`` abstract type which is itself a subtype of the abstract ``Calendar`` type.
 
-Additionally, the concrete ``JointFCalendar`` subtype of ``Calendar`` represents a vector of ``SingleCalendar`` instances (the ``calendars`` field) and flags whether the calendars are joined by on the intersection of good or bad days (the ``onbad`` boolean typed field).
+Additionally, the concrete ``JointCalendar`` subtype of ``Calendar`` represents a vector of ``SingleCalendar`` instances (the ``calendars`` field) and flags whether the calendars are joined by on the intersection of good or bad days (the ``onbad`` boolean typed field).
 
 A number of commonly used locale-specific ``SingleCalendar`` subtypes are defined by FinancialMarkets.jl.
 
 =====================   =====================  ==========  ======================
 Name                    Locale                 Concrete    Supertype
 =====================   =====================  ==========  ======================
-``AUFCalendar``         Australia              ``false``   ``SingleCalendar``
-``AUSYFCalendar``       Sydney/Australia       ``true``    ``AUFCalendar``
-``AUMEFCalendar``       Melbourne/Australia    ``true``    ``AUFCalendar``
-``EUFCalendar``         Europe                 ``false``   ``SingleCalendar``
-``EUTAFCalendar``       TARGET                 ``true``    ``EUFCalendar``
-``EULIBORFCalendar``    EUR LIBOR              ``true``    ``EUFCalendar``
-``GBFCalendar``         Great Britain          ``false``   ``SingleCalendar``
-``GBLOFCalendar``       London/GB              ``true``    ``GBFCalendar``
-``JPFCalendar``         Japan                  ``false``   ``SingleCalendar``
-``JPTOFCalendar``       Tokyo/Japan            ``true``    ``JPFCalendar``
-``NZFCalendar``         New Zealand            ``false``   ``SingleCalendar``
-``NZAUFCalendar``       Auckland/NZ            ``true``    ``NZFCalendar``
-``NZWEFCalendar``       Wellington/NZ          ``true``    ``NZFCalendar``
-``USFCalendar``         United States          ``false``   ``SingleCalendar``
-``USNYFCalendar``       New York/US            ``true``    ``USFCalendar``
-``USLIBORFCalendar``    US LIBOR               ``true``    ``USFCalendar``
+``AUCalendar``         Australia              ``false``   ``SingleCalendar``
+``AUSYCalendar``       Sydney/Australia       ``true``    ``AUCalendar``
+``AUMECalendar``       Melbourne/Australia    ``true``    ``AUCalendar``
+``EUCalendar``         Europe                 ``false``   ``SingleCalendar``
+``EUTACalendar``       TARGET                 ``true``    ``EUCalendar``
+``EULIBORCalendar``    EUR LIBOR              ``true``    ``EUCalendar``
+``GBCalendar``         Great Britain          ``false``   ``SingleCalendar``
+``GBLOCalendar``       London/GB              ``true``    ``GBCalendar``
+``JPCalendar``         Japan                  ``false``   ``SingleCalendar``
+``JPTOCalendar``       Tokyo/Japan            ``true``    ``JPCalendar``
+``NZCalendar``         New Zealand            ``false``   ``SingleCalendar``
+``NZAUCalendar``       Auckland/NZ            ``true``    ``NZCalendar``
+``NZWECalendar``       Wellington/NZ          ``true``    ``NZCalendar``
+``USCalendar``         United States          ``false``   ``SingleCalendar``
+``USNYCalendar``       New York/US            ``true``    ``USCalendar``
+``USLIBORCalendar``    US LIBOR               ``true``    ``USCalendar``
 =====================   =====================  ==========  ======================
 
 Good day methods have been implemented for these financial calendar types and for joint calendars::
@@ -56,11 +56,11 @@ Good day methods have been implemented for these financial calendar types and fo
     # No calendars => all weekdays are good; weekends bad
     isgood(d1)
     # Sydney calendar
-    isgood(d1, AUSYFCalendar())
+    isgood(d1, AUSYCalendar())
     # Sydney, Melbourne calendar joined on bad days
-    isgood(d1, +(AUSYFCalendar(), AUMEFCalendar()))
+    isgood(d1, +(AUSYCalendar(), AUMECalendar()))
     # Sydney, Melbourne calendar joined on good days
-    isgood(d1, *(AUSYFCalendar(), AUMEFCalendar()))
+    isgood(d1, *(AUSYCalendar(), AUMECalendar()))
 
 
 Business day conventions
@@ -74,99 +74,99 @@ Bad day can be adjusted using ``adjust`` methods using these business day conven
 
     # Christmas Day
     d2 = Date(2014,12,25)
-    adjust(d2, Unadjusted(), AUSYFCalendar())
-    adjust(d2, Following(), AUSYFCalendar())
+    adjust(d2, Unadjusted(), AUSYCalendar())
+    adjust(d2, Following(), AUSYCalendar())
 
 Interface
 -------------------------------------------------------------------------------
 
-.. function:: NoFCalendar() -> NoFCalendar
+.. function:: NoCalendar() -> NoCalendar
 
-    Constructs a ``NoFCalendar`` type, a sub-type of ``SingleCalendar``.
+    Constructs a ``NoCalendar`` type, a sub-type of ``SingleCalendar``.
 
-.. function:: AUMEFCalendar() -> AUMEFCalendar
+.. function:: AUMECalendar() -> AUMECalendar
 
-    Constructs a ``AUMEFCalendar`` type, a sub-type of ``AUFCalendar``.
+    Constructs a ``AUMECalendar`` type, a sub-type of ``AUCalendar``.
 
-.. function:: AUSYFCalendar() -> AUSYFCalendar
+.. function:: AUSYCalendar() -> AUSYCalendar
 
-    Constructs a ``AUSYFCalendar`` type, a sub-type of ``AUFCalendar`` which is a subtype of ``SingleCalendar``.
+    Constructs a ``AUSYCalendar`` type, a sub-type of ``AUCalendar`` which is a subtype of ``SingleCalendar``.
 
-.. function:: AUSYFCalendar() -> AUSYFCalendar
+.. function:: AUSYCalendar() -> AUSYCalendar
 
-    Constructs a ``AUSYFCalendar`` type, a sub-type of ``AUFCalendar`` which is a subtype of ``SingleCalendar``.
+    Constructs a ``AUSYCalendar`` type, a sub-type of ``AUCalendar`` which is a subtype of ``SingleCalendar``.
 
-.. function:: EUTAFCalendar() -> EUTAFCalendar
+.. function:: EUTACalendar() -> EUTACalendar
 
-    Constructs a ``EUTAFCalendar`` type, a sub-type of ``EUFCalendar`` which is a subtype of ``SingleCalendar``.
+    Constructs a ``EUTACalendar`` type, a sub-type of ``EUCalendar`` which is a subtype of ``SingleCalendar``.
 
-.. function:: EULIBORFCalendar() -> EULIBORFCalendar
+.. function:: EULIBORCalendar() -> EULIBORCalendar
 
-    Constructs a ``EULIBORFCalendar`` type, a sub-type of ``EUFCalendar`` which is a subtype of ``SingleCalendar``.
+    Constructs a ``EULIBORCalendar`` type, a sub-type of ``EUCalendar`` which is a subtype of ``SingleCalendar``.
 
-.. function:: GBLOFCalendar() -> GBLOFCalendar
+.. function:: GBLOCalendar() -> GBLOCalendar
 
-    Constructs a ``GBLOFCalendar`` type, a sub-type of ``GBFCalendar`` which is a subtype of ``SingleCalendar``.
+    Constructs a ``GBLOCalendar`` type, a sub-type of ``GBCalendar`` which is a subtype of ``SingleCalendar``.
 
-.. function:: JPTOFCalendar() -> JPFCalendar
+.. function:: JPTOCalendar() -> JPCalendar
 
-    Constructs a ``JPTOFCalendar`` type, a sub-type of ``JPFCalendar`` which is a subtype of ``SingleCalendar``.
+    Constructs a ``JPTOCalendar`` type, a sub-type of ``JPCalendar`` which is a subtype of ``SingleCalendar``.
 
-.. function:: NZAUFCalendar() -> NZAUFCalendar
+.. function:: NZAUCalendar() -> NZAUCalendar
 
-    Constructs a ``NZAUFCalendar`` type, a sub-type of ``NZFCalendar`` which is a subtype of ``SingleCalendar``.
+    Constructs a ``NZAUCalendar`` type, a sub-type of ``NZCalendar`` which is a subtype of ``SingleCalendar``.
 
-.. function:: NZWEFCalendar() -> NZWEFCalendar
+.. function:: NZWECalendar() -> NZWECalendar
 
-    Constructs a ``NZWEFCalendar`` type, a sub-type of ``NZFCalendar`` which is a subtype of ``SingleCalendar``.
+    Constructs a ``NZWECalendar`` type, a sub-type of ``NZCalendar`` which is a subtype of ``SingleCalendar``.
 
-.. function:: USNYFCalendar() -> USNYFCalendar
+.. function:: USNYCalendar() -> USNYCalendar
 
-    Constructs a ``USNYFCalendar`` type, a sub-type of ``USFCalendar`` which is a subtype of ``SingleCalendar``.
+    Constructs a ``USNYCalendar`` type, a sub-type of ``USCalendar`` which is a subtype of ``SingleCalendar``.
 
-.. function:: USLIBORFCalendar() -> USLIBORFCalendar
+.. function:: USLIBORCalendar() -> USLIBORCalendar
 
-    Constructs a ``USLIBORFCalendar`` type, a sub-type of ``USFCalendar`` which is a subtype of ``SingleCalendar``.
+    Constructs a ``USLIBORCalendar`` type, a sub-type of ``USCalendar`` which is a subtype of ``SingleCalendar``.
 
-.. function:: JointFCalendar(calendars::Vector{SingleCalendar}, onbad::Bool) -> JointFCalendar
+.. function:: JointCalendar(calendars::Vector{SingleCalendar}, onbad::Bool) -> JointCalendar
 
-    Construct a ``JointFCalendar`` type. If ``onbad`` is ``true`` then the joint calendar's bad days are the union of the bad days of its constituent calendars. Otherwise, a calendar's bad days are the intersection of the bad days of its constituent calendars. ``JointFCalendar`` is a subtype of ``FCalendar``
+    Construct a ``JointCalendar`` type. If ``onbad`` is ``true`` then the joint calendar's bad days are the union of the bad days of its constituent calendars. Otherwise, a calendar's bad days are the intersection of the bad days of its constituent calendars. ``JointCalendar`` is a subtype of ``Calendar``
 
-.. function:: +(c1::SingleCalendar, c2::SingleCalendar) -> JointFCalendar
+.. function:: +(c1::SingleCalendar, c2::SingleCalendar) -> JointCalendar
 
-    Equivalent to calling ``JointFCalendar([c1, c2], true)``
+    Equivalent to calling ``JointCalendar([c1, c2], true)``
 
-.. function:: *(c1::SingleCalendar, c2::SingleCalendar) -> JointFCalendar
+.. function:: *(c1::SingleCalendar, c2::SingleCalendar) -> JointCalendar
 
-    Equivalent to calling ``JointFCalendar([c1, c2], false)``
+    Equivalent to calling ``JointCalendar([c1, c2], false)``
 
-.. function:: +(jc::JointFCalendar, c::SingleCalendar) -> JointFCalendar
+.. function:: +(jc::JointCalendar, c::SingleCalendar) -> JointCalendar
 
-    Equivalent to calling ``JointFCalendar([jc.calendars, c],
+    Equivalent to calling ``JointCalendar([jc.calendars, c],
     jc.onbad)``
 
-.. function:: convert(::Type{JointFCalendar}, c::SingleCalendar) -> JointFCalendar
+.. function:: convert(::Type{JointCalendar}, c::SingleCalendar) -> JointCalendar
 
-    Equivalent to ``JointFCalendar(c)``
+    Equivalent to ``JointCalendar(c)``
 
 .. function:: isweekend(dt::TimeType) -> Boolean
 
     Returns ``true`` if ``dt`` is on a weekend and vice-versa.
 
-.. function:: isgood(dt::TimeType, c::NoFCalendar = NoFCalendar()) -> Boolean
-              isgood(dt::TimeType, c::AUMEFCalendar) -> Boolean
-              isgood(dt::TimeType, c::AUSYFCalendar) -> Boolean
-              isgood(dt::TimeType, c::EUTAFCalendar) -> Boolean
-              isgood(dt::TimeType, c::EULIBORFCalendar) -> Boolean
-              isgood(dt::TimeType, c::GBFCalendar) -> Boolean
-              isgood(dt::TimeType, c::JPFCalendar) -> Boolean
-              isgood(dt::TimeType, c::NZAUFCalendar) -> Boolean
-              isgood(dt::TimeType, c::NZWEFCalendar) -> Boolean
-              isgood(dt::TimeType, c::USFCalendar) -> Boolean
-              isgood(dt::TimeType, c::USLIBORFCalendar) -> Boolean
+.. function:: isgood(dt::TimeType, c::NoCalendar = NoCalendar()) -> Boolean
+              isgood(dt::TimeType, c::AUMECalendar) -> Boolean
+              isgood(dt::TimeType, c::AUSYCalendar) -> Boolean
+              isgood(dt::TimeType, c::EUTACalendar) -> Boolean
+              isgood(dt::TimeType, c::EULIBORCalendar) -> Boolean
+              isgood(dt::TimeType, c::GBCalendar) -> Boolean
+              isgood(dt::TimeType, c::JPCalendar) -> Boolean
+              isgood(dt::TimeType, c::NZAUCalendar) -> Boolean
+              isgood(dt::TimeType, c::NZWECalendar) -> Boolean
+              isgood(dt::TimeType, c::USCalendar) -> Boolean
+              isgood(dt::TimeType, c::USLIBORCalendar) -> Boolean
 
-    Returns ``true`` if ``dt`` is good day in ``c``. This is ``true`` only if ``dt`` does not fall on a weekend (where ``c`` is ``NoFCalendar``) or a weekend or public holiday.
+    Returns ``true`` if ``dt`` is good day in ``c``. This is ``true`` only if ``dt`` does not fall on a weekend (where ``c`` is ``NoCalendar``) or a weekend or public holiday.
 
-.. function:: isgood(dt::TimeType, c::JointFCalendar) -> Boolean
+.. function:: isgood(dt::TimeType, c::JointCalendar) -> Boolean
 
     Returns ``true`` if ``dt`` is good in ``c`` where ``c.onbad`` determines how to check across each of the calendars in the joint calendar. If ``c.onbad`` is ``true`` then ``dt`` must be good in each of the financial calendars making up ``c`` and vice-versa.

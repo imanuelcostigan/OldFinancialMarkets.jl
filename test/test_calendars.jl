@@ -31,6 +31,6 @@
 # Good day testers
 @test !isgood(Date(2014, 7, 20))
 @test isgood(Date(2014, 7, 21))
-@test !isgood(Date(2015, 11, 3), +(AUSYFCalendar(), AUMEFCalendar()))
+@test !isgood(Date(2015, 11, 3), +(AUSYCalendar(), AUMECalendar()))
 @test isgood(Date(2015, 11, 3),
-    JointFCalendar([AUSYFCalendar(), AUMEFCalendar()], false))
+    JointCalendar([AUSYCalendar(), AUMECalendar()], false))

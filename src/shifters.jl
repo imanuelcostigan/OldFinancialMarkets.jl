@@ -2,7 +2,7 @@
 # 1. Opengamma: Interest rate instruments and market conventions guide
 # 2. Quantlib.org
 
-function shift(dt::TimeType, p::Period, bdc = Unadjusted(), c = NoFCalendar(),
+function shift(dt::TimeType, p::Period, bdc = Unadjusted(), c = NoCalendar(),
     eom = true)
     result = dt
     # Extract period details

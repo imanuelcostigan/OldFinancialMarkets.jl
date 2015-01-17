@@ -2,30 +2,30 @@
 # Type declarations
 #####
 
-abstract EUFCalendar <: SingleCalendar
-immutable EUTAFCalendar <: EUFCalendar end
-immutable EULIBORFCalendar <: EUFCalendar end
+abstract EUCalendar <: SingleCalendar
+immutable EUTACalendar <: EUCalendar end
+immutable EULIBORCalendar <: EUCalendar end
 
 #####
 # Methods
 #####
 
-function isnewyearsholiday(dt::TimeType, c::EUFCalendar)
+function isnewyearsholiday(dt::TimeType, c::EUCalendar)
     dayofyear(dt) == 1
 end
-function iseasterholiday(dt::TimeType, c::EUFCalendar)
+function iseasterholiday(dt::TimeType, c::EUCalendar)
     (iseaster(dt, Fri) || iseaster(dt, Mon)) && year(dt) >= 2000
 end
-function islabourdayholiday(dt::TimeType, c::EUTAFCalendar)
+function islabourdayholiday(dt::TimeType, c::EUTACalendar)
     day(dt) == 1 && month(dt) == May && year(dt) >= 2000
 end
-function ischristmasdayholiday(dt::TimeType, c::EUFCalendar)
+function ischristmasdayholiday(dt::TimeType, c::EUCalendar)
     day(dt) in [25, 26] && month(dt) == Dec
 end
-function istargetclosed(dt::TimeType, c::EUTAFCalendar)
+function istargetclosed(dt::TimeType, c::EUTACalendar)
     day(dt) == 31 && month(dt) == 12 && year(dt) in [1999, 2001]
 end
-function isgood(dt::TimeType, c::EUTAFCalendar)
+function isgood(dt::TimeType, c::EUTACalendar)
     # EUR holiday calendar
     # http://www.ecb.europa.eu/home/html/holidays.en.html
     # Closing days (1999):
@@ -41,7 +41,7 @@ function isgood(dt::TimeType, c::EUTAFCalendar)
         iseasterholiday(dt, c) || ischristmasdayholiday(dt, c) ||
         islabourdayholiday(dt, c) || istargetclosed(dt, c))
 end
-function isgood(dt::TimeType, c::EULIBORFCalendar)
+function isgood(dt::TimeType, c::EULIBORCalendar)
     # https://www.theice.com/iba/libor
-    isgood(dt, GBLOFCalendar()) && !islabourdayholiday(dt, EUTAFCalendar())
+    isgood(dt, GBLOCalendar()) && !islabourdayholiday(dt, EUTACalendar())
 end

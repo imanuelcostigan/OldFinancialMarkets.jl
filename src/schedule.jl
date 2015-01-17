@@ -48,12 +48,12 @@ function Base.show(io::IO, sds::SwapDateSchedule)
 end
 
 function SwapDateSchedule(dates::Vector{TimeType}, tenor::Period)
-    SwapDateSchedule(dates, tenor, NoFCalendar(), Unadjusted(),
+    SwapDateSchedule(dates, tenor, NoCalendar(), Unadjusted(),
         ShortFrontStub(), false)
 end
 
 function SwapDateSchedule(effectivedate::TimeType, terminationdate::TimeType,
-    tenor::Period, calendar = NoFCalendar(), bdc = Unadjusted(),
+    tenor::Period, calendar = NoCalendar(), bdc = Unadjusted(),
     stub = ShortFrontStub(), eom = false)
 
     # Set up

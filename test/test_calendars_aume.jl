@@ -10,6 +10,6 @@ Date(2015, 11, 3), Date(2015, 12, 25), Date(2015, 12, 26), Date(2015, 12, 28)]
 dt = Date(2014)
 while year(dt) <= 2015
     @test !((dt in aumeholidays || isweekend(dt)) $
-        !isgood(dt, AUMEFCalendar()))
+        !isgood(dt, AUMECalendar()))
     dt += Day(1)
 end

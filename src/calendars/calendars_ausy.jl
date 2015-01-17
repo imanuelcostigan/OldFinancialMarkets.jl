@@ -2,18 +2,18 @@
 # Type declarations
 #####
 
-immutable AUSYFCalendar <: AUFCalendar end
+immutable AUSYCalendar <: AUCalendar end
 
 #####
 # Methods
 #####
-function isbankholiday(dt::TimeType, c::AUSYFCalendar)
+function isbankholiday(dt::TimeType, c::AUSYCalendar)
     dayofweek(dt) == Mon && dayofweekofmonth(dt) == 1 && month(dt) == Aug
 end
-function islabourdayholiday(dt::TimeType, c::AUSYFCalendar)
+function islabourdayholiday(dt::TimeType, c::AUSYCalendar)
     dayofweek(dt) == Mon && dayofweekofmonth(dt) == 1 && month(dt) == Oct
 end
-function isgood(dt::TimeType, c::AUSYFCalendar)
+function isgood(dt::TimeType, c::AUSYCalendar)
     # http://en.wikipedia.org/wiki/Public_holidays_in_Australia
     # http://www.legislation.nsw.gov.au/maintop/view/inforce/act+115+2010+cd+0+N
     !(isweekend(dt) || isnewyearsholiday(dt, c) ||

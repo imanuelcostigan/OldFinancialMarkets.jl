@@ -9,6 +9,6 @@ nzauholidays = [Date(2014, 1, 1), Date(2014, 1, 2), Date(2014, 1, 27),
 dt = Date(2014)
 while year(dt) <= 2015
     !((dt in nzauholidays || isweekend(dt)) $
-        !isgood(dt, NZAUFCalendar()))
+        !isgood(dt, NZAUCalendar()))
     dt += Day(1)
 end
