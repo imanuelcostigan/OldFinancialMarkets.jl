@@ -10,7 +10,7 @@ immutable JointFCalendar <: FinCalendar
     function JointFCalendar(c::Vector{SingleFCalendar}, r::Function = all)
         msg = "reducer must be `any` or `all`"
         r in [any, all] || throw(ArgumentError(msg))
-        new(c, r)
+        new(unique(c), r)
     end
 end
 immutable NoFCalendar <: SingleFCalendar end
