@@ -39,7 +39,7 @@ Base.convert(::Type{JointFCalendar}, c::SingleFCalendar) = JointFCalendar(c)
 #####
 
 isweekend(dt::TimeType) = dayofweek(dt) in [Sat, Sun]
-isgood(dt::TimeType, c::NoFCalendar = NoFCalendar()) = !isweekend(dt)
+isgood(dt::TimeType, ::NoFCalendar) = !isweekend(dt)
 function isgood(dt::TimeType, c::JointFCalendar)
     rule = c.onbad ? all : any
     rule([ isgood(dt, ci) for ci in c.calendars ])
