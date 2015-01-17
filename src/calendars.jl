@@ -28,10 +28,10 @@ join(c1::SingleFCalendar, c2::JointFCalendar) =
     join(c2, c1)
 join(c1::JointFCalendar, c2::JointFCalendar) =
     JointFCalendar([c1.calendars, c2.calendars], c1.is_good_on_rule)
-join(c::SingleFCalendar...) =
-    JointFCalendar([ ci for ci in c ], all)
-join(c::JointFCalendar...) =
-    JointFCalendar([ jc for jc in c ], all)
+join{T<:SingleFCalendar}(c::Vector{T}, r::Function = all) =
+    JointFCalendar([ ci for ci in c ], r)
+join{T<:JointFCalendar}(jcs::Vector{T}) =
+    JointFCalendar([ jc.calendars for jc in jcs ], jcs[1].is_good_on_rule)
 Base.convert(::Type{JointFCalendar}, c::SingleFCalendar) = JointFCalendar(c)
 
 #####
@@ -40,6 +40,7 @@ Base.convert(::Type{JointFCalendar}, c::SingleFCalendar) = JointFCalendar(c)
 
 isweekend(dt::TimeType) = dayofweek(dt) in [Sat, Sun]
 isgood(dt::TimeType, ::NoFCalendar) = !isweekend(dt)
+isgood(dt::TimeType) = isgood(dt, NoFCalendar())
 function isgood(dt::TimeType, c::JointFCalendar)
     c.is_good_on_rule([ isgood(dt, ci) for ci in c.calendars ])
 end
