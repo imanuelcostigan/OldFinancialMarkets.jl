@@ -23,11 +23,11 @@ immutable NoFCalendar <: SingleFCalendar end
 join(c1::SingleFCalendar, c2::SingleFCalendar, r::Function = all) =
     JointFCalendar([c1, c2], r)
 join(c1::JointFCalendar, c2::SingleFCalendar) =
-    JointFCalendar([c1.calendars, c2], c1.reducer)
+    JointFCalendar([c1.calendars, c2], c1.is_good_on_rule)
 join(c1::SingleFCalendar, c2::JointFCalendar) =
     join(c2, c1)
 join(c1::JointFCalendar, c2::JointFCalendar) =
-    JointFCalendar([c1.calendars, c2.calendars], c1.reducer)
+    JointFCalendar([c1.calendars, c2.calendars], c1.is_good_on_rule)
 join(c::SingleFCalendar...) =
     JointFCalendar([ ci for ci in c ], all)
 join(c::JointFCalendar...) =
