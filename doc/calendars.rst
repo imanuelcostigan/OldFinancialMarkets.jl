@@ -23,7 +23,7 @@ Financial calendars
 
 FinancialMarkets.jl implements financial calendars as subtypes of the abstract ``SingleCalendar`` abstract type which is itself a subtype of the abstract ``Calendar`` type.
 
-Additionally, the concrete ``JointCalendar`` subtype of ``Calendar`` represents a vector of ``SingleCalendar`` instances (the ``calendars`` field) and flags whether the calendars are joined by on the intersection of good or bad days (the ``onbad`` boolean typed field).
+Additionally, the concrete ``JointCalendar`` subtype of ``Calendar`` represents a vector of ``SingleCalendar`` instances (the ``calendars`` field) and flags whether the calendars are joined by on the intersection of good or bad days (the ``rule`` boolean typed field).
 
 A number of commonly used locale-specific ``SingleCalendar`` subtypes are defined by FinancialMarkets.jl.
 
@@ -58,9 +58,9 @@ Good day methods have been implemented for these financial calendar types and fo
     # Sydney calendar
     isgood(d1, AUSYCalendar())
     # Sydney, Melbourne calendar joined on bad days
-    isgood(d1, +(AUSYCalendar(), AUMECalendar()))
+    isgood(d1, join(AUSYCalendar(), AUMECalendar()))
     # Sydney, Melbourne calendar joined on good days
-    isgood(d1, *(AUSYCalendar(), AUMECalendar()))
+    isgood(d1, join(AUSYCalendar(), AUMECalendar(), any))
 
 
 Business day conventions
@@ -128,32 +128,29 @@ Interface
 
     Constructs a ``USLIBORCalendar`` type, a sub-type of ``USCalendar`` which is a subtype of ``SingleCalendar``.
 
-.. function:: JointCalendar(calendars::Vector{SingleCalendar}, onbad::Bool) -> JointCalendar
+.. function:: JointCalendar(calendars::Vector{SingleCalendar}, rule::GoodDayReducer = AllDaysGood()) -> JointCalendar
 
-    Construct a ``JointCalendar`` type. If ``onbad`` is ``true`` then the joint calendar's bad days are the union of the bad days of its constituent calendars. Otherwise, a calendar's bad days are the intersection of the bad days of its constituent calendars. ``JointCalendar`` is a subtype of ``Calendar``
+    Construct a ``JointCalendar`` type. If ``GoodDayReducer`` is ``AllDaysGood`` then the joint calendar's good days are the intersection of the good days of its constituent calendars. Otherwise (``AnyDaysGood``), a calendar's good days are the union of the good days of its constituent calendars. ``JointCalendar`` is a subtype of ``Calendar``
 
-.. function:: +(c1::SingleCalendar, c2::SingleCalendar) -> JointCalendar
+.. function:: join(c1::SingleCalendar, c2::SingleCalendar, r::GoodDayReducer = AllDaysGood()) -> JointCalendar
 
-    Equivalent to calling ``JointCalendar([c1, c2], true)``
+    Equivalent to calling ``JointCalendar([c1, c2], AllDaysGood())``
 
-.. function:: *(c1::SingleCalendar, c2::SingleCalendar) -> JointCalendar
-
-    Equivalent to calling ``JointCalendar([c1, c2], false)``
-
-.. function:: +(jc::JointCalendar, c::SingleCalendar) -> JointCalendar
+.. function:: join(jc::JointCalendar, c::SingleCalendar) -> JointCalendar
 
     Equivalent to calling ``JointCalendar([jc.calendars, c],
-    jc.onbad)``
+    jc.rule)``
 
 .. function:: convert(::Type{JointCalendar}, c::SingleCalendar) -> JointCalendar
 
-    Equivalent to ``JointCalendar(c)``
+    Equivalent to ``JointCalendar([c])``
 
 .. function:: isweekend(dt::TimeType) -> Boolean
 
     Returns ``true`` if ``dt`` is on a weekend and vice-versa.
 
-.. function:: isgood(dt::TimeType, c::NoCalendar = NoCalendar()) -> Boolean
+.. function:: isgood(dt::TimeType, ::NoCalendar) -> Boolean
+              isgood(dt::TimeType) -> Boolean
               isgood(dt::TimeType, c::AUMECalendar) -> Boolean
               isgood(dt::TimeType, c::AUSYCalendar) -> Boolean
               isgood(dt::TimeType, c::EUTACalendar) -> Boolean
@@ -169,4 +166,4 @@ Interface
 
 .. function:: isgood(dt::TimeType, c::JointCalendar) -> Boolean
 
-    Returns ``true`` if ``dt`` is good in ``c`` where ``c.onbad`` determines how to check across each of the calendars in the joint calendar. If ``c.onbad`` is ``true`` then ``dt`` must be good in each of the financial calendars making up ``c`` and vice-versa.
+    Returns ``true`` if ``dt`` is good in ``c`` where ``c.rule`` determines how to check across each of the calendars in the joint calendar. If ``c.rule`` is ``true`` then ``dt`` must be good in each of the financial calendars making up ``c`` and vice-versa.
