@@ -32,8 +32,8 @@ typealias FixedFloatingSwap TwoLeggedSwap{FixedSwapLeg, FloatingSwapLeg}
 ###############################################################################
 
 function FixedFloatingSwap{TC<:Currency}(currency::Vector{TC}, term::Period,
-    rate::Real, ibor::IBOR, ibor_margin::Real = 0,
-    trade_date::TimeType = EVAL_DATE, amount::Real = 1e6)
+    rate::Real, ibor::IBOR, trade_date::TimeType = EVAL_DATE,
+    amount::Real = 1e6)
 
     ######
     # Input checking
