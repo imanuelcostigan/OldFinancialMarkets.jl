@@ -19,7 +19,7 @@ price(depo)
 
 Objects such as:
 
-- Compounding constants, interest rates, discount factors
+- Compounding types, interest rates, discount factors
 - Financial market calendars, day counters and roll conventions
 - Currencies
 - Stub types
