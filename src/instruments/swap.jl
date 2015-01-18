@@ -81,6 +81,12 @@ function FixedFloatingSwap{TC<:Currency}(currency::Vector{TC}, term::Period,
     FixedFloatingSwap(trade_date, leg1, leg2)
 end
 
+function FixedFloatingSwap(currency::Currency, term::Period,
+    rate::Real, ibor::IBOR, trade_date::TimeType = EVAL_DATE,
+    amount::Real = 1e6)
+    FixedFloatingSwap([currency, currency], term, rate, ibor, trade_date, amount)
+end
+
 get_period_starts(fsl::SwapLeg) = get_period_starts(fsl.schedule)
 get_period_ends(fsl::SwapLeg) = get_period_ends(fsl.schedule)
 get_payment_dates(fsl::SwapLeg) = get_payment_dates(fsl.schedule)
