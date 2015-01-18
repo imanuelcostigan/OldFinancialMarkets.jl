@@ -42,7 +42,7 @@ Modelling such as:
 Install FinancialMarkets.jl by running:
 
 ```julia
-Pkg.clone("https://github.com/imanuelcostigan/FinancialMarkets.jl")
+Pkg.add("FinancialMarkets")
 ```
 
 ## Obligatory badges
