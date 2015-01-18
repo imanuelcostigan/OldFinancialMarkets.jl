@@ -48,5 +48,5 @@ Pkg.clone("https://github.com/imanuelcostigan/FinancialMarkets.jl")
 ## Obligatory badges
 
 [![Build Status](https://travis-ci.org/imanuelcostigan/FinancialMarkets.jl.png)](https://travis-ci.org/imanuelcostigan/FinancialMarkets.jl)
-[![Coverage Status](https://img.shields.io/coveralls/imanuelcostigan/FinancialMarkets.jl.svg)](https://coveralls.io/r/imanuelcostigan/FinancialMarkets.jl?branch=release%2F0.2)
-[![Documentation Status](https://readthedocs.org/projects/FinancialMarketsjl/badge/?version=master)](https://readthedocs.org/projects/FinancialMarketsjl/?badge=master)
+[![Coverage Status](https://coveralls.io/repos/imanuelcostigan/FinancialMarkets.jl/badge.svg?branch=release%2F0.2)](https://coveralls.io/r/imanuelcostigan/FinancialMarkets.jl?branch=release%2F0.2)
+[![Documentation Status](https://readthedocs.org/projects/finmarketsjl/badge/?version=latest)](https://readthedocs.org/projects/finmarketsjl/?badge=latest)
