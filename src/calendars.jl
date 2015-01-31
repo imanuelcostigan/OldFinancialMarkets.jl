@@ -1,6 +1,7 @@
 #####
 # Type declarations
 #####
+
 abstract GoodDayReducer
 immutable AllDaysGood <: GoodDayReducer end
 immutable AnyDaysGood <: GoodDayReducer end
@@ -18,6 +19,13 @@ immutable NoCalendar <: SingleCalendar end
 #####
 # Methods
 #####
+
+Base.string(gdr::GoodDayReducer) = string(typeof(gdr))
+Base.show(io::IO, gdr::GoodDayReducer) = print(io, string(gdr))
+Base.show(io::IO, c::Calendar) = print(io, string(c))
+Base.string(sc::SingleCalendar) = string(typeof(sc))
+Base.string(jc::JointCalendar) = join([string(c) for c in jc.calendars],
+    isa(jc.rule, AllDaysGood) ? "&&" : "||")
 
 Base.join(c1::SingleCalendar, c2::SingleCalendar, r::GoodDayReducer = AllDaysGood()) =
     JointCalendar([c1, c2], r)
