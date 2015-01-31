@@ -1,10 +1,7 @@
 module FinancialMarkets
 
-if VERSION < v"0.4-"
-    using Dates
-else
-    using Base.Dates
-end
+VERSION < v"0.4-" && using Dates
+
 using Polynomials: Poly, polyval
 import DataFrames.DataFrame
 
