@@ -20,6 +20,9 @@ immutable Succeeding <: BusinessDayConvention end
 # Methods
 #####
 
+Base.string(bdc::BusinessDayConvention) = string(typeof(bdc))
+Base.show(io::IO, bdc::BusinessDayConvention) = print(io, string(bdc))
+
 adjust(dt::TimeType, bdc::Unadjusted, c::Calendar = NoCalendar()) = dt
 function adjust(dt::TimeType, bdc::Preceding, c::Calendar = NoCalendar())
     while !isgood(dt, c)
