@@ -167,3 +167,20 @@ USDLIBOR(tenor) = IBOR(USD(), tenor)
 #####
 
 currency(index::Index) = index.currency
+benchmark(index::AUDBBSW) = "BBSW"
+benchmark(index::EURIBOR) = "(L)IBOR"
+benchmark(index::GBPLIBOR) = "LIBOR"
+benchmark(index::JPYLIBOR) = "(L|T)IBOR"
+benchmark(index::NZDBKBM) = "BKBM"
+benchmark(index::USDLIBOR) = "LIBOR"
+benchmark(index::AONIA) = "AONIA"
+benchmark(index::EONIA) = "EONIA"
+benchmark(index::SONIA) = "SONIA"
+benchmark(index::TONAR) = "TONAR"
+benchmark(index::NZIONA) = "NZIONA"
+benchmark(index::FedFund) = "FedFund"
+
+Base.string(index::ONIA) = benchmark(index)
+Base.string(index::IBOR) = (replace(string(index.tenor), r"s$", "") * " " *
+    benchmark(index))
+Base.show(io::IO, index::InterestRateIndex) = print(io, string(index))
