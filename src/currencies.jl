@@ -10,44 +10,38 @@ abstract Currency
 
 immutable AUD <: Currency
     calendar::JointCalendar
-    AUD(calendar::AUSYCalendar) = new(calendar)
+    AUD(calendar::AUSYCalendar = AUSYCalendar()) = new(calendar)
 end
-AUD() = AUD(AUSYCalendar())
 
 immutable EUR <: Currency
     calendar::JointCalendar
-    EUR(calendar::EUTACalendar) = new(calendar)
+    EUR(calendar::EUTACalendar = EUTACalendar()) = new(calendar)
 end
-EUR() = EUR(EUTACalendar())
 
 immutable GBP <: Currency
     calendar::JointCalendar
-    GBP(calendar::GBLOCalendar) = new(calendar)
+    GBP(calendar::GBLOCalendar = GBLOCalendar()) = new(calendar)
 end
-GBP() = GBP(GBLOCalendar())
 
 immutable JPY <: Currency
     calendar::JointCalendar
-    JPY(calendar::JPTOCalendar) = new(calendar)
+    JPY(calendar::JPTOCalendar = JPTOCalendar()) = new(calendar)
 end
-JPY() = JPY(JPTOCalendar())
 
 immutable NZD <: Currency
     calendar::JointCalendar
-    function NZD(calendar::JointCalendar)
+    function NZD(calendar::JointCalendar = join(NZAUCalendar(), NZWECalendar()))
         cals = [NZAUCalendar(), NZWECalendar()]
         valid_cals = all([ c in cals for c in calendar.calendars ])
         msg = "Must use NZAU & NZWE calendars."
         valid_cals ? new(calendar) : throw(ArgumentError(msg))
     end
 end
-NZD() = NZD(join(NZAUCalendar(), NZWECalendar()))
 
 immutable USD <: Currency
     calendar::JointCalendar
-    USD(calendar::USNYCalendar) = new(calendar)
+    USD(calendar::USNYCalendar = USNYCalendar()) = new(calendar)
 end
-USD() = USD(USNYCalendar())
 
 # Source:
 # 2. Opengamma: Interest rate instruments and market conventions guide
