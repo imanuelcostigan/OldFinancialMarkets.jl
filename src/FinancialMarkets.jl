@@ -1,6 +1,7 @@
 module FinancialMarkets
 
 VERSION < v"0.4-" && using Dates
+VERSION < v"0.4-" && using Docile
 
 using Polynomials: Poly, polyval
 import DataFrames.DataFrame
@@ -53,6 +54,8 @@ export
     # instruments.jl
     Cash, Deposit, Future, STIRFuture,
     price
+
+@document
 
 include("constants.jl")
 include("calendars.jl")
