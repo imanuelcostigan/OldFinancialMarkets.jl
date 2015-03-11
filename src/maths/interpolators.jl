@@ -51,6 +51,21 @@ typealias FloatSplineInterpolation SplineInterpolation{Float64, Float64}
 # Methods
 ###############################################################################
 
+Base.string(i::Interpolators) = string(typeof(i))
+Base.string(e::Extrapolators) = string(typeof(e))
+Base.string(hf::HymanFilters) = string(typeof(hf))
+Base.show(io::IO, i::Interpolators) = print(io, string(i))
+Base.show(io::IO, e::Extrapolators) = print(io, string(e))
+Base.show(io::IO, hf::HymanFilters) = print(io, string(hf))
+function Base.show(io::IO, fsi::FloatSplineInterpolation)
+    println("Data")
+    println("=============")
+    show(io, DataFrame(x = fsi.x, y = fsi.y))
+    println("\n\nCoefficient matrix")
+    println("=============")
+    show(io, fsi.coefficients)
+end
+
 function interpolate(x_new::Real, i::FloatSplineInterpolation)
     msg = string("x_new is not in the interpolator's domain. ",
         "You may wish to extrapolate.")
