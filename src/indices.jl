@@ -125,8 +125,8 @@ function IBOR(::NZD, tenor::Period)
     # OpenGamma: Interest rate instruments & market conventions guide
     msg = "The tenor must be no less than 1 month."
     tenor < Month(1) && throw(ArgumentError(msg))
-    IBOR{NZD}(NZD(), Day(0), tenor, join(NZAUCalendar(), NZWECalendar()), bdc,
-        false, A365())
+    IBOR{NZD}(NZD(), Day(0), tenor, join(NZAUCalendar(), NZWECalendar()),
+        ModifiedFollowing(), false, A365())
 end
 function IBOR(::USD, tenor::Period)
     # https://www.theice.com/iba/libor
