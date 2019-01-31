@@ -1,8 +1,9 @@
+using Printf
 ####
 # Types
 ####
 
-type InterestRate
+struct InterestRate
     rate::Real
     compounding::Int
     daycount::DayCountFraction
@@ -14,7 +15,7 @@ type InterestRate
 end
 
 
-type DiscountFactor
+struct DiscountFactor
     discountfactor::Real
     startdate::TimeType
     enddate::TimeType
@@ -36,15 +37,13 @@ value(df::DiscountFactor) = df.discountfactor
 
 # IO
 function Base.string(r::InterestRate)
-    (@sprintf("%05f", 100 * value(r)) * "%," *
-        uppercase(COMPOUNDINGS[r.compounding]) * "," *
-        uppercase(string(r.daycount)))
+    s = @sprintf "%05f" 100 * value(r) 
+    "$(s)%, $(uppercase(COMPOUNDINGS[r.compounding])), $(uppercase(string(r.daycount))))"
 end
 Base.show(io::IO, r::InterestRate) = print(io, string(r))
 
 function Base.string(df::DiscountFactor)
-   ("DF: " * @sprintf("%06f", value(df)) * ", " * string(df.startdate) *
-        "--" * string(df.enddate))
+   "DF: $(@sprintf("%06f", value(df))), $(df.startdate)--$(string(df.enddate))"
 end
 Base.show(io::IO, df::DiscountFactor) = print(io, string(df))
 

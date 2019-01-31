@@ -2,7 +2,7 @@
 # Types
 ####
 
-type Cash <: Instrument
+struct Cash <: Instrument
     amount::Real
     rate::Real
     tradedate::TimeType

@@ -1,5 +1,7 @@
+using Dates
+
 # Session variables
-const EVAL_DATE = today()
+const EVAL_DATE = Dates.today()
 
 # Seasonal constants to determine start of seasons (more precisely, equinoxes
 # ands solstices)

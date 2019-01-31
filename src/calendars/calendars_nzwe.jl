@@ -2,7 +2,7 @@
 # Type declarations
 #####
 
-immutable NZWEFCalendar <: NZFCalendar end
+struct NZWEFCalendar <: NZFCalendar end
 
 #####
 # Methods

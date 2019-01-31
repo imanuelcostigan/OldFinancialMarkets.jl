@@ -2,7 +2,7 @@
 # Type declarations
 #####
 
-abstract NZFCalendar <: SingleFCalendar
+abstract type NZFCalendar <: SingleFCalendar end
 
 #####
 # Methods

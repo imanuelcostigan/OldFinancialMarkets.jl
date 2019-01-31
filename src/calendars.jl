@@ -2,13 +2,13 @@
 # Type declarations
 #####
 
-abstract FinCalendar
-abstract SingleFCalendar <: FinCalendar
-immutable JointFCalendar <: FinCalendar
+abstract type FinCalendar end
+abstract type SingleFCalendar <: FinCalendar end
+struct JointFCalendar <: FinCalendar
     calendars::Vector{SingleFCalendar}
     onbad::Bool
 end
-immutable NoFCalendar <: SingleFCalendar end
+struct NoFCalendar <: SingleFCalendar end
 
 
 #####

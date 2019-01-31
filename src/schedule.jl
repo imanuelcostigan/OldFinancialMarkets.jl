@@ -2,22 +2,22 @@
 # Types
 ####
 # Stub types
-abstract Stub
-abstract FrontStub <: Stub
-abstract BackStub <: Stub
-immutable ShortFrontStub <: FrontStub end
-immutable LongFrontStub <: FrontStub end
-immutable ShortBackStub <: BackStub end
-immutable LongBackStub <: BackStub end
+abstract type Stub end
+abstract type FrontStub <: Stub end
+abstract type BackStub <: Stub end
+struct ShortFrontStub <: FrontStub end
+struct LongFrontStub <: FrontStub end
+struct ShortBackStub <: BackStub end
+struct LongBackStub <: BackStub end
 
 # Schedules
-abstract DateSchedule
+abstract type DateSchedule end
 
 # Sources:
 # 1. Opengamma: Interest rate instruments and market conventions guide
 # 2. Quantlib.org
 
-immutable SwapDateSchedule <: DateSchedule
+struct SwapDateSchedule <: DateSchedule
     dates::Array{TimeType, 1}
     tenor::Period
     calendar::FinCalendar

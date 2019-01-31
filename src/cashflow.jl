@@ -2,7 +2,7 @@
 # Types
 ####
 
-type CashFlow
+struct CashFlow
     currency::Vector{Currency}
     date::Vector{TimeType}
     amount::Vector{Real}
@@ -17,8 +17,7 @@ end
 
 CashFlow(currency::Currency, date::TimeType, amount::Real) = (
     CashFlow([currency], [date], [amount]))
-function CashFlow{C<:Currency, T<:TimeType, R<:Real}(currency::Vector{C},
-    date::Vector{T}, amount::Vector{R})
+function CashFlow(currency::Vector{C}, date::Vector{T}, amount::Vector{R}) where {C<:Currency, T<:TimeType, R<:Real}
     currency = Currency[ccy for ccy in currency]
     date = TimeType[dt for dt in date]
     amount = Real[amt for amt in amount]

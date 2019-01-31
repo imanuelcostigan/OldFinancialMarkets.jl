@@ -2,7 +2,7 @@
 # Types
 ####
 
-type Deposit <: Instrument
+struct Deposit <: Instrument
     amount::Real
     rate::Real
     tradedate::TimeType

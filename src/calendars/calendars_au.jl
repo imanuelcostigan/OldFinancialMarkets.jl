@@ -2,7 +2,7 @@
 # Type declarations
 #####
 
-abstract AUFCalendar <: SingleFCalendar
+abstract type AUFCalendar <: SingleFCalendar end
 
 #####
 # Methods

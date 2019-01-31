@@ -1,6 +1,6 @@
 using Dates
 using FinancialMarkets
-using Base.Test
+using Test
 
 include("test_times.jl")
 include("test_calendars.jl")

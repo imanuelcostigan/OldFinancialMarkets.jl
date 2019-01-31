@@ -2,8 +2,8 @@
 # Types
 ####
 
-abstract Future <: Instrument
-type STIRFuture <: Future
+abstract type Future <: Instrument end
+struct STIRFuture <: Future
     amount::Real
     price::Real
     tradedate::TimeType

@@ -2,18 +2,18 @@
 # Type declarations
 #####
 
-abstract DayCountFraction
+abstract type DayCountFraction end
 
 # Sources:
 # 1. ISDA 2006 definitions
 # 2. Opengamma: Interest rate instruments and market conventions guide
 
-immutable A365 <: DayCountFraction end
-immutable A360 <: DayCountFraction end
-immutable ActActISDA <: DayCountFraction end
-immutable Thirty360 <: DayCountFraction end
-immutable ThirtyE360 <: DayCountFraction end
-immutable ThirtyEP360 <: DayCountFraction end
+struct A365 <: DayCountFraction end
+struct A360 <: DayCountFraction end
+struct ActActISDA <: DayCountFraction end
+struct Thirty360 <: DayCountFraction end
+struct ThirtyE360 <: DayCountFraction end
+struct ThirtyEP360 <: DayCountFraction end
 
 ####
 # Day count basis methods

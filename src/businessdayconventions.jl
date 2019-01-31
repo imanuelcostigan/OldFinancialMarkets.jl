@@ -3,18 +3,18 @@
 #####
 
 
-abstract BusinessDayConvention
+abstract type BusinessDayConvention end
 
 # Sources:
 # 1. ISDA 2006 definitions
 # 2. Opengamma: Interest rate instruments and market conventions guide
 
-immutable Unadjusted <: BusinessDayConvention end
-immutable Preceding <: BusinessDayConvention end
-immutable ModifiedPreceding <: BusinessDayConvention end
-immutable Following <: BusinessDayConvention end
-immutable ModifiedFollowing <: BusinessDayConvention end
-immutable Succeeding <: BusinessDayConvention end
+struct Unadjusted <: BusinessDayConvention end
+struct Preceding <: BusinessDayConvention end
+struct ModifiedPreceding <: BusinessDayConvention end
+struct Following <: BusinessDayConvention end
+struct ModifiedFollowing <: BusinessDayConvention end
+struct Succeeding <: BusinessDayConvention end
 
 #####
 # Methods
