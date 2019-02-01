@@ -28,10 +28,10 @@ thirty360 = Thirty360()
 @test years(d1, d2, thirty360) ≈ 1.0
 @test years(d2, d1, thirty360) ≈ -1.0
 @test years(d1, d3, thirty360) ≈ 1 / 12
-@test years(d4, d1, thirty360) (2 * 360 - 11 * 30) ≈ / 360
+@test years(d4, d1, thirty360) ≈ (2 * 360 - 11 * 30)  / 360
 @test years(d1, d5, thirty360) ≈ 1 / 12
 @test years(d5, d6, thirty360) ≈ 1 / 6
-@test years(d1, d6, thirty360) (2 * 30 + 30) ≈ / 360
+@test years(d1, d6, thirty360) ≈ (2 * 30 + 30) / 360
 
 # ThirtyE360
 thirtyE360 = ThirtyE360()
@@ -41,7 +41,7 @@ thirtyE360 = ThirtyE360()
 @test years(d4, d1, thirtyE360) ≈ years(d4, d1, thirty360)
 @test years(d1, d5, thirtyE360) ≈ 29 / 360
 @test years(d5, d6, thirtyE360) ≈ years(d5, d6, thirty360)
-@test years(d1, d6, thirtyE360) (2 * 30 + 29) ≈ / 360
+@test years(d1, d6, thirtyE360) ≈ (2 * 30 + 29) / 360
 
 # ThirtyEP360
 thirtyEP360 = ThirtyEP360()
@@ -49,5 +49,5 @@ thirtyEP360 = ThirtyEP360()
 @test years(d2, d1, thirtyEP360) ≈ years(d2, d1, thirty360)
 @test years(d1, d3, thirtyEP360) ≈ years(d1, d3, thirty360)
 @test years(d1, d5, thirtyEP360) ≈ 1 / 12
-@test years(d5, d6, thirtyEP360) (-29 + 3 * 30) ≈ / 360
+@test years(d5, d6, thirtyEP360) ≈ (-29 + 3 * 30) / 360
 @test years(d1, d6, thirtyEP360) ≈ 3 * 30 / 360

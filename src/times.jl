@@ -1,3 +1,5 @@
+using Dates
+import Base: (==), +, -
 #####
 # Type declarations
 #####
@@ -35,6 +37,7 @@ end
 function years(date1::TimeType, date2::TimeType, dc::ActActISDA)
     date1 == date2 && return 0
     y1 = year(date1); y2 = year(date2)
+    @show 
     diy1 = daysinyear(year(date1)); diy2 = daysinyear(year(date2))
     bony1 = Date(y1 + 1, 1, 1)
     boy2 = Date(y2, 1, 1)

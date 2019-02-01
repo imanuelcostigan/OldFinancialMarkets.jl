@@ -1,4 +1,5 @@
 using Printf
+
 ####
 # Types
 ####
@@ -114,33 +115,63 @@ function equivalent(to::InterestRate, x::InterestRate)
 end
 
 # arithmetic operations
-for op in (:+, :*, :-, :/)
-    @eval begin
-        function ($op)(x::InterestRate, y::Real)
-            InterestRate(($op)(value(x), y), x.compounding, x.daycount)
-        end
-    end
-    @eval begin
-        function ($op)(x::InterestRate, y::InterestRate)
-            InterestRate(($op)(value(x), value(equivalent(x, y))),
-                x.compounding, x.daycount)
-        end
-    end
+# for op in (Base.:+, Base.:*, Base.:-, Base.:/)
+#     @eval begin
+#         function $op(x::InterestRate, y::Real)
+#             InterestRate($op(value(x), y), x.compounding, x.daycount)
+#         end
+#     end
+#     @eval begin
+#         function $op(x::InterestRate, y::InterestRate)
+#             InterestRate($op(value(x), value(equivalent(x, y))),
+#                 x.compounding, x.daycount)
+#         end
+#     end
+# end
+function Base.:+(x::InterestRate, y::Real)
+    InterestRate(Base.:+(value(x), y), x.compounding, x.daycount)
 end
-(+)(x::Real, y::InterestRate) = y + x
-(*)(x::Real, y::InterestRate) = y * x
-(-)(x::Real, y::InterestRate) = -1(y - x)
-(/)(x::Real, y::InterestRate) = InterestRate(x / value(y), y.compounding,
+function Base.:+(x::InterestRate, y::InterestRate)
+    InterestRate(Base.:+(value(x), value(equivalent(x, y))),
+        x.compounding, x.daycount)
+end
+function Base.:-(x::InterestRate, y::Real)
+    InterestRate(Base.:-(value(x), y), x.compounding, x.daycount)
+end
+function Base.:-(x::InterestRate, y::InterestRate)
+    InterestRate(Base.:-(value(x), value(equivalent(x, y))),
+        x.compounding, x.daycount)
+end
+function Base.:*(x::InterestRate, y::Real)
+    InterestRate(Base.:*(value(x), y), x.compounding, x.daycount)
+end
+function Base.:*(x::InterestRate, y::InterestRate)
+    InterestRate(Base.:*(value(x), value(equivalent(x, y))),
+        x.compounding, x.daycount)
+end
+function Base.:/(x::InterestRate, y::Real)
+    InterestRate(Base.:/(value(x), y), x.compounding, x.daycount)
+end
+function Base.:/(x::InterestRate, y::InterestRate)
+    InterestRate(Base.:/(value(x), value(equivalent(x, y))),
+        x.compounding, x.daycount)
+end
+
+
+Base.:+(x::Real, y::InterestRate) = y + x
+Base.:*(x::Real, y::InterestRate) = y * x
+Base.:-(x::Real, y::InterestRate) = -1(y - x)
+Base.:/(x::Real, y::InterestRate) = InterestRate(x / value(y), y.compounding,
     y.daycount)
 
-function (*)(x::DiscountFactor, y::DiscountFactor)
+function Base.:*(x::DiscountFactor, y::DiscountFactor)
     msg = "The discount factors must represent two cotinguous spans of time."
     (x.enddate == y.enddate || y.startdate == x.enddate) || throw(
         ArgumentError(msg))
     DiscountFactor(value(x) * value(y), min(x.startdate, y.startdate),
         max(x.enddate, y.enddate))
 end
-function (/)(x::DiscountFactor, y::DiscountFactor)
+function Base.:/(x::DiscountFactor, y::DiscountFactor)
     msg = "The discount factors must start at the same instant."
     (x.startdate == y.startdate) || throw(ArgumentError(msg))
     DiscountFactor(value(x) / value(y), min(x.enddate, y.enddate),
@@ -148,12 +179,12 @@ function (/)(x::DiscountFactor, y::DiscountFactor)
 end
 
 # comparison operations
-for op in (:(==), :!=, :<, :<=, :>, :>=)
-    @eval begin
-        function ($op)(x::InterestRate, y::InterestRate)
-            return ($op)(value(x), value(equivalent(x, y)))
-        end
-        (($op)(x::DiscountFactor, y::DiscountFactor) =
-            ($op)(value(x), value(y)))
-    end
-end
+# for op in (:(==), :!=, :<, :<=, :>, :>=)
+#     @eval begin
+#         function $op(x::InterestRate, y::InterestRate)
+#             return $op(value(x), value(equivalent(x, y)))
+#         end
+#         $op(x::DiscountFactor, y::DiscountFactor) =
+#             $op(value(x), value(y))
+#     end
+# end

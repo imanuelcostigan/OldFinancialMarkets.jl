@@ -51,7 +51,9 @@ function seasonstart(y::Integer, m::Integer)
     y = (y - 2000) / 1000
     k = SEASON[m]
     jde0 = 0
-    for i in 1:length(k) jde0 += y ^ (i - 1) * k[i] end
+    for i in 1:length(k)
+        jde0 += (y ^ (i - 1) * k[i])[1]
+    end
     # Calculate corrections
     tt = (jde0 - 2451545) / 36525
     w = 35999.373tt - 2.47
