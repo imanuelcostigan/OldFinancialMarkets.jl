@@ -52,8 +52,8 @@ USD() = USD(USNYFCalendar())
 # Source:
 # 2. Opengamma: Interest rate instruments and market conventions guide
 
-const CCY_STRENGTH = [EUR => 1,  GBP => 2, AUD => 3, NZD => 4, USD => 5,
-    JPY => 6]
+const CCY_STRENGTH = Dict(EUR => 1,  GBP => 2, AUD => 3, NZD => 4, USD => 5,
+    JPY => 6)
 
 Base.isless(x::Currency, y::Currency) = (CCY_STRENGTH[typeof(x)] >
     CCY_STRENGTH[typeof(y)])
