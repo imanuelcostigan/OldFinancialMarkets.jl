@@ -8,16 +8,11 @@ Date(2014, 12, 26), Date(2016, 1, 1), Date(2016, 1, 26), Date(2016, 3, 25),
 Date(2016, 3, 26), Date(2016, 3, 27), Date(2016, 3, 28), Date(2016, 4, 25),
 Date(2016, 6, 13), Date(2016, 8, 1), Date(2016, 10, 3), Date(2016, 12, 25),
 Date(2016, 12, 27), Date(2016, 12, 26)]
-dt = Date(2014)
-while year(dt) == 2014
-    @test !((dt in ausyholidays || isweekend(dt)) $
-        !isgood(dt, AUSYFCalendar()))
-    dt += Day(1)
-end
-dt = Date(2016)
-while year(dt) == 2016
-    @test !((dt in ausyholidays || isweekend(dt)) $
-        !isgood(dt, AUSYFCalendar()))
-    dt += Day(1)
+
+for dt in Date(2014,1,1):Dates.Day(1):Date(2014,12,31)
+    @test !((dt in ausyholidays || isweekend(dt)) ⊻ !isgood(dt, AUSYFCalendar()))
 end
 
+for dt in Date(2016,1,1):Dates.Day(1):Date(2016,12,31)
+    @test !((dt in ausyholidays || isweekend(dt)) ⊻ !isgood(dt, AUSYFCalendar()))
+end

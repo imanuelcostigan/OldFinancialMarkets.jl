@@ -6,9 +6,7 @@ nzauholidays = [Date(2014, 1, 1), Date(2014, 1, 2), Date(2014, 1, 27),
     Date(2015, 1, 1), Date(2015, 1, 2), Date(2015, 1, 26), Date(2015, 2, 6),
     Date(2015, 4, 3), Date(2015, 4, 6), Date(2015, 4, 27), Date(2015, 6, 1),
     Date(2015, 10, 26), Date(2015, 12, 25), Date(2015, 12, 28)]
-dt = Date(2014)
-while year(dt) <= 2015
-    !((dt in nzauholidays || isweekend(dt)) $
-        !isgood(dt, NZAUFCalendar()))
-    dt += Day(1)
+
+for dt in Date(2014,1,1):Dates.Day(1):Date(2015,12,31)
+        @test !((dt in nzauholidays || isweekend(dt)) ⊻ !isgood(dt, NZAUFCalendar()))
 end

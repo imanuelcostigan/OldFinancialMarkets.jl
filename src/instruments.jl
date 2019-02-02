@@ -2,7 +2,7 @@
 # Types
 ####
 
-abstract Instrument
+abstract type Instrument end
 
 include("instruments/cash.jl")
 include("instruments/deposit.jl")

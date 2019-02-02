@@ -2,7 +2,7 @@
 # Type declarations
 #####
 
-immutable AUMEFCalendar <: AUFCalendar end
+struct AUMEFCalendar <: AUFCalendar end
 
 #####
 # Methods

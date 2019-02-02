@@ -2,13 +2,13 @@
 # Type declarations
 #####
 
-abstract FinCalendar
-abstract SingleFCalendar <: FinCalendar
-immutable JointFCalendar <: FinCalendar
+abstract type FinCalendar end
+abstract type SingleFCalendar <: FinCalendar end
+struct JointFCalendar <: FinCalendar
     calendars::Vector{SingleFCalendar}
     onbad::Bool
 end
-immutable NoFCalendar <: SingleFCalendar end
+struct NoFCalendar <: SingleFCalendar end
 
 
 #####
@@ -16,9 +16,9 @@ immutable NoFCalendar <: SingleFCalendar end
 #####
 
 JointFCalendar(c::SingleFCalendar...) = JointFCalendar([ ci for ci in c ], true)
-+(c1::SingleFCalendar, c2::SingleFCalendar) = JointFCalendar([c1, c2], true)
-*(c1::SingleFCalendar, c2::SingleFCalendar) = JointFCalendar([c1, c2], false)
-+(jc::JointFCalendar, c::SingleFCalendar) = JointFCalendar([jc.calendars, c],
+Base.:+(c1::SingleFCalendar, c2::SingleFCalendar) = JointFCalendar([c1, c2], true)
+Base.:*(c1::SingleFCalendar, c2::SingleFCalendar) = JointFCalendar([c1, c2], false)
+Base.:+(jc::JointFCalendar, c::SingleFCalendar) = JointFCalendar([jc.calendars, c],
     jc.onbad)
 Base.convert(::Type{JointFCalendar}, c::SingleFCalendar) = JointFCalendar(c)
 

@@ -2,8 +2,8 @@
 # Type declarations
 #####
 
-abstract GBFCalendar <: SingleFCalendar
-immutable GBLOFCalendar <: GBFCalendar end
+abstract type GBFCalendar <: SingleFCalendar end
+struct GBLOFCalendar <: GBFCalendar end
 
 #####
 # Methods

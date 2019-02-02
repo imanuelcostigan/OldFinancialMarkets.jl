@@ -2,14 +2,14 @@
 # Types
 ####
 
-abstract Index
-abstract InterestRateIndex <: Index
+abstract type Index end
+abstract type InterestRateIndex <: Index end
 
 ##############################################################################
 ### Cash
 ##############################################################################
 
-immutable ONIA{CCY<:Currency} <: InterestRateIndex
+struct ONIA{CCY<:Currency} <: InterestRateIndex
     currency::CCY
     calendar::JointFCalendar
     bdc::BusinessDayConvention
@@ -26,12 +26,12 @@ ONIA(::NZD) = ONIA{NZD}(NZD(), +(NZAUFCalendar(), NZWEFCalendar()),
     Following(), A365())
 ONIA(::USD) = ONIA{USD}(USD(), USNYFCalendar(), Following(), A360())
 
-typealias AONIA ONIA{AUD}
-typealias EONIA ONIA{EUR}
-typealias SONIA ONIA{GBP}
-typealias TONAR ONIA{JPY}
-typealias NZIONA ONIA{NZD}
-typealias FedFund ONIA{USD}
+const AONIA = ONIA{AUD}
+const EONIA = ONIA{EUR}
+const SONIA = ONIA{GBP}
+const TONAR = ONIA{JPY}
+const NZIONA = ONIA{NZD}
+const FedFund = ONIA{USD}
 
 AONIA() = ONIA(AUD())
 EONIA() = ONIA(EUR())
@@ -44,7 +44,7 @@ FedFund() = ONIA(USD())
 ### LIBOR
 ##############################################################################
 
-immutable IBOR{CCY<:Currency} <: InterestRateIndex
+struct IBOR{CCY<:Currency} <: InterestRateIndex
     currency::CCY
     spotlag::Period
     tenor::Period
@@ -146,12 +146,12 @@ function IBOR(::USD, tenor::Period)
     IBOR{USD}(USD(), spotlag, tenor, calendar, bdc, true, A360())
 end
 
-typealias AUDBBSW IBOR{AUD}
-typealias EURIBOR IBOR{EUR}
-typealias GBPLIBOR IBOR{GBP}
-typealias JPYLIBOR IBOR{JPY}
-typealias NZDBKBM IBOR{NZD}
-typealias USDLIBOR IBOR{USD}
+const AUDBBSW = IBOR{AUD}
+const EURIBOR = IBOR{EUR}
+const GBPLIBOR = IBOR{GBP}
+const JPYLIBOR = IBOR{JPY}
+const NZDBKBM = IBOR{NZD}
+const USDLIBOR = IBOR{USD}
 
 AUDBBSW(tenor) = IBOR(AUD(), tenor)
 EURIBOR(tenor) = IBOR(EUR(), tenor)

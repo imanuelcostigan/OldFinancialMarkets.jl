@@ -14,4 +14,4 @@ tau = years(stir.underlying.startdate, stir.underlying.enddate,
 @test price(stir) == 1e6 / (1 + 0.04 * tau)
 @test cfs.currency == [EUR(), EUR()]
 @test cfs.date == [Date(2014, 12, 17), Date(2015, 3, 17)]
-@test_approx_eq cfs.amount 1 * [-price(stir), 1e6]
+@test cfs.amount ≈ 1 * [-price(stir), 1e6]

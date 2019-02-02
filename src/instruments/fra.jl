@@ -2,7 +2,7 @@
 # Types
 ####
 
-type FRA <: Instrument
+struct FRA <: Instrument
     amount::Real
     rate::Real
     tradedate::TimeType

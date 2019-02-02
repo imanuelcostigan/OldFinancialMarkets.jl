@@ -15,9 +15,7 @@ jpholidays = [Date(2014, 1, 1), Date(2014, 1, 2), Date(2014, 1, 3),
     Date(2013, 9, 16), Date(2013, 9, 23), Date(2013, 10, 14),
     Date(2013, 11, 3), Date(2013, 11, 4), Date(2013, 11, 23),
     Date(2013, 12, 23), Date(2013, 12, 31)]
-dt = Date(2013)
-while year(dt) <= 2014
-    @test !((dt in jpholidays || isweekend(dt)) $
-        !isgood(dt, JPTOFCalendar()))
-    dt += Day(1)
+
+for dt in Date(2013,1,1):Dates.Day(1):Date(2014,12,31)
+    @test !((dt in jpholidays || isweekend(dt)) ⊻ !isgood(dt, JPTOFCalendar()))
 end

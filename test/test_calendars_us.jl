@@ -9,9 +9,7 @@ usholidays = [Date(2012, 1, 1), Date(2012, 1, 2), Date(2012, 1, 16),
     Date(2013, 5, 27), Date(2013, 7, 4), Date(2013, 9, 2),
     Date(2013, 10, 14), Date(2013, 11, 11), Date(2013, 11, 28),
     Date(2013, 12, 25)]
-dt = Date(2012)
-while year(dt) <= 2013
-    @test !((dt in usholidays || isweekend(dt)) $
-        !isgood(dt, USNYFCalendar()))
-    dt += Day(1)
+
+    for dt in Date(2012,1,1):Dates.Day(1):Date(2013,12,31)
+    @test !((dt in usholidays || isweekend(dt)) ⊻ !isgood(dt, USNYFCalendar()))
 end

@@ -3,8 +3,8 @@
 #####
 
 
-abstract JPFCalendar <: SingleFCalendar
-immutable JPTOFCalendar <: JPFCalendar end
+abstract type JPFCalendar <: SingleFCalendar end
+struct JPTOFCalendar <: JPFCalendar end
 
 #####
 # Methods

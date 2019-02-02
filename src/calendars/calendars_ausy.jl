@@ -2,7 +2,7 @@
 # Type declarations
 #####
 
-immutable AUSYFCalendar <: AUFCalendar end
+struct AUSYFCalendar <: AUFCalendar end
 
 #####
 # Methods

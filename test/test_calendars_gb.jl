@@ -8,9 +8,7 @@ gbholidays = [Date(2012, 1, 1), Date(2012, 1, 2), Date(2012, 4, 6),
   Date(2013, 1, 1), Date(2013, 3, 29), Date(2013, 4, 1),
   Date(2013, 5, 6), Date(2013, 5, 27), Date(2013, 8, 26),
   Date(2013, 12, 25), Date(2013, 12, 26)]
-  dt = Date(2012)
-  while year(dt) <= 2013
-    @test !((dt in gbholidays || isweekend(dt)) $
-        !isgood(dt, GBLOFCalendar()))
-    dt += Day(1)
+
+for dt in Date(2012,1,1):Dates.Day(1):Date(2013,12,31)
+    @test !((dt in gbholidays || isweekend(dt)) ⊻ !isgood(dt, GBLOFCalendar()))
 end

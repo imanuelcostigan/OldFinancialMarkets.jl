@@ -2,9 +2,9 @@
 # Type declarations
 #####
 
-abstract USFCalendar <: SingleFCalendar
-immutable USNYFCalendar <: USFCalendar end
-immutable USLIBORFCalendar <: USFCalendar end
+abstract type USFCalendar <: SingleFCalendar end
+struct USNYFCalendar <: USFCalendar end
+struct USLIBORFCalendar <: USFCalendar end
 
 #####
 # Methods

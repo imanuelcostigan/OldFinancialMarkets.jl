@@ -2,9 +2,9 @@
 # Type declarations
 #####
 
-abstract EUFCalendar <: SingleFCalendar
-immutable EUTAFCalendar <: EUFCalendar end
-immutable EULIBORFCalendar <: EUFCalendar end
+abstract type EUFCalendar <: SingleFCalendar end
+struct EUTAFCalendar <: EUFCalendar end
+struct EULIBORFCalendar <: EUFCalendar end
 
 #####
 # Methods

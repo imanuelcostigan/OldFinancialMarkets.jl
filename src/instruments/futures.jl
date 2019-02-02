@@ -2,8 +2,8 @@
 # Types
 ####
 
-abstract Future <: Instrument
-type STIRFuture <: Future
+abstract type Future <: Instrument end
+struct STIRFuture <: Future
     amount::Real
     price::Real
     tradedate::TimeType
@@ -14,12 +14,12 @@ end
 # Methods
 ####
 
-stirsettlementparameters(ccy::AUD) = ["nth" => 2, "day" => Fri, "off" => Day(0)]
-stirsettlementparameters(ccy::EUR) = ["nth" => 3, "day" => Wed, "off" => Day(0)]
-stirsettlementparameters(ccy::GBP) = ["nth" => 3, "day" => Wed, "off" => Day(0)]
-stirsettlementparameters(ccy::JPY) = ["nth" => 3, "day" => Wed, "off" => Day(0)]
-stirsettlementparameters(ccy::NZD) = ["nth" => 1, "day" => Wed, "off" => Day(8)]
-stirsettlementparameters(ccy::USD) = ["nth" => 3, "day" => Wed, "off" => Day(0)]
+stirsettlementparameters(ccy::AUD) = Dict("nth" => 2, "day" => Fri, "off" => Day(0))
+stirsettlementparameters(ccy::EUR) = Dict("nth" => 3, "day" => Wed, "off" => Day(0))
+stirsettlementparameters(ccy::GBP) = Dict("nth" => 3, "day" => Wed, "off" => Day(0))
+stirsettlementparameters(ccy::JPY) = Dict("nth" => 3, "day" => Wed, "off" => Day(0))
+stirsettlementparameters(ccy::NZD) = Dict("nth" => 1, "day" => Wed, "off" => Day(8))
+stirsettlementparameters(ccy::USD) = Dict("nth" => 3, "day" => Wed, "off" => Day(0))
 
 function to_nth_dayofweek(dt::TimeType, n::Integer, dow::Integer)
     dt + Day(7 * (n - 1) + mod(dow - dayofweek(dt), 7))
