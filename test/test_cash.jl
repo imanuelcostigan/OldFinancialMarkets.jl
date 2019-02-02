@@ -6,4 +6,4 @@ cfs = CashFlow(audcash)
 @test price(audcash) == 1e6
 @test cfs.currency == [AUD(), AUD()]
 @test cfs.date == [Date(2014, 9, 26), Date(2014, 9, 29)]
-@test_approx_eq cfs.amount 1e6 * [-1.0, 1.0 + 0.04 * 3.0 / 365.0]
+@test cfs.amount ≈ 1e6 * [-1.0, 1.0 + 0.04 * 3.0 / 365.0]
