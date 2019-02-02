@@ -115,48 +115,18 @@ function equivalent(to::InterestRate, x::InterestRate)
 end
 
 # arithmetic operations
-# for op in (Base.:+, Base.:*, Base.:-, Base.:/)
-#     @eval begin
-#         function $op(x::InterestRate, y::Real)
-#             InterestRate($op(value(x), y), x.compounding, x.daycount)
-#         end
-#     end
-#     @eval begin
-#         function $op(x::InterestRate, y::InterestRate)
-#             InterestRate($op(value(x), value(equivalent(x, y))),
-#                 x.compounding, x.daycount)
-#         end
-#     end
-# end
-function Base.:+(x::InterestRate, y::Real)
-    InterestRate(Base.:+(value(x), y), x.compounding, x.daycount)
+for op in (:+, :*, :-, :/)
+    @eval begin
+        function Base.$op(x::InterestRate, y::Real)
+            InterestRate(Base.$op(value(x), y), x.compounding, x.daycount)
+        end
+    end
+    @eval begin
+        function Base.$op(x::InterestRate, y::InterestRate)
+            InterestRate(Base.$op(value(x), value(equivalent(x, y))), x.compounding, x.daycount)
+        end
+    end
 end
-function Base.:+(x::InterestRate, y::InterestRate)
-    InterestRate(Base.:+(value(x), value(equivalent(x, y))),
-        x.compounding, x.daycount)
-end
-function Base.:-(x::InterestRate, y::Real)
-    InterestRate(Base.:-(value(x), y), x.compounding, x.daycount)
-end
-function Base.:-(x::InterestRate, y::InterestRate)
-    InterestRate(Base.:-(value(x), value(equivalent(x, y))),
-        x.compounding, x.daycount)
-end
-function Base.:*(x::InterestRate, y::Real)
-    InterestRate(Base.:*(value(x), y), x.compounding, x.daycount)
-end
-function Base.:*(x::InterestRate, y::InterestRate)
-    InterestRate(Base.:*(value(x), value(equivalent(x, y))),
-        x.compounding, x.daycount)
-end
-function Base.:/(x::InterestRate, y::Real)
-    InterestRate(Base.:/(value(x), y), x.compounding, x.daycount)
-end
-function Base.:/(x::InterestRate, y::InterestRate)
-    InterestRate(Base.:/(value(x), value(equivalent(x, y))),
-        x.compounding, x.daycount)
-end
-
 
 Base.:+(x::Real, y::InterestRate) = y + x
 Base.:*(x::Real, y::InterestRate) = y * x
@@ -179,12 +149,11 @@ function Base.:/(x::DiscountFactor, y::DiscountFactor)
 end
 
 # comparison operations
-# for op in (:(==), :!=, :<, :<=, :>, :>=)
-#     @eval begin
-#         function $op(x::InterestRate, y::InterestRate)
-#             return $op(value(x), value(equivalent(x, y)))
-#         end
-#         $op(x::DiscountFactor, y::DiscountFactor) =
-#             $op(value(x), value(y))
-#     end
-# end
+for op in (:(==), :!=, :<, :<=, :>, :>=)
+    @eval begin
+        function Base.$op(x::InterestRate, y::InterestRate)
+            return Base.$op(value(x), value(equivalent(x, y)))
+        end
+        Base.$op(x::DiscountFactor, y::DiscountFactor) = Base.$op(value(x), value(y))
+    end
+end

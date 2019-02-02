@@ -31,3 +31,10 @@ r3 = convert(InterestRate, convert(DiscountFactor, r, d1, d2), SemiAnnually,
 @test convert(InterestRate, r, thirty360).rate ≈ r1.rate
 @test convert(InterestRate, r, SemiAnnually).rate ≈ r2.rate
 @test convert(InterestRate, r, SemiAnnually, thirty360).rate ≈ r3.rate
+
+
+@test InterestRate(0.04, Simply, a365) < InterestRate(0.05, Simply, a365)
+@test InterestRate(0.05, Simply, a365) > InterestRate(0.04, Simply, a365)
+@test InterestRate(0.05, Simply, a365) == InterestRate(0.05, Simply, a365)
+@test InterestRate(0.05, Simply, a365) >= InterestRate(0.05, Simply, a365)
+@test InterestRate(0.05, Simply, a365) <= InterestRate(0.05, Simply, a365)
