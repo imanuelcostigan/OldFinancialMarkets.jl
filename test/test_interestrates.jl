@@ -6,16 +6,18 @@ r = InterestRate(0.04, Simply, a365)
 df = DiscountFactor(1 / (1 + 0.04 * years(d1, d2, a365)), d1, d2)
 
 # Test conversion between DF & IR & vice-versa
-@test_approx_eq convert(DiscountFactor, r, d1, d2).discountfactor df.discountfactor
-@test_approx_eq convert(InterestRate, df, Simply, a365).rate r.rate
-r.compounding = Quarterly
-df.discountfactor = (1 + 0.04 / 4) ^ (-4 * years(d1, d2, a365))
-@test_approx_eq convert(DiscountFactor, r, d1, d2).discountfactor df.discountfactor
-@test_approx_eq convert(InterestRate, df, Quarterly, a365).rate r.rate
-r.compounding = Continuously
-df.discountfactor = exp(-0.04years(d1, d2, a365))
-@test_approx_eq convert(DiscountFactor, r, d1, d2).discountfactor df.discountfactor
-@test_approx_eq convert(InterestRate, df, Continuously, a365).rate r.rate
+@test convert(DiscountFactor, r, d1, d2).discountfactor ≈ df.discountfactor
+@test convert(InterestRate, df, Simply, a365).rate ≈ r.rate
+
+r = InterestRate(0.04, Quarterly, a365)
+df = DiscountFactor((1 + 0.04 / 4) ^ (-4 * years(d1, d2, a365)), d1, d2)
+@test convert(DiscountFactor, r, d1, d2).discountfactor ≈ df.discountfactor
+@test convert(InterestRate, df, Quarterly, a365).rate ≈ r.rate
+
+r = InterestRate(0.04, Continuously, a365)
+df = DiscountFactor(exp(-0.04years(d1, d2, a365)), d1, d2)
+@test convert(DiscountFactor, r, d1, d2).discountfactor ≈ df.discountfactor
+@test convert(InterestRate, df, Continuously, a365).rate ≈ r.rate
 
 # Test conversion between rates
 d1 = Date(2013,1,1)
@@ -26,6 +28,6 @@ r2 = convert(InterestRate, convert(DiscountFactor, r, d1, d2), SemiAnnually,
     r.daycount)
 r3 = convert(InterestRate, convert(DiscountFactor, r, d1, d2), SemiAnnually,
     thirty360)
-@test_approx_eq convert(InterestRate, r, thirty360).rate r1.rate
-@test_approx_eq convert(InterestRate, r, SemiAnnually).rate r2.rate
-@test_approx_eq convert(InterestRate, r, SemiAnnually, thirty360).rate r3.rate
+@test convert(InterestRate, r, thirty360).rate ≈ r1.rate
+@test convert(InterestRate, r, SemiAnnually).rate ≈ r2.rate
+@test convert(InterestRate, r, SemiAnnually, thirty360).rate ≈ r3.rate
