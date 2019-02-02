@@ -6,13 +6,13 @@ For example:
 
 ```julia
 # Load packages
-using Dates, FinancialMarkets
-# Create US Dollar object
-USD = USD()
+ using Dates, FinancialMarkets
+
 # Create 3m USD LIBOR
-depo = Deposit(USD, Month(3), 0.05)
-# Price depo at trade date
-price(depo)
+depo = Deposit(USD(), Month(3), 0.05)
+
+# Price depo at trade date with default par of 1e6 
+price(depo) # returns 987518.8588670965
 ```
 ## Features
 
